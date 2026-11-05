@@ -10,7 +10,7 @@ import {
   Factory, 
   Sparkles,
   CheckCircle2
-} from 'lucide-react';
+} from 'lucide-react';  
 
 export const AboutUs: React.FC = () => {
   return (
