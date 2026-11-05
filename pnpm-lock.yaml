@@ -45,6 +45,9 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
     devDependencies:
+      '@netlify/plugin-nextjs':
+        specifier: ^5.16.6
+        version: 5.16.6
       '@tailwindcss/turbopack':
         specifier: ^4
         version: 4.3.3
@@ -973,6 +976,10 @@ packages:
   '@modelcontextprotocol/server@2.4.0':
     resolution: {integrity: sha512-rgR9yxSaAJ+bcsi/XroT/S2AfPiIWloXAnrdfYSCms9ivVju0ishu/wW0J21Ho6+ZOR1r7RyeRbjiRuF87ix5Q==}
     engines: {node: '>=20'}
+
+  '@netlify/plugin-nextjs@5.16.6':
+    resolution: {integrity: sha512-BXy5WhogsaQOKz+C+KMlWrQupdGkV1a6TmJ6RLF6RwUMz6Oi419RejMD8yB8ttBKqImQDkOE4MmNLx3uEEKxPw==}
+    engines: {node: '>=18.0.0'}
 
   '@next/env@16.4.3':
     resolution: {integrity: sha512-a7tz1QCcWWkwC/rPJcPMJk/UNRu9CFhDd3OHYE5hddbJrs8BqRTalxI6GlKCWEGzRLHN+S/B7a4PAHCtm25aBQ==}
@@ -4029,6 +4036,8 @@ snapshots:
     dependencies:
       '@modelcontextprotocol/core': 2.4.0
       zod: 4.6.7
+
+  '@netlify/plugin-nextjs@5.16.6': {}
 
   '@next/env@16.4.3': {}
 
