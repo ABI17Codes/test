@@ -30,9 +30,14 @@ export const Navbar: React.FC = () => {
   const [catalogDropdownOpen, setCatalogDropdownOpen] = useState(false);
   const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const accountRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -360,7 +365,7 @@ export const Navbar: React.FC = () => {
             >
               <ShoppingBag className="w-3.5 h-3.5 text-[#F5B800]" />
               <span>RFQ</span>
-              {totalItems > 0 && (
+              {mounted && totalItems > 0 && (
                 <span className="inline-flex items-center justify-center w-4 h-4 text-[10px] font-black bg-[#F5B800] text-neutral-900 rounded-full">
                   {totalItems}
                 </span>
