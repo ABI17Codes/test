@@ -2,52 +2,42 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { PRODUCTS } from '../data/products';
 import { ProductCard } from './ProductCard';
 
 export const FeaturedProductsSection: React.FC = () => {
-  // Select top featured items across categories
-  const featuredIds = ['hgs-h74', 'bg-boxer', 'bg-volvo-2', 'hgs-h66'];
-  const featuredProducts = PRODUCTS.filter((p) => featuredIds.includes(p.id));
+  const featuredIds = ['hgs-h74', 'bg-boxer', 'hgs-h71', 'bg-volvo-2'];
+  const featuredProducts = featuredIds
+    .map((id) => PRODUCTS.find((p) => p.id === id))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
     <section className="py-20 bg-white border-b border-[#E5E7EB]">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 space-y-12">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-8 lg:px-10">
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 text-left">
-          <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200">
-              <Sparkles className="w-3.5 h-3.5 text-[#0876B4]" />
-              <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#0876B4]">
-                Enterprise Best-Sellers
-              </span>
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#101828] tracking-[-0.035em]">
-              Curated corporate staples,{' '}
-              <span className="brand-gradient-text">
-                ready to brand.
-              </span>
-            </h2>
-
-            <p className="text-sm sm:text-base text-[#667085] font-normal leading-relaxed">
-              Our most-requested executive gift sets and corporate backpacks, trusted by over 500+ enterprise procurement teams across India.
+        {/* Header matching media_1793878039758_2b665fa3.jpg */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 text-left">
+          <div className="space-y-2.5 max-w-lg">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0876B4]">
+              Featured Products
             </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#101828] tracking-[-0.025em] leading-[1.12]">
+              Corporate essentials, ready to brand
+            </h2>
           </div>
 
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 px-6 py-3.5 btn-primary text-xs sm:text-sm self-start md:self-end group cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#0876B4] hover:text-[#101828] transition-colors self-start sm:self-end"
           >
-            <span>View All 180+ Products</span>
-            <ArrowRight className="w-4 h-4 text-[#E8B43A] group-hover:translate-x-1 transition-transform" />
+            <span>View all (180+) products</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
         {/* 4-Column Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

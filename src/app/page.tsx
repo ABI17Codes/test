@@ -1,50 +1,38 @@
-'use client';
-
 import React from 'react';
-import { useRouter } from 'next/navigation';
 import { Hero } from '../components/Hero';
 import { EnterpriseTrustBar } from '../components/EnterpriseTrustBar';
 import { SignatureCollections } from '../components/SignatureCollections';
-import { FeaturedProductsSection } from '../components/FeaturedProductsSection';
-import { GiftingWorkflowSection } from '../components/GiftingWorkflowSection';
 import { CorporatePromotionsSection } from '../components/CorporatePromotionsSection';
+import { HomepageSolutionsSection } from '../components/HomepageSolutionsSection';
+import { FeaturedProductsSection } from '../components/FeaturedProductsSection';
 import { CustomerTestimonials } from '../components/CustomerTestimonials';
-import { DigitalCataloguesSection } from '../components/DigitalCataloguesSection';
 import { BespokeConciergeCTA } from '../components/BespokeConciergeCTA';
 
-export default function HomePage() {
-  const router = useRouter();
-
+export default function Home() {
   return (
-    <div className="bg-[#F5F7FA] text-[#101828] min-h-screen">
-      {/* 1. Hero Section - Sophisticated Split Layout */}
-      <Hero
-        onExploreCollection={() => router.push('/products')}
-        onRequestQuote={() => router.push('/quote')}
-      />
+    <div className="min-h-screen bg-white text-[#101828] flex flex-col">
+      {/* 2. Split Hero */}
+      <Hero />
 
-      {/* 2. Trust & Statistics Section */}
+      {/* 3. Enterprise Statistics */}
       <EnterpriseTrustBar />
 
-      {/* 3. Signature Collections (4 Core Brand Pillars) */}
+      {/* 4. Signature Collections (Asymmetric 7/5 Bento Grid) */}
       <SignatureCollections />
 
-      {/* 4. Featured Products (Curated 4-Column Grid) */}
-      <FeaturedProductsSection />
-
-      {/* 5. Corporate Gifting Experience (3-Step Process) */}
-      <GiftingWorkflowSection />
-
-      {/* 6. Dedicated B2B Promotional Section */}
+      {/* 5. Why Choose Globrands */}
       <CorporatePromotionsSection />
 
-      {/* 7. Testimonials & Client Trust */}
+      {/* 6. Corporate Gifting Solutions */}
+      <HomepageSolutionsSection />
+
+      {/* 7. Featured Products */}
+      <FeaturedProductsSection />
+
+      {/* 8. Client Testimonials */}
       <CustomerTestimonials />
 
-      {/* 8. Digital Catalogue Flipbooks (All-in-One & Executive Bags) */}
-      <DigitalCataloguesSection />
-
-      {/* 9. Final High-Impact CTA */}
+      {/* 9. Premium CTA Section */}
       <BespokeConciergeCTA />
     </div>
   );

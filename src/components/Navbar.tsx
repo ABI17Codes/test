@@ -95,13 +95,13 @@ export const Navbar: React.FC = () => {
   }, [pathname]);
 
   const navLinks = [
-    { label: 'Products', href: '/products' },
-    { label: 'Gift Sets', href: '/gift-sets' },
-    { label: 'Bags', href: '/bags' },
-    { label: 'Branding', href: '/branding' },
-    { label: 'Solutions', href: '/solutions' },
-    { label: 'About', href: '/about' },
-    { label: 'Contact', href: '/contact' },
+    { label: 'Products', href: '/products', hasChevron: true },
+    { label: 'Gift Sets', href: '/gift-sets', hasChevron: true },
+    { label: 'Bags', href: '/bags', hasChevron: true },
+    { label: 'Branding', href: '/branding', hasChevron: false },
+    { label: 'Solutions', href: '/solutions', hasChevron: true },
+    { label: 'About', href: '/about', hasChevron: false },
+    { label: 'Contact', href: '/contact', hasChevron: false },
   ];
 
   return (
@@ -137,20 +137,23 @@ export const Navbar: React.FC = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1.5">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative px-3 py-1.5 text-xs font-semibold tracking-tight rounded-lg transition-all ${
+                  className={`relative inline-flex items-center gap-1 px-3 py-1.5 text-[13px] font-semibold tracking-tight rounded-lg transition-all ${
                     isActive
                       ? 'text-[#0876B4] font-bold bg-[#0876B4]/8'
                       : 'text-[#101828] hover:text-[#0876B4] hover:bg-[#F5F7FA]'
                   }`}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  {link.hasChevron && (
+                    <ChevronDown className="w-3 h-3 text-[#667085] opacity-75" />
+                  )}
                   {isActive && (
                     <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#0876B4] rounded-full" />
                   )}
@@ -343,11 +346,11 @@ export const Navbar: React.FC = () => {
             {/* Bulk RFQ Cart Button */}
             <Link
               href="/quote"
-              className="relative inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#101828] hover:bg-[#0876B4] text-white text-xs font-semibold tracking-tight transition-all shadow-xs cursor-pointer"
+              className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#101828] hover:bg-[#0876B4] text-white text-xs font-semibold tracking-tight transition-all shadow-xs cursor-pointer"
               title="View Bulk RFQ Basket"
             >
-              <ShoppingBag className="w-3.5 h-3.5 text-[#E8B43A]" />
-              <span>RFQ</span>
+              <FileText className="w-3.5 h-3.5 text-white/90" />
+              <span>Request RFQ</span>
               {mounted && totalItems > 0 && (
                 <span className="inline-flex items-center justify-center w-4 h-4 text-[10px] font-black bg-[#E8B43A] text-[#101828] rounded-full">
                   {totalItems}

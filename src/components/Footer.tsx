@@ -19,9 +19,48 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-white border-t border-[#E5E7EB] text-[#667085] text-xs pt-16 pb-12">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+    <footer className="bg-white border-t border-[#E5E7EB] text-[#667085] text-xs pt-8 pb-12">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
         
+        {/* Top Horizontal Brand & Quick Nav Strip matching reference image */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 pb-8 mb-10 border-b border-[#E5E7EB]">
+          <div className="flex items-center gap-5">
+            <Link href="/" className="flex items-center gap-2.5 shrink-0">
+              <div className="w-9 h-9 rounded-full overflow-hidden border border-[#E5E7EB] shadow-2xs bg-white p-0.5 flex items-center justify-center">
+                <img
+                  src="/globrands-emblem-clean.png"
+                  alt="Globrands Lifestyle Logo"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="flex flex-col text-left">
+                <span className="font-extrabold tracking-tight text-sm leading-none font-sans">
+                  <span className="text-[#0876B4]">GLOBRANDS</span>{' '}
+                  <span className="text-[#E8B43A]">LIFESTYLE</span>
+                </span>
+                <span className="text-[9px] uppercase tracking-wider text-[#667085] font-semibold mt-0.5 font-mono">
+                  Corporate Gifting &amp; Bags
+                </span>
+              </div>
+            </Link>
+            <div className="hidden lg:block h-6 w-[1px] bg-[#E5E7EB]" />
+          </div>
+
+          <nav className="flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-[#101828]">
+            <Link href="/products" className="hover:text-[#0876B4] transition-colors">Products</Link>
+            <Link href="/gift-sets" className="hover:text-[#0876B4] transition-colors">Gift Sets</Link>
+            <Link href="/bags" className="hover:text-[#0876B4] transition-colors">Bags</Link>
+            <Link href="/branding" className="hover:text-[#0876B4] transition-colors">Branding</Link>
+            <Link href="/solutions" className="hover:text-[#0876B4] transition-colors">Solutions</Link>
+            <Link href="/about" className="hover:text-[#0876B4] transition-colors">About</Link>
+            <Link href="/contact" className="hover:text-[#0876B4] transition-colors">Contact</Link>
+          </nav>
+
+          <div className="text-xs text-[#667085]">
+            &copy; 2026 Globrands Lifestyle. All rights reserved.
+          </div>
+        </div>
+
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-[#E5E7EB] text-left">
           
