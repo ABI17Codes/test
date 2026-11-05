@@ -4,12 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { 
   Eye, 
-  MessageCircle, 
   ShoppingBag, 
   Check, 
-  FileText,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  MessageSquare
 } from 'lucide-react';
 import { Product } from '../data/products';
 import { useQuote } from '../context/QuoteContext';
@@ -42,29 +41,40 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     addToQuote(product);
   };
 
+  // Determine brand tag color styling
+  const getBrandBadge = () => {
+    if (product.brand === 'Ninja Gear') {
+      return 'bg-neutral-900 text-white border-neutral-800';
+    }
+    if (product.brand === 'ADMA London') {
+      return 'bg-sky-900 text-white border-sky-800';
+    }
+    return 'bg-blue-50 text-[#0E679C] border-blue-200';
+  };
+
   return (
-    <div className="group relative rounded-2xl bg-white border border-neutral-200/80 hover:border-[#b88e3e]/50 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-xl hover:shadow-[#b88e3e]/10 hover:-translate-y-1">
+    <div className="group relative rounded-2xl bg-white border border-neutral-200/90 hover:border-[#0E679C]/50 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-2xs hover:shadow-xl hover:shadow-[#0E679C]/8 hover:-translate-y-1">
       
-      {/* Top Media Container */}
+      {/* Top Media / Product Stage */}
       <Link 
         href={`/products/${product.id}`}
-        className="relative aspect-[4/3] bg-gradient-to-b from-[#faf9f5] to-[#f4efe6] p-4 flex items-center justify-center overflow-hidden border-b border-neutral-100 block cursor-pointer"
+        className="relative aspect-[4/3] bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] p-5 flex items-center justify-center overflow-hidden border-b border-neutral-100 block cursor-pointer"
       >
-        {/* Brand Badge */}
-        <div className="absolute top-3 left-3 z-10 flex flex-col gap-1 items-start">
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/95 backdrop-blur-md text-[#916c27] border border-[#b88e3e]/30 shadow-xs uppercase tracking-wider">
+        {/* Floating Brand Badge */}
+        <div className="absolute top-3 left-3 z-10 flex flex-col gap-1 items-start pointer-events-none">
+          <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border shadow-2xs uppercase tracking-wider ${getBrandBadge()}`}>
             {product.brand}
           </span>
           {product.tags?.[0] && (
-            <span className="text-[9px] font-semibold px-2 py-0.5 rounded-full bg-neutral-900/5 text-neutral-600 backdrop-blur-md border border-neutral-200/50">
+            <span className="text-[9px] font-semibold px-2 py-0.5 rounded-full bg-white/90 text-neutral-700 backdrop-blur-md border border-neutral-200 shadow-2xs">
               {product.tags[0]}
             </span>
           )}
         </div>
 
-        {/* Product Code Pill */}
-        <div className="absolute top-3 right-3 z-10">
-          <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-md bg-white/95 backdrop-blur-md text-neutral-800 border border-neutral-200/80 shadow-xs">
+        {/* Product Code SKU Chip */}
+        <div className="absolute top-3 right-3 z-10 pointer-events-none">
+          <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-white/95 backdrop-blur-md text-neutral-800 border border-neutral-200 shadow-2xs">
             {product.code}
           </span>
         </div>
@@ -73,14 +83,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <img
           src={product.image}
           alt={product.name}
-          className="max-h-full max-w-full object-contain transform group-hover:scale-106 transition-transform duration-500 drop-shadow-sm"
+          className="max-h-full max-w-full object-contain rounded-lg drop-shadow-md transform group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
         />
 
-        {/* Quick View Overlay Hover */}
-        <div className="absolute inset-0 bg-neutral-900/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 backdrop-blur-[2px]">
-          <span className="px-3.5 py-2 rounded-xl bg-white text-neutral-900 text-xs font-bold flex items-center gap-1.5 shadow-md hover:bg-neutral-50 transition-colors">
-            <Eye className="w-3.5 h-3.5 text-[#b88e3e]" />
+        {/* Quick View Overlay on Hover */}
+        <div className="absolute inset-0 bg-neutral-900/25 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center backdrop-blur-[1px]">
+          <span className="px-3.5 py-1.5 rounded-full bg-white text-neutral-900 text-xs font-bold flex items-center gap-1.5 shadow-xl border border-neutral-200">
+            <Eye className="w-3.5 h-3.5 text-[#0E679C]" />
             <span>View Details</span>
           </span>
         </div>
@@ -92,53 +102,55 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {/* Product Name */}
           <Link 
             href={`/products/${product.id}`}
-            className="text-sm sm:text-base font-bold text-neutral-900 hover:text-[#b88e3e] transition-colors block line-clamp-1 font-serif-luxury"
+            className="text-sm sm:text-base font-bold text-[#0F172A] hover:text-[#0E679C] transition-colors block line-clamp-1 tracking-tight"
           >
             {product.name}
           </Link>
 
           {/* Description */}
-          <p className="text-xs text-neutral-500 line-clamp-2 mt-1 leading-relaxed">
+          <p className="text-xs text-neutral-500 line-clamp-2 mt-1 leading-relaxed font-normal">
             {product.description}
           </p>
 
-          {/* Composition or Specs Highlights */}
+          {/* Key Specs / Inclusions Chips */}
           {product.composition && product.composition.length > 0 ? (
             <div className="mt-2.5 flex flex-wrap gap-1">
-              {product.composition.slice(0, 3).map((item, idx) => (
+              {product.composition.slice(0, 2).map((item, idx) => (
                 <span
                   key={idx}
-                  className="text-[10px] px-2 py-0.5 rounded-md bg-neutral-50 text-neutral-700 border border-neutral-200/60 truncate max-w-[200px]"
+                  className="text-[10px] px-2 py-0.5 rounded-md bg-neutral-50 text-neutral-700 border border-neutral-200/70 truncate max-w-[200px]"
                 >
                   {item}
                 </span>
               ))}
-              {product.composition.length > 3 && (
-                <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[#fbf5e8] text-[#916c27] font-semibold">
-                  +{product.composition.length - 3} more
+              {product.composition.length > 2 && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-blue-50 text-[#0E679C] font-semibold border border-blue-100">
+                  +{product.composition.length - 2} items
                 </span>
               )}
             </div>
           ) : product.specs && product.specs.length > 0 ? (
-            <div className="mt-2.5 grid grid-cols-2 gap-1 text-[11px] text-neutral-700">
-              <span className="truncate text-neutral-500">
-                {product.specs[0]?.label}: <b className="text-neutral-900 font-semibold">{product.specs[0]?.value}</b>
+            <div className="mt-2.5 flex flex-wrap gap-1 text-[10px] text-neutral-600">
+              <span className="px-2 py-0.5 rounded-md bg-neutral-50 border border-neutral-200/70 truncate max-w-[150px]">
+                {product.specs[0]?.label}: <b>{product.specs[0]?.value}</b>
               </span>
-              <span className="truncate text-neutral-500">
-                {product.specs[1]?.label}: <b className="text-neutral-900 font-semibold">{product.specs[1]?.value}</b>
-              </span>
+              {product.specs[1] && (
+                <span className="px-2 py-0.5 rounded-md bg-neutral-50 border border-neutral-200/70 truncate max-w-[150px]">
+                  {product.specs[1]?.label}: <b>{product.specs[1]?.value}</b>
+                </span>
+              )}
             </div>
           ) : null}
 
-          {/* Color swatches if available */}
+          {/* Color swatches */}
           {product.colors && product.colors.length > 0 && (
-            <div className="flex items-center gap-1.5 mt-3">
+            <div className="flex items-center gap-1.5 mt-2.5">
               <span className="text-[10px] text-neutral-400 font-semibold uppercase">Colors:</span>
               <div className="flex items-center gap-1">
                 {product.colors.map((c, idx) => (
                   <span
                     key={idx}
-                    className="w-3.5 h-3.5 rounded-full border border-neutral-300 shadow-2xs"
+                    className="w-3 h-3 rounded-full border border-neutral-300 shadow-2xs"
                     style={{ backgroundColor: c.hex }}
                     title={c.name}
                   />
@@ -150,50 +162,50 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Pricing & MOQ Footer */}
         <div className="pt-3 border-t border-neutral-100 space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between text-xs">
             <div>
-              <span className="text-[10px] text-neutral-400 uppercase font-semibold block">Pricing</span>
-              <span className="text-xs font-bold text-[#916c27] flex items-center gap-1">
-                <Sparkles className="w-3 h-3" />
-                Tiered Bulk Rates
+              <span className="text-[10px] text-neutral-400 uppercase font-bold tracking-wider block">Pricing</span>
+              <span className="font-bold text-[#0E679C] flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-[#F5B800]" />
+                Tiered Bulk Slabs
               </span>
             </div>
             
             <div className="text-right">
-              <span className="text-[10px] text-neutral-400 uppercase font-semibold block">Min. Order</span>
-              <span className="text-xs font-bold text-neutral-800">{product.moq}</span>
+              <span className="text-[10px] text-neutral-400 uppercase font-bold tracking-wider block">Min. Order</span>
+              <span className="font-bold text-neutral-800">{product.moq}</span>
             </div>
           </div>
 
-          {/* Action Button Grid */}
+          {/* Action Buttons */}
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={handleAddQuote}
-              className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+              className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 isAlreadyInQuote
                   ? 'bg-emerald-50 text-emerald-800 border border-emerald-300'
-                  : 'primary-luxury-button shadow-xs'
+                  : 'bg-[#0E679C] hover:bg-[#0A4E78] text-white shadow-xs'
               }`}
             >
               {isAlreadyInQuote ? (
                 <>
-                  <Check className="w-3.5 h-3.5" />
-                  <span>In RFQ</span>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>In RFQ ✓</span>
                 </>
               ) : (
                 <>
-                  <ShoppingBag className="w-3.5 h-3.5 text-[#eddab4]" />
-                  <span>Bulk Quote</span>
+                  <ShoppingBag className="w-3.5 h-3.5 text-[#F5B800]" />
+                  <span>Add to RFQ</span>
                 </>
               )}
             </button>
 
             <button
               onClick={getWhatsAppLink}
-              className="py-2 px-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold flex items-center justify-center gap-1 transition-colors"
+              className="py-2 px-2 rounded-xl bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
               title="Enquire on WhatsApp"
             >
-              <MessageCircle className="w-3.5 h-3.5 fill-emerald-600 text-emerald-600" />
+              <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
               <span>WhatsApp</span>
             </button>
           </div>
