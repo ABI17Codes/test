@@ -31,71 +31,71 @@ export default function GiftSetsPage() {
   });
 
   return (
-    <div className="py-10 bg-[#F8FAFC] min-h-screen">
+    <div className="py-10 bg-[#F5F7FA] min-h-screen">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 space-y-10">
         
         {/* Header Breadcrumb */}
         <div className="text-left space-y-3">
-          <div className="flex items-center gap-2 text-xs text-neutral-500">
-            <Link href="/" className="hover:text-black">Home</Link>
+          <div className="flex items-center gap-2 text-xs text-[#667085]">
+            <Link href="/" className="hover:text-[#101828]">Home</Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-[#0E679C] font-semibold">Corporate Gift Sets</span>
+            <span className="text-[#0876B4] font-semibold">Corporate Gift Sets</span>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 shadow-2xs">
-            <Gift className="w-3.5 h-3.5 text-[#0E679C]" />
-            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#0E679C]">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 shadow-2xs">
+            <Gift className="w-3.5 h-3.5 text-[#0876B4]" />
+            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#0876B4]">
               ALL IN ONE CATALOGUE COLLECTION &bull; B2B DIRECT FACTORY
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-[-0.03em]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#101828] tracking-[-0.03em]">
             Curated Executive Hampers &amp;{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0E679C] via-[#0284C7] to-[#F5B800]">
+            <span className="brand-gradient-text">
               VIP Welcome Kits
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-neutral-600 max-w-3xl font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-[#667085] max-w-3xl font-normal leading-relaxed">
             Thoughtfully curated corporate gift hampers featuring high-grade vacuum flasks, laser color-changer diaries, precision metal pens, and executive tech suites presented in rigid magnetic presentation boxes with custom EVA foam trays.
           </p>
         </div>
 
         {/* Feature Cards Banner */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-          <div className="p-6 rounded-3xl bg-white border border-neutral-200/90 shadow-2xs space-y-3">
-            <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#0E679C] flex items-center justify-center border border-blue-100">
+          <div className="p-6 rounded-3xl bg-white border border-[#E5E7EB] shadow-2xs space-y-3">
+            <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#0876B4] flex items-center justify-center border border-blue-100">
               <Package className="w-5 h-5" />
             </div>
-            <h3 className="text-base font-bold text-[#0F172A]">Rigid Magnetic Keepsake Boxes</h3>
-            <p className="text-xs text-neutral-600 leading-relaxed">
+            <h3 className="text-base font-bold text-[#101828]">Rigid Magnetic Keepsake Boxes</h3>
+            <p className="text-xs text-[#667085] leading-relaxed">
               Every HGS flagship set is packaged inside a heavy-duty, soft-touch magnetic closure box designed to elevate your brand unboxing experience.
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl bg-white border border-neutral-200/90 shadow-2xs space-y-3">
-            <div className="w-11 h-11 rounded-2xl bg-amber-50 text-[#F5B800] flex items-center justify-center border border-amber-100">
+          <div className="p-6 rounded-3xl bg-white border border-[#E5E7EB] shadow-2xs space-y-3">
+            <div className="w-11 h-11 rounded-2xl bg-amber-50 text-[#E8B43A] flex items-center justify-center border border-amber-100">
               <Sparkles className="w-5 h-5" />
             </div>
-            <h3 className="text-base font-bold text-[#0F172A]">Custom Color-Matched Sets</h3>
-            <p className="text-xs text-neutral-600 leading-relaxed">
+            <h3 className="text-base font-bold text-[#101828]">Custom Color-Matched Sets</h3>
+            <p className="text-xs text-[#667085] leading-relaxed">
               Harmonized metallic and matte finishes across bottle, pen, keychain, and notebook binding for complete corporate visual unity.
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl bg-white border border-neutral-200/90 shadow-2xs space-y-3">
+          <div className="p-6 rounded-3xl bg-white border border-[#E5E7EB] shadow-2xs space-y-3">
             <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h3 className="text-base font-bold text-[#0F172A]">In-House Laser Customization</h3>
-            <p className="text-xs text-neutral-600 leading-relaxed">
+            <h3 className="text-base font-bold text-[#101828]">In-House Laser Customization</h3>
+            <p className="text-xs text-[#667085] leading-relaxed">
               Permanent microscopic laser engraving of your corporate logo on the bottle, pen, and notebook cover with free 3D digital proofing.
             </p>
           </div>
         </div>
 
         {/* Filter Tabs Toolbar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-neutral-200/90 shadow-2xs text-left">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-[#E5E7EB] shadow-2xs text-left">
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none w-full sm:w-auto">
             {[
               { id: 'all', label: 'All Sets (18+ Models)' },
@@ -109,8 +109,8 @@ export default function GiftSetsPage() {
                 onClick={() => setFilterType(tab.id as any)}
                 className={`text-xs px-4 py-2 rounded-xl font-bold transition-all whitespace-nowrap cursor-pointer ${
                   filterType === tab.id
-                    ? 'bg-[#0F172A] text-white shadow-xs'
-                    : 'bg-neutral-100 hover:bg-neutral-200/70 text-neutral-700'
+                    ? 'bg-[#101828] text-white shadow-xs'
+                    : 'bg-[#F5F7FA] hover:bg-neutral-200/70 text-[#667085] border border-[#E5E7EB]'
                 }`}
               >
                 {tab.label}

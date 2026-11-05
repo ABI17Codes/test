@@ -1,131 +1,135 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @layer base {
   :root {
-    --bg-primary: #F8FAFC;
-    --bg-secondary: #F1F5F9;
+    /* Exact Master Prompt Palette */
+    --navy-primary: #101828;
+    --blue-corporate: #0876B4;
+    --blue-sky: #168FC9;
+    --gold-premium: #E8B43A;
+    --sage-accent: #A2AA9B;
+    --bg-white: #FFFFFF;
+    --bg-soft: #F5F7FA;
+    --border-light: #E5E7EB;
+    --text-secondary: #667085;
+    
+    --bg-primary: #F5F7FA;
     --bg-card: #FFFFFF;
-    --text-primary: #0F172A;
-    --text-secondary: #475569;
-    --text-muted: #94A3B8;
-    
-    /* Authentic Globrands Brand Colors */
-    --brand-blue: #0E679C;
-    --brand-blue-dark: #0A4E78;
-    --brand-blue-light: #EBF4F9;
-    --brand-gold: #F5B800;
-    --brand-gold-dark: #D97706;
-    --brand-gold-light: #FEF9E6;
-    
-    --border-light: rgba(226, 232, 240, 0.8);
+    --text-primary: #101828;
   }
 
   body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-soft);
+    color: var(--navy-primary);
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
   }
   
-  h1, h2, h3, h4 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.03em;
     font-weight: 700;
+    color: #101828;
   }
 }
 
-/* Custom Clean Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: #F5F7FA;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #D1D5DB;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #0E679C;
+  background: #0876B4;
 }
 
-/* 2026 Liquid Glass & Bento Card Utilities */
-.light-glass-nav {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+/* Master Brand Gradient Text (Corporate Blue -> Sage -> Premium Gold) */
+.brand-gradient-text {
+  background: linear-gradient(135deg, #0876B4 0%, #A2AA9B 45%, #E8B43A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.bento-card {
+.blue-gradient-text {
+  background: linear-gradient(135deg, #101828 0%, #0876B4 60%, #168FC9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Premium Card Styles */
+.premium-card {
   background: #FFFFFF;
-  border: 1px solid rgba(226, 232, 240, 0.85);
-  border-radius: 1.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 6px 20px -4px rgba(15, 23, 42, 0.04);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid #E5E7EB;
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 3px 0 rgba(16, 24, 40, 0.03), 0 4px 16px -2px rgba(16, 24, 40, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
 }
 
-.bento-card:hover {
-  border-color: rgba(14, 103, 156, 0.35);
-  box-shadow: 0 20px 40px -15px rgba(14, 103, 156, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.02);
+.premium-card:hover {
+  border-color: rgba(8, 118, 180, 0.35);
+  box-shadow: 0 16px 36px -8px rgba(16, 24, 40, 0.08), 0 1px 3px 0 rgba(16, 24, 40, 0.02);
   transform: translateY(-2px);
 }
 
-.bento-card-dark {
-  background: #0F172A;
+.premium-card-dark {
+  background: #101828;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.5rem;
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.4);
 }
 
-/* Modern Gradient Text */
-.modern-gradient-text {
-  background: linear-gradient(135deg, #0F172A 30%, #0E679C 70%, #0284C7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gold-gradient-text {
-  background: linear-gradient(135deg, #0E679C 0%, #D97706 60%, #F5B800 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* 2026 Modern Pill Buttons */
-.modern-primary-button {
-  background: #0F172A;
+/* Master Button Styles */
+.btn-primary {
+  background: #101828;
   color: #FFFFFF;
   font-weight: 600;
   border-radius: 9999px;
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 14px 0 rgba(16, 24, 40, 0.2);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.modern-primary-button:hover {
-  background: #0E679C;
-  box-shadow: 0 14px 30px -5px rgba(14, 103, 156, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  transform: translateY(-1.5px);
+.btn-primary:hover {
+  background: #0876B4;
+  box-shadow: 0 6px 20px 0 rgba(8, 118, 180, 0.35);
+  transform: translateY(-1px);
 }
 
-.modern-secondary-button {
+.btn-secondary {
   background: #FFFFFF;
-  color: #0F172A;
+  color: #101828;
   font-weight: 600;
-  border: 1px solid rgba(226, 232, 240, 0.9);
+  border: 1px solid #E5E7EB;
   border-radius: 9999px;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.04);
   transition: all 0.25s ease;
 }
-.modern-secondary-button:hover {
-  background: #F8FAFC;
-  border-color: rgba(14, 103, 156, 0.4);
-  color: #0E679C;
-  transform: translateY(-1.5px);
+.btn-secondary:hover {
+  background: #F5F7FA;
+  border-color: #0876B4;
+  color: #0876B4;
+  transform: translateY(-1px);
+}
+
+.btn-gold {
+  background: #E8B43A;
+  color: #101828;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 0 4px 14px 0 rgba(232, 180, 58, 0.3);
+  transition: all 0.25s ease;
+}
+.btn-gold:hover {
+  background: #D9A329;
+  box-shadow: 0 6px 20px 0 rgba(232, 180, 58, 0.45);
+  transform: translateY(-1px);
 }
 
 /* Live Pulse Indicator */

@@ -45,29 +45,32 @@ export default function BagsPage() {
   });
 
   return (
-    <div className="py-12 bg-[#F8FAFC]">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 space-y-12">
+    <div className="py-10 bg-[#F5F7FA] min-h-screen">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 space-y-10">
         
         {/* Breadcrumb & Header */}
         <div className="text-left space-y-3">
-          <div className="flex items-center gap-2 text-xs text-neutral-500">
-            <Link href="/" className="hover:text-black">Home</Link>
+          <div className="flex items-center gap-2 text-xs text-[#667085]">
+            <Link href="/" className="hover:text-[#101828]">Home</Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-[#0E679C] font-semibold">Corporate Bags & Laptop Backpacks</span>
+            <span className="text-[#0876B4] font-semibold">Corporate Bags &amp; Laptop Backpacks</span>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200">
-            <Briefcase className="w-3.5 h-3.5 text-[#0E679C]" />
-            <span className="text-xs uppercase tracking-wider font-extrabold text-[#0E679C]">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 shadow-2xs">
+            <Briefcase className="w-3.5 h-3.5 text-[#0876B4]" />
+            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#0876B4]">
               GLOBRANDS BAG CATALOGUE 2026 &bull; B2B DIRECT FACTORY
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight">
-            Corporate Laptop Bags, Backpacks &amp; Travel Carrywear
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#101828] tracking-tight">
+            Corporate Laptop Bags, Backpacks &amp;{' '}
+            <span className="brand-gradient-text">
+              Travel Carrywear
+            </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-neutral-600 max-w-3xl font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-[#667085] max-w-3xl font-normal leading-relaxed">
             Engineered, patented, and manufactured by Globrands Lifestyle in Bengaluru. Featuring proprietary sub-brands <strong>Ninja Gear Original</strong> and <strong>ADMA London</strong> with an authentic 1-Year Direct Factory Replacement Warranty on all corporate orders.
           </p>
         </div>
@@ -80,8 +83,8 @@ export default function BagsPage() {
             onClick={() => setSelectedBrand(selectedBrand === 'Ninja Gear' ? 'all' : 'Ninja Gear')}
             className={`p-6 sm:p-8 rounded-3xl cursor-pointer transition-all border flex flex-col justify-between group ${
               selectedBrand === 'Ninja Gear'
-                ? 'bg-white border-[#0E679C] shadow-lg ring-2 ring-[#0E679C]/30'
-                : 'bg-white border-neutral-200/90 hover:border-neutral-300 shadow-2xs'
+                ? 'bg-white border-[#0876B4] shadow-lg ring-2 ring-[#0876B4]/30'
+                : 'bg-white border-[#E5E7EB] hover:border-neutral-300 shadow-2xs'
             }`}
           >
             <div>
@@ -95,17 +98,17 @@ export default function BagsPage() {
                   Tech &amp; Antitheft Series
                 </span>
               </div>
-              <h3 className="text-xl font-bold text-[#0F172A]">
+              <h3 className="text-xl font-bold text-[#101828]">
                 NINJA GEAR ORIGINAL
               </h3>
-              <p className="text-xs text-neutral-600 mt-2 leading-relaxed">
+              <p className="text-xs text-[#667085] mt-2 leading-relaxed">
                 Engineered with concealed anti-theft zipper geometry, quick-access RFID card pockets, external USB fast-charging ports, and reinforced tear-resistant ballistic poly fabric.
               </p>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-xs font-bold text-[#0E679C]">
+            <div className="mt-6 pt-4 border-t border-[#E5E7EB] flex items-center justify-between text-xs font-bold text-[#0876B4]">
               <span>{selectedBrand === 'Ninja Gear' ? 'Showing Ninja Gear Bags ✓' : 'Filter Ninja Gear Bags'}</span>
-              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-[#E8B43A]" />
             </div>
           </div>
 
@@ -114,8 +117,8 @@ export default function BagsPage() {
             onClick={() => setSelectedBrand(selectedBrand === 'ADMA London' ? 'all' : 'ADMA London')}
             className={`p-6 sm:p-8 rounded-3xl cursor-pointer transition-all border flex flex-col justify-between group ${
               selectedBrand === 'ADMA London'
-                ? 'bg-white border-[#0E679C] shadow-lg ring-2 ring-[#0E679C]/30'
-                : 'bg-white border-neutral-200/90 hover:border-neutral-300 shadow-2xs'
+                ? 'bg-white border-[#0876B4] shadow-lg ring-2 ring-[#0876B4]/30'
+                : 'bg-white border-[#E5E7EB] hover:border-neutral-300 shadow-2xs'
             }`}
           >
             <div>
@@ -129,24 +132,24 @@ export default function BagsPage() {
                   Corporate &amp; Office Series
                 </span>
               </div>
-              <h3 className="text-xl font-bold text-[#0F172A]">
+              <h3 className="text-xl font-bold text-[#101828]">
                 ADMA LONDON
               </h3>
-              <p className="text-xs text-neutral-600 mt-2 leading-relaxed">
-                "A Real Companion" for everyday executive travel. Features integrated waterproof rain covers, cushioned 15.6" to 17" laptop protection compartments, and professional corporate messengers.
+              <p className="text-xs text-[#667085] mt-2 leading-relaxed">
+                &ldquo;A Real Companion&rdquo; for everyday executive travel. Features integrated waterproof rain covers, cushioned 15.6&quot; to 17&quot; laptop protection compartments, and professional corporate messengers.
               </p>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-xs font-bold text-[#0E679C]">
+            <div className="mt-6 pt-4 border-t border-[#E5E7EB] flex items-center justify-between text-xs font-bold text-[#0876B4]">
               <span>{selectedBrand === 'ADMA London' ? 'Showing ADMA London Bags ✓' : 'Filter ADMA London Bags'}</span>
-              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-[#E8B43A]" />
             </div>
           </div>
 
         </div>
 
         {/* Filter Toolbar - High Intent Search Filters */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-neutral-200/90 shadow-2xs">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-[#E5E7EB] shadow-2xs">
           <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none w-full lg:w-auto pb-1 sm:pb-0">
             {[
               { id: 'all', label: 'All Bags' },
@@ -163,8 +166,8 @@ export default function BagsPage() {
                 onClick={() => setBagTypeFilter(type.id)}
                 className={`text-xs px-3.5 py-2 rounded-xl font-bold transition-all whitespace-nowrap cursor-pointer ${
                   bagTypeFilter === type.id
-                    ? 'bg-[#0F172A] text-white shadow-xs'
-                    : 'bg-neutral-100 hover:bg-neutral-200/70 text-neutral-700'
+                    ? 'bg-[#101828] text-white shadow-xs'
+                    : 'bg-[#F5F7FA] hover:bg-neutral-200/70 text-[#667085]'
                 }`}
               >
                 {type.label}

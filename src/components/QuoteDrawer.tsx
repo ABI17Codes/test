@@ -5,16 +5,16 @@ import {
   X, 
   Trash2, 
   Send, 
-  MessageCircle, 
   CheckCircle2, 
   Building, 
   Mail, 
   Phone, 
   User, 
-  FileCheck,
-  ShoppingBag,
-  Sparkles,
-  ArrowRight
+  ShoppingBag, 
+  Sparkles, 
+  ArrowRight,
+  MessageSquare,
+  Lock
 } from 'lucide-react';
 import { useQuote } from '../context/QuoteContext';
 
@@ -37,7 +37,6 @@ export const QuoteDrawer: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Store lead locally for CRM sync
     const lead = {
       id: 'LEAD-' + Date.now(),
       createdAt: new Date().toISOString(),
@@ -88,32 +87,32 @@ export const QuoteDrawer: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
       
       <div 
-        className="relative w-full max-w-xl h-full bg-white border-l border-neutral-200 flex flex-col justify-between shadow-2xl overflow-y-auto"
+        className="relative w-full max-w-xl h-full bg-white border-l border-[#E5E7EB] flex flex-col justify-between shadow-2xl overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Top Header */}
-        <div className="p-5 bg-[#FAF8F5] border-b border-neutral-200 flex items-center justify-between">
+        <div className="p-5 bg-[#F5F7FA] border-b border-[#E5E7EB] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-[#FAF6EE] text-[#916c27] border border-[#b88e3e]/20">
+            <div className="p-2.5 rounded-xl bg-blue-50 text-[#0876B4] border border-blue-100">
               <ShoppingBag className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#111317] font-serif-luxury">
+              <h3 className="text-base font-bold text-[#101828]">
                 Corporate RFQ Basket
               </h3>
-              <p className="text-xs text-neutral-500 font-medium">
-                {items.length} Product Models Shortlisted ({totalUnits} Units)
+              <p className="text-xs text-[#667085] font-medium">
+                {items.length} Product Models &bull; {totalUnits} Units Total
               </p>
             </div>
           </div>
 
           <button
             onClick={() => setIsDrawerOpen(false)}
-            className="p-2 rounded-lg bg-white border border-neutral-200 text-neutral-600 hover:text-black hover:bg-neutral-100 transition-colors shadow-2xs"
+            className="p-2 rounded-xl bg-white border border-[#E5E7EB] text-[#667085] hover:text-[#101828] hover:bg-neutral-100 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -129,12 +128,12 @@ export const QuoteDrawer: React.FC = () => {
                 <CheckCircle2 className="w-8 h-8" />
               </div>
 
-              <h4 className="text-xl font-bold text-[#111317] font-serif-luxury">
+              <h4 className="text-xl font-bold text-[#101828]">
                 Corporate RFQ Dispatched!
               </h4>
 
-              <p className="text-xs text-neutral-600 max-w-md mx-auto leading-relaxed">
-                Thank you, <b className="text-[#111317]">{fullName}</b> ({companyName}). Our enterprise sales team will review your specifications and contact you within 2 business hours.
+              <p className="text-xs text-[#667085] max-w-md mx-auto leading-relaxed">
+                Thank you, <b className="text-[#101828]">{fullName}</b> ({companyName}). Our enterprise sales team will review your specifications and contact you within 2 business hours.
               </p>
 
               <div className="pt-4 space-y-3">
@@ -142,9 +141,9 @@ export const QuoteDrawer: React.FC = () => {
                   href={getWhatsAppForwardUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all"
+                  className="w-full py-3.5 px-4 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all"
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <MessageSquare className="w-4 h-4" />
                   <span>Send Direct Copy via WhatsApp to Account Manager</span>
                 </a>
 
@@ -154,9 +153,9 @@ export const QuoteDrawer: React.FC = () => {
                     clearQuote();
                     setIsDrawerOpen(false);
                   }}
-                  className="w-full py-2.5 rounded-xl bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold hover:bg-neutral-200 transition-colors"
+                  className="w-full py-2.5 rounded-full bg-[#F5F7FA] border border-[#E5E7EB] text-[#101828] text-xs font-semibold hover:bg-neutral-200 transition-colors cursor-pointer"
                 >
-                  Close & Continue Browsing
+                  Close &amp; Continue Browsing
                 </button>
               </div>
             </div>
@@ -164,12 +163,12 @@ export const QuoteDrawer: React.FC = () => {
             <>
               {/* Product Shortlist Items */}
               <div className="space-y-3">
-                <div className="flex items-center justify-between text-xs text-neutral-500 pb-1 font-semibold">
+                <div className="flex items-center justify-between text-xs text-[#667085] pb-1 font-semibold">
                   <span>Selected Products</span>
                   {items.length > 0 && (
                     <button
                       onClick={clearQuote}
-                      className="text-red-500 hover:underline text-[11px]"
+                      className="text-red-500 hover:underline text-[11px] cursor-pointer"
                     >
                       Clear All
                     </button>
@@ -177,10 +176,10 @@ export const QuoteDrawer: React.FC = () => {
                 </div>
 
                 {items.length === 0 ? (
-                  <div className="text-center py-8 px-4 rounded-xl border border-dashed border-neutral-300 bg-[#FAF8F5] space-y-2">
-                    <p className="text-xs text-neutral-600 font-medium">Your corporate quote basket is currently empty.</p>
-                    <p className="text-[11px] text-neutral-400">
-                      Click "Enquire for Bulk Pricing" on any gift set or backpack to build your RFQ.
+                  <div className="text-center py-8 px-4 rounded-2xl border border-dashed border-[#E5E7EB] bg-[#F5F7FA] space-y-2">
+                    <p className="text-xs text-[#101828] font-medium">Your corporate quote basket is currently empty.</p>
+                    <p className="text-[11px] text-[#667085]">
+                      Click &ldquo;Add to RFQ&rdquo; on any gift set or backpack to build your proposal.
                     </p>
                   </div>
                 ) : (
@@ -188,22 +187,22 @@ export const QuoteDrawer: React.FC = () => {
                     {items.map((item) => (
                       <div
                         key={item.product.id}
-                        className="p-3 rounded-xl bg-[#FAF8F5] border border-neutral-200 flex items-center justify-between gap-3 text-left"
+                        className="p-3 rounded-2xl bg-[#F5F7FA] border border-[#E5E7EB] flex items-center justify-between gap-3 text-left"
                       >
                         <img
                           src={item.product.image}
                           alt={item.product.name}
-                          className="w-12 h-12 rounded-lg object-contain bg-white p-1 border border-neutral-200 shadow-2xs shrink-0"
+                          className="w-12 h-12 rounded-xl object-contain bg-white p-1 border border-[#E5E7EB] shadow-2xs shrink-0"
                         />
 
                         <div className="flex-1 min-w-0">
-                          <span className="text-[10px] font-mono font-bold text-[#916c27] block">
+                          <span className="text-[10px] font-mono font-bold text-[#0876B4] block">
                             {item.product.code}
                           </span>
-                          <h5 className="text-xs font-bold text-[#111317] truncate">
+                          <h5 className="text-xs font-bold text-[#101828] truncate">
                             {item.product.name}
                           </h5>
-                          <span className="text-[10px] text-neutral-500 font-medium">
+                          <span className="text-[10px] text-[#667085] font-medium">
                             Min MOQ: {item.product.moq}
                           </span>
                         </div>
@@ -218,15 +217,15 @@ export const QuoteDrawer: React.FC = () => {
                             onChange={(e) =>
                               updateQuantity(item.product.id, parseInt(e.target.value) || 10)
                             }
-                            className="w-16 px-1.5 py-1 text-xs rounded-md bg-white border border-neutral-300 text-[#111317] text-center font-bold shadow-2xs"
+                            className="w-16 px-1.5 py-1 text-xs rounded-lg bg-white border border-[#E5E7EB] text-[#101828] text-center font-bold shadow-2xs"
                           />
-                          <span className="text-[10px] text-neutral-500">pcs</span>
+                          <span className="text-[10px] text-[#667085]">pcs</span>
                         </div>
 
                         {/* Delete */}
                         <button
                           onClick={() => removeFromQuote(item.product.id)}
-                          className="p-1.5 text-neutral-400 hover:text-red-500 transition-colors"
+                          className="p-1.5 text-neutral-400 hover:text-red-500 transition-colors cursor-pointer"
                           title="Remove item"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -238,14 +237,14 @@ export const QuoteDrawer: React.FC = () => {
               </div>
 
               {/* Form Inputs for Lead Capture */}
-              <form onSubmit={handleSubmit} className="space-y-3.5 pt-4 border-t border-neutral-200 text-left">
-                <span className="text-xs font-bold text-[#111317] uppercase tracking-wider block">
-                  Enterprise Contact & Company Details:
+              <form onSubmit={handleSubmit} className="space-y-3.5 pt-4 border-t border-[#E5E7EB] text-left">
+                <span className="text-xs font-bold text-[#101828] uppercase tracking-wider block">
+                  Enterprise Contact &amp; Company Details:
                 </span>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[11px] font-semibold text-neutral-700 block mb-1">Your Full Name *</label>
+                    <label className="text-[11px] font-bold text-[#101828] block mb-1">Your Full Name *</label>
                     <div className="relative">
                       <User className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
                       <input
@@ -253,14 +252,14 @@ export const QuoteDrawer: React.FC = () => {
                         required
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        placeholder="John Doe"
-                        className="w-full pl-9 pr-3 py-2 rounded-lg bg-white border border-neutral-200 text-xs text-[#111317] placeholder-neutral-400 focus:outline-none focus:border-[#b88e3e] shadow-2xs"
+                        placeholder="e.g. Rahul Mehta"
+                        className="w-full pl-9 pr-3 py-2 rounded-xl bg-white border border-[#E5E7EB] text-xs text-[#101828] placeholder-[#667085] focus:outline-none focus:border-[#0876B4] shadow-2xs"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-semibold text-neutral-700 block mb-1">Company / Organization *</label>
+                    <label className="text-[11px] font-bold text-[#101828] block mb-1">Company / Organization *</label>
                     <div className="relative">
                       <Building className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
                       <input
@@ -268,8 +267,8 @@ export const QuoteDrawer: React.FC = () => {
                         required
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
-                        placeholder="Infosys / Google / HDFC"
-                        className="w-full pl-9 pr-3 py-2 rounded-lg bg-white border border-neutral-200 text-xs text-[#111317] placeholder-neutral-400 focus:outline-none focus:border-[#b88e3e] shadow-2xs"
+                        placeholder="e.g. Infosys / Google / HDFC"
+                        className="w-full pl-9 pr-3 py-2 rounded-xl bg-white border border-[#E5E7EB] text-xs text-[#101828] placeholder-[#667085] focus:outline-none focus:border-[#0876B4] shadow-2xs"
                       />
                     </div>
                   </div>
@@ -277,7 +276,7 @@ export const QuoteDrawer: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[11px] font-semibold text-neutral-700 block mb-1">Official Email ID *</label>
+                    <label className="text-[11px] font-bold text-[#101828] block mb-1">Official Work Email *</label>
                     <div className="relative">
                       <Mail className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
                       <input
@@ -286,13 +285,13 @@ export const QuoteDrawer: React.FC = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="name@company.com"
-                        className="w-full pl-9 pr-3 py-2 rounded-lg bg-white border border-neutral-200 text-xs text-[#111317] placeholder-neutral-400 focus:outline-none focus:border-[#b88e3e] shadow-2xs"
+                        className="w-full pl-9 pr-3 py-2 rounded-xl bg-white border border-[#E5E7EB] text-xs text-[#101828] placeholder-[#667085] focus:outline-none focus:border-[#0876B4] shadow-2xs"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-semibold text-neutral-700 block mb-1">Mobile / WhatsApp Number *</label>
+                    <label className="text-[11px] font-bold text-[#101828] block mb-1">Mobile / WhatsApp *</label>
                     <div className="relative">
                       <Phone className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
                       <input
@@ -301,7 +300,7 @@ export const QuoteDrawer: React.FC = () => {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+91 98765 43210"
-                        className="w-full pl-9 pr-3 py-2 rounded-lg bg-white border border-neutral-200 text-xs text-[#111317] placeholder-neutral-400 focus:outline-none focus:border-[#b88e3e] shadow-2xs"
+                        className="w-full pl-9 pr-3 py-2 rounded-xl bg-white border border-[#E5E7EB] text-xs text-[#101828] placeholder-[#667085] focus:outline-none focus:border-[#0876B4] shadow-2xs"
                       />
                     </div>
                   </div>
@@ -309,22 +308,22 @@ export const QuoteDrawer: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[11px] font-semibold text-neutral-700 block mb-1">Delivery City</label>
+                    <label className="text-[11px] font-bold text-[#101828] block mb-1">Delivery City</label>
                     <input
                       type="text"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       placeholder="Bengaluru / Mumbai / Delhi"
-                      className="w-full px-3 py-2 rounded-lg bg-white border border-neutral-200 text-xs text-[#111317] placeholder-neutral-400 focus:outline-none focus:border-[#b88e3e] shadow-2xs"
+                      className="w-full px-3 py-2 rounded-xl bg-white border border-[#E5E7EB] text-xs text-[#101828] placeholder-[#667085] focus:outline-none focus:border-[#0876B4] shadow-2xs"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-semibold text-neutral-700 block mb-1">Logo Branding Preference</label>
+                    <label className="text-[11px] font-bold text-[#101828] block mb-1">Branding Preference</label>
                     <select
                       value={customizationType}
                       onChange={(e) => setCustomizationType(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg bg-white border border-neutral-200 text-xs text-[#111317] focus:outline-none focus:border-[#b88e3e] shadow-2xs"
+                      className="w-full px-3 py-2 rounded-xl bg-white border border-[#E5E7EB] text-xs text-[#101828] focus:outline-none focus:border-[#0876B4] shadow-2xs"
                     >
                       <option value="Laser Engraving">Laser Engraving</option>
                       <option value="Screen Printing">Screen Printing</option>
@@ -337,13 +336,13 @@ export const QuoteDrawer: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-semibold text-neutral-700 block mb-1">Requirements / Expected Event Date</label>
+                  <label className="text-[11px] font-bold text-[#101828] block mb-1">Requirements / Expected Event Date</label>
                   <textarea
                     rows={2}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="e.g. Need welcome kits dispatched by next month for 200 joiners."
-                    className="w-full px-3 py-2 rounded-lg bg-white border border-neutral-200 text-xs text-[#111317] placeholder-neutral-400 focus:outline-none focus:border-[#b88e3e] shadow-2xs"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#E5E7EB] text-xs text-[#101828] placeholder-[#667085] focus:outline-none focus:border-[#0876B4] shadow-2xs"
                   />
                 </div>
 
@@ -351,9 +350,9 @@ export const QuoteDrawer: React.FC = () => {
                 <div className="pt-2 space-y-2">
                   <button
                     type="submit"
-                    className="w-full py-3.5 px-4 rounded-xl gold-luxury-button text-xs font-bold tracking-wide shadow-md flex items-center justify-center gap-2"
+                    className="w-full py-3.5 px-4 rounded-full bg-[#101828] hover:bg-[#0876B4] text-white text-xs font-bold tracking-wide shadow-md flex items-center justify-center gap-2 transition-all cursor-pointer"
                   >
-                    <Send className="w-4 h-4" />
+                    <Send className="w-4 h-4 text-[#E8B43A]" />
                     <span>SUBMIT CORPORATE RFQ</span>
                   </button>
 
@@ -361,9 +360,9 @@ export const QuoteDrawer: React.FC = () => {
                     href={getWhatsAppForwardUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 text-xs font-semibold flex items-center justify-center gap-2 transition-colors shadow-2xs"
+                    className="w-full py-2.5 px-4 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-semibold flex items-center justify-center gap-2 transition-colors shadow-2xs"
                   >
-                    <MessageCircle className="w-4 h-4" />
+                    <MessageSquare className="w-4 h-4 text-emerald-600" />
                     <span>Instant Send via WhatsApp</span>
                   </a>
                 </div>
@@ -378,4 +377,3 @@ export const QuoteDrawer: React.FC = () => {
     </div>
   );
 };
-

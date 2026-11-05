@@ -184,7 +184,7 @@ export const CatalogViewerModal: React.FC<CatalogViewerModalProps> = ({
                 const val = parseInt(e.target.value);
                 if (val >= 1 && val <= totalPages) setCurrentPage(val);
               }}
-              className="w-16 px-2 py-1 rounded-md bg-white border border-neutral-300 text-neutral-900 text-center font-bold focus:outline-none focus:border-[#b88e3e] shadow-2xs"
+              className="w-16 px-2 py-1 rounded-md bg-white border border-[#E5E7EB] text-[#101828] text-center font-bold focus:outline-none focus:border-[#0876B4] shadow-2xs"
             />
           </div>
 
@@ -195,7 +195,7 @@ export const CatalogViewerModal: React.FC<CatalogViewerModalProps> = ({
               max={totalPages}
               value={currentPage}
               onChange={(e) => setCurrentPage(parseInt(e.target.value))}
-              className="w-full accent-[#b88e3e] cursor-pointer"
+              className="w-full accent-[#0876B4] cursor-pointer"
             />
           </div>
 
@@ -205,7 +205,7 @@ export const CatalogViewerModal: React.FC<CatalogViewerModalProps> = ({
                 onClose();
                 setIsDrawerOpen(true);
               }}
-              className="px-3.5 py-1.5 rounded-lg gold-luxury-button font-bold flex items-center gap-1.5 shadow-xs"
+              className="px-4 py-1.5 rounded-full bg-[#0876B4] hover:bg-[#075f91] text-white font-bold flex items-center gap-1.5 shadow-xs transition-colors"
             >
               <ShoppingBag className="w-3.5 h-3.5" />
               <span>Request Quote</span>

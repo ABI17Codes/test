@@ -197,22 +197,22 @@ export default function QuoteBasketPage() {
   };
 
   return (
-    <div className="py-12 bg-[#FCFBF9]">
+    <div className="py-12 bg-[#F5F7FA]">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 space-y-8">
         
         {/* Header Breadcrumb */}
         <div className="text-left space-y-2">
-          <div className="flex items-center gap-2 text-xs text-neutral-500">
-            <Link href="/" className="hover:text-black">Home</Link>
+          <div className="flex items-center gap-2 text-xs text-[#667085]">
+            <Link href="/" className="hover:text-[#101828]">Home</Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-[#916c27] font-semibold">Bulk Checkout & RFQ</span>
+            <span className="text-[#0876B4] font-semibold">Bulk Checkout &amp; RFQ</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#111317] tracking-tight font-serif-luxury">
-            CORPORATE CHECKOUT & BULK RFQ
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#101828] tracking-tight">
+            Corporate Checkout &amp; Bulk RFQ
           </h1>
 
-          <p className="text-xs sm:text-sm text-neutral-600 max-w-2xl font-normal leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#667085] max-w-2xl font-normal leading-relaxed">
             Enterprise procurement desk backed by idempotent request safety, live inventory validation, and integrated corporate payment processing.
           </p>
         </div>
@@ -317,11 +317,11 @@ export default function QuoteBasketPage() {
             
             {/* Left: Shortlisted Items Table */}
             <div className="lg:col-span-7 space-y-4">
-              <div className="bg-white p-6 sm:p-7 rounded-3xl border border-neutral-200/90 shadow-2xs space-y-4">
+              <div className="bg-white p-6 sm:p-7 rounded-3xl border border-[#E5E7EB] shadow-xs space-y-4">
                 
-                <div className="flex items-center justify-between pb-3 border-b border-neutral-100">
-                  <h3 className="text-base sm:text-lg font-bold text-[#111317] font-serif-luxury flex items-center gap-2">
-                    <ShoppingBag className="w-5 h-5 text-[#b88e3e]" />
+                <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
+                  <h3 className="text-base sm:text-lg font-bold text-[#101828] flex items-center gap-2">
+                    <ShoppingBag className="w-5 h-5 text-[#0876B4]" />
                     <span>Shortlisted Products ({items.length})</span>
                   </h3>
                   
@@ -336,37 +336,37 @@ export default function QuoteBasketPage() {
                 </div>
 
                 {items.length === 0 ? (
-                  <div className="text-center py-16 px-4 rounded-2xl border border-dashed border-neutral-300 bg-[#FAF8F5] space-y-3">
-                    <p className="text-base text-neutral-800 font-bold font-serif-luxury">Your RFQ basket is currently empty.</p>
-                    <p className="text-xs text-neutral-500 max-w-sm mx-auto">
-                      Explore our catalog products and click &ldquo;Bulk Quote&rdquo; on any model to build your corporate proposal.
+                  <div className="text-center py-16 px-4 rounded-2xl border border-dashed border-[#E5E7EB] bg-[#F5F7FA] space-y-3">
+                    <p className="text-base text-[#101828] font-bold">Your RFQ basket is currently empty.</p>
+                    <p className="text-xs text-[#667085] max-w-sm mx-auto">
+                      Explore our catalog products and click &ldquo;Add to RFQ&rdquo; on any model to build your corporate proposal.
                     </p>
                     <Link
                       href="/products"
-                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl gold-luxury-button text-xs font-bold shadow-xs mt-2"
+                      className="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-[#0876B4] hover:bg-[#075f91] text-white text-xs font-bold shadow-xs mt-2"
                     >
                       <span>Explore Catalog</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4 text-[#E8B43A]" />
                     </Link>
                   </div>
                 ) : (
-                  <div className="space-y-4 divide-y divide-neutral-100">
+                  <div className="space-y-4 divide-y divide-[#E5E7EB]">
                     {items.map((item) => (
                       <div key={item.product.id} className="pt-4 first:pt-0 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
                           <img
                             src={item.product.image}
                             alt={item.product.name}
-                            className="w-16 h-16 rounded-xl object-cover border border-neutral-200 bg-neutral-100"
+                            className="w-16 h-16 rounded-xl object-contain border border-[#E5E7EB] bg-[#F5F7FA] p-1"
                           />
                           <div>
-                            <span className="text-[10px] font-bold text-[#916c27] uppercase">
+                            <span className="text-[10px] font-bold text-[#0876B4] uppercase">
                               {item.product.code}
                             </span>
-                            <h4 className="text-xs sm:text-sm font-bold text-neutral-900 leading-tight">
+                            <h4 className="text-xs sm:text-sm font-bold text-[#101828] leading-tight">
                               {item.product.name}
                             </h4>
-                            <p className="text-[11px] text-neutral-500">
+                            <p className="text-[11px] text-[#667085]">
                               Branding: {item.customization || customizationType}
                             </p>
                           </div>
@@ -411,10 +411,10 @@ export default function QuoteBasketPage() {
             <div className="lg:col-span-5">
               <div className="bg-white p-6 sm:p-7 rounded-3xl border border-neutral-200/90 shadow-sm space-y-5">
                 <div>
-                  <h3 className="text-lg font-bold text-[#111317] font-serif-luxury">
+                  <h3 className="text-lg font-bold text-[#101828]">
                     Enterprise Order Information
                   </h3>
-                  <p className="text-xs text-neutral-500">
+                  <p className="text-xs text-[#667085]">
                     Duplicate-safe checkout with unique idempotency token.
                   </p>
                 </div>
@@ -428,75 +428,75 @@ export default function QuoteBasketPage() {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-bold text-neutral-700 mb-1">Full Name *</label>
+                    <label className="block text-xs font-bold text-[#101828] mb-1">Full Name *</label>
                     <input
                       type="text"
                       required
                       placeholder="e.g. Anand Sharma"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#b88e3e] focus:outline-none bg-neutral-50"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E7EB] text-xs focus:ring-2 focus:ring-[#0876B4]/20 focus:border-[#0876B4] focus:outline-none bg-[#F5F7FA]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-neutral-700 mb-1">Company Name *</label>
+                    <label className="block text-xs font-bold text-[#101828] mb-1">Company Name *</label>
                     <input
                       type="text"
                       required
                       placeholder="e.g. Wipro Technologies Ltd"
                       value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#b88e3e] focus:outline-none bg-neutral-50"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E7EB] text-xs focus:ring-2 focus:ring-[#0876B4]/20 focus:border-[#0876B4] focus:outline-none bg-[#F5F7FA]"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-neutral-700 mb-1">Work Email *</label>
+                      <label className="block text-xs font-bold text-[#101828] mb-1">Work Email *</label>
                       <input
                         type="email"
                         required
                         placeholder="anand@company.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#b88e3e] focus:outline-none bg-neutral-50"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E7EB] text-xs focus:ring-2 focus:ring-[#0876B4]/20 focus:border-[#0876B4] focus:outline-none bg-[#F5F7FA]"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-neutral-700 mb-1">Phone / Mobile *</label>
+                      <label className="block text-xs font-bold text-[#101828] mb-1">Phone / Mobile *</label>
                       <input
                         type="tel"
                         required
                         placeholder="+91 98765 43210"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#b88e3e] focus:outline-none bg-neutral-50"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E7EB] text-xs focus:ring-2 focus:ring-[#0876B4]/20 focus:border-[#0876B4] focus:outline-none bg-[#F5F7FA]"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-neutral-700 mb-1">Delivery City & State</label>
+                    <label className="block text-xs font-bold text-[#101828] mb-1">Delivery City &amp; State</label>
                     <input
                       type="text"
                       placeholder="e.g. Bengaluru, Karnataka"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#b88e3e] focus:outline-none bg-neutral-50"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E7EB] text-xs focus:ring-2 focus:ring-[#0876B4]/20 focus:border-[#0876B4] focus:outline-none bg-[#F5F7FA]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-neutral-700 mb-1">Payment & Processing Mode</label>
+                    <label className="block text-xs font-bold text-[#101828] mb-1">Payment &amp; Processing Mode</label>
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
                         onClick={() => setPaymentMode('rfq')}
                         className={`p-2.5 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
                           paymentMode === 'rfq'
-                            ? 'bg-neutral-900 text-white border-neutral-900'
-                            : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-neutral-100'
+                            ? 'bg-[#101828] text-white border-[#101828]'
+                            : 'bg-[#F5F7FA] text-[#667085] border-[#E5E7EB] hover:bg-neutral-100'
                         }`}
                       >
                         B2B Purchase Order (PO)
@@ -506,8 +506,8 @@ export default function QuoteBasketPage() {
                         onClick={() => setPaymentMode('online_advance')}
                         className={`p-2.5 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
                           paymentMode === 'online_advance'
-                            ? 'bg-[#2563eb] text-white border-[#2563eb]'
-                            : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-neutral-100'
+                            ? 'bg-[#0876B4] text-white border-[#0876B4]'
+                            : 'bg-[#F5F7FA] text-[#667085] border-[#E5E7EB] hover:bg-neutral-100'
                         }`}
                       >
                         <CreditCard className="w-3.5 h-3.5" />
@@ -517,13 +517,13 @@ export default function QuoteBasketPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-neutral-700 mb-1">Customization Instructions</label>
+                    <label className="block text-xs font-bold text-[#101828] mb-1">Customization Instructions</label>
                     <textarea
                       rows={2}
                       placeholder="e.g. Laser engrave company logo on bottle and diary, deliver by 15th."
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 text-xs focus:ring-2 focus:ring-[#b88e3e] focus:outline-none bg-neutral-50"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E7EB] text-xs focus:ring-2 focus:ring-[#0876B4]/20 focus:border-[#0876B4] focus:outline-none bg-[#F5F7FA]"
                     />
                   </div>
 
@@ -531,7 +531,7 @@ export default function QuoteBasketPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting || items.length === 0}
-                    className="w-full py-3.5 rounded-xl bg-[#111317] hover:bg-[#2563eb] text-white font-bold text-xs tracking-wide shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                    className="w-full py-3.5 rounded-full bg-[#101828] hover:bg-[#0876B4] text-white font-bold text-xs tracking-wide shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
                   >
                     {isSubmitting ? (
                       <>
@@ -540,7 +540,7 @@ export default function QuoteBasketPage() {
                       </>
                     ) : (
                       <>
-                        <Send className="w-4 h-4" />
+                        <Send className="w-4 h-4 text-[#E8B43A]" />
                         <span>
                           {paymentMode === 'online_advance' ? 'Place Order & Pay with Gateway' : 'Place Idempotent Order / RFQ'}
                         </span>

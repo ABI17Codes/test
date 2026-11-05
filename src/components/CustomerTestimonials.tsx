@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight, Quote, Building2, CheckCircle2 } from 'lucide-react';
 
 export const CustomerTestimonials: React.FC = () => {
   const testimonials = [
@@ -17,7 +17,7 @@ export const CustomerTestimonials: React.FC = () => {
       name: 'Rajesh K. Mehta',
       role: 'Procurement VP',
       company: 'Flipkart Logistics',
-      text: 'We ordered 1,200 Ninja Gear Boxer backpacks for our annual regional summit. The stitch quality, waterproof zips, and corporate rubber badging were flawless. Outstanding service from their Bangalore hub.',
+      text: 'We ordered 1,200 Ninja Gear Boxer backpacks for our annual regional summit. The stitch quality, waterproof zips, and corporate rubber badging were flawless. Outstanding service from their Bangalore factory hub.',
       rating: 5,
       avatar: 'RM'
     },
@@ -25,7 +25,7 @@ export const CustomerTestimonials: React.FC = () => {
       name: 'Sneha Venkatesh',
       role: 'Brand & Marketing Lead',
       company: 'Biocon Biologics',
-      text: 'The sustainable bamboo 4-in-1 gift sets were an absolute hit for our annual leadership conference. Real luxury feel without the astronomical pricing. Will be our primary corporate gifting partner.',
+      text: 'The sustainable bamboo 4-in-1 gift sets were an absolute hit for our annual leadership conference. Real luxury feel without the astronomical broker pricing. They are our permanent corporate gifting partner.',
       rating: 5,
       avatar: 'SV'
     }
@@ -35,83 +35,66 @@ export const CustomerTestimonials: React.FC = () => {
   const current = testimonials[currentIndex];
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden border-t border-neutral-100">
-      
-      {/* Subtle floating colored dots matching reference image */}
-      <div className="absolute top-12 left-[20%] w-3 h-3 rounded-full bg-amber-400 opacity-60 hidden md:block" />
-      <div className="absolute top-28 right-[18%] w-3.5 h-3.5 rounded-full bg-blue-500 opacity-60 hidden md:block" />
-      <div className="absolute bottom-16 left-[25%] w-2.5 h-2.5 rounded-full bg-emerald-400 opacity-60 hidden md:block" />
-      <div className="absolute bottom-20 right-[22%] w-3 h-3 rounded-full bg-rose-400 opacity-60 hidden md:block" />
-
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section className="py-20 bg-[#F5F7FA] border-b border-[#E5E7EB] relative overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-10 text-center space-y-10">
         
         {/* Header */}
-        <div className="space-y-2 mb-14">
-          <span className="text-xs font-bold text-neutral-400 tracking-widest uppercase">
-            — Trusted by 500+ Enterprises
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111317] tracking-tight">
-            Reviews from Our Customers
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E5E7EB]">
+            <Building2 className="w-3.5 h-3.5 text-[#0876B4]" />
+            <span className="text-[11px] font-bold text-[#0876B4] tracking-wider uppercase">
+              Verified Enterprise Experiences
+            </span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-black text-[#101828] tracking-tight">
+            Trusted by Procurement Leaders Across India
           </h2>
         </div>
 
-        {/* Central Floating Avatar Circle */}
-        <div className="flex items-center justify-center gap-3 sm:gap-6 mb-8">
-          {testimonials.map((t, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm transition-all duration-300 border-2 cursor-pointer ${
-                currentIndex === idx
-                  ? 'bg-[#2563eb] text-white border-white shadow-lg scale-110'
-                  : 'bg-neutral-100 text-neutral-600 border-transparent hover:bg-neutral-200'
-              }`}
-            >
-              {t.avatar}
-            </button>
-          ))}
-        </div>
-
-        {/* Quote Card */}
-        <div className="max-w-2xl mx-auto bg-neutral-50/80 border border-neutral-200/80 rounded-3xl p-8 sm:p-10 shadow-xs relative">
-          <div className="flex items-center justify-center gap-1 mb-4">
-            {[...Array(current.rating)].map((_, i) => (
-              <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-            ))}
+        {/* Testimonial Card */}
+        <div className="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-3xl border border-[#E5E7EB] shadow-xl relative text-left space-y-6">
+          <div className="flex items-center justify-between">
+            {/* Stars */}
+            <div className="flex items-center text-[#E8B43A]">
+              {[...Array(current.rating)].map((_, i) => (
+                <Star key={i} className="w-4 h-4 fill-[#E8B43A] text-[#E8B43A]" />
+              ))}
+            </div>
+            <Quote className="w-8 h-8 text-[#0876B4]/20" />
           </div>
 
-          <p className="text-sm sm:text-base text-neutral-700 leading-relaxed font-medium italic mb-6">
+          <p className="text-base sm:text-lg text-[#101828] leading-relaxed font-normal">
             &ldquo;{current.text}&rdquo;
           </p>
 
-          <div>
-            <h4 className="text-sm font-bold text-neutral-900">
-              {current.name}
-            </h4>
-            <p className="text-xs text-neutral-500 font-normal">
-              {current.role} • <span className="font-semibold text-neutral-700">{current.company}</span>
-            </p>
-          </div>
+          <div className="pt-6 border-t border-[#E5E7EB] flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-full bg-blue-50 text-[#0876B4] font-bold text-sm flex items-center justify-center border border-blue-100">
+                {current.avatar}
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-[#101828]">{current.name}</h4>
+                <p className="text-xs text-[#667085]">{current.role} &bull; <span className="font-semibold text-[#0876B4]">{current.company}</span></p>
+              </div>
+            </div>
 
-          {/* Navigation Arrows */}
-          <div className="flex items-center justify-center gap-2 mt-6">
-            <button
-              onClick={() => setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
-              className="p-1.5 rounded-full bg-white hover:bg-neutral-100 border border-neutral-200 text-neutral-600 transition-colors cursor-pointer"
-              aria-label="Previous review"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <span className="text-xs text-neutral-400 font-semibold px-2">
-              {currentIndex + 1} / {testimonials.length}
-            </span>
-            <button
-              onClick={() => setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
-              className="p-1.5 rounded-full bg-white hover:bg-neutral-100 border border-neutral-200 text-neutral-600 transition-colors cursor-pointer"
-              aria-label="Next review"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
+            {/* Stepper Buttons */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
+                className="w-9 h-9 rounded-full border border-[#E5E7EB] bg-white hover:bg-[#F5F7FA] text-[#101828] flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
+                className="w-9 h-9 rounded-full border border-[#E5E7EB] bg-white hover:bg-[#F5F7FA] text-[#101828] flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Next testimonial"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -119,4 +102,3 @@ export const CustomerTestimonials: React.FC = () => {
     </section>
   );
 };
-

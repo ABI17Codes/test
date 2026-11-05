@@ -5,38 +5,46 @@ import { useRouter } from 'next/navigation';
 import { Hero } from '../components/Hero';
 import { EnterpriseTrustBar } from '../components/EnterpriseTrustBar';
 import { SignatureCollections } from '../components/SignatureCollections';
+import { FeaturedProductsSection } from '../components/FeaturedProductsSection';
 import { GiftingWorkflowSection } from '../components/GiftingWorkflowSection';
+import { CorporatePromotionsSection } from '../components/CorporatePromotionsSection';
+import { CustomerTestimonials } from '../components/CustomerTestimonials';
 import { DigitalCataloguesSection } from '../components/DigitalCataloguesSection';
-import { QualityPromiseSection } from '../components/QualityPromiseSection';
 import { BespokeConciergeCTA } from '../components/BespokeConciergeCTA';
 
 export default function HomePage() {
   const router = useRouter();
 
   return (
-    <div className="bg-[#F8FAFC] text-[#0F172A] min-h-screen">
-      {/* 1. Modern Studio Luxe + Delight Hero with Flagship Showcase */}
+    <div className="bg-[#F5F7FA] text-[#101828] min-h-screen">
+      {/* 1. Hero Section - Sophisticated Split Layout */}
       <Hero
         onExploreCollection={() => router.push('/products')}
         onRequestQuote={() => router.push('/quote')}
       />
 
-      {/* 2. Fortune 500 Enterprise Trust Bar & Verified Metrics */}
+      {/* 2. Trust & Statistics Section */}
       <EnterpriseTrustBar />
 
-      {/* 3. The 4 Curated Signature Collections (Asymmetrical Bento) */}
+      {/* 3. Signature Collections (4 Core Brand Pillars) */}
       <SignatureCollections />
 
-      {/* 4. The 3-Step Enterprise Gifting Experience (Curate -> Proof -> Dispatch) */}
+      {/* 4. Featured Products (Curated 4-Column Grid) */}
+      <FeaturedProductsSection />
+
+      {/* 5. Corporate Gifting Experience (3-Step Process) */}
       <GiftingWorkflowSection />
 
-      {/* 5. Official Digital Catalogue Flipbooks (All-in-One & Executive Bags) */}
+      {/* 6. Dedicated B2B Promotional Section */}
+      <CorporatePromotionsSection />
+
+      {/* 7. Testimonials & Client Trust */}
+      <CustomerTestimonials />
+
+      {/* 8. Digital Catalogue Flipbooks (All-in-One & Executive Bags) */}
       <DigitalCataloguesSection />
 
-      {/* 6. 5-Stage In-House Quality Assurance & Bengaluru Manufacturing */}
-      <QualityPromiseSection />
-
-      {/* 7. Dark Luxury Bespoke Concierge & Bulk RFQ Invitation */}
+      {/* 9. Final High-Impact CTA */}
       <BespokeConciergeCTA />
     </div>
   );
