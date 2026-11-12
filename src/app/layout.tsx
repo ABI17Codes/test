@@ -165,7 +165,7 @@ export default function RootLayout({
           </Suspense>
 
           {/* Page Body */}
-          <main className="min-h-[85vh] pt-16">
+          <main className="min-h-[85vh] pt-[92px]">
             {children}
           </main>
 

@@ -59,30 +59,30 @@ const WHY_CHOOSE_PILLARS = [
 
 export const CorporatePromotionsSection: React.FC = () => {
   return (
-    <section className="py-20 bg-white border-b border-[#E5E7EB]">
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-8 lg:px-10">
+    <section className="py-20 bg-[#F8F9FA] border-b border-[#E5E7EB]">
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-8 lg:px-10">
         
-        {/* Header matching media_1793878039758_2b665fa3.jpg */}
+        {/* Header matching slice_3.jpg */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 text-left">
-          <div className="space-y-2.5 max-w-lg">
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0876B4]">
+          <div className="space-y-2 max-w-xl">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#C69214]">
               Why Choose Globrands
             </p>
-            <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#101828] tracking-[-0.025em] leading-[1.12]">
+            <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-[#101828] leading-[1.12]">
               Built for procurement leaders, trusted by HR teams
             </h2>
           </div>
 
           <Link
             href="/about"
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#0876B4] hover:text-[#101828] transition-colors self-start sm:self-end"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C69214] hover:text-[#101828] transition-colors self-start sm:self-end"
           >
             <span>Explore Bengaluru factory</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        {/* 6 Pillars Grid */}
+        {/* 6 White Pillars Grid matching slice_3.jpg & slice_4.jpg */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-left">
           {WHY_CHOOSE_PILLARS.map((item, idx) => {
             const Icon = item.icon;
@@ -90,28 +90,28 @@ export const CorporatePromotionsSection: React.FC = () => {
               <Link
                 key={idx}
                 href={item.href}
-                className="group bg-[#F8FAFC] hover:bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#0876B4]/40 p-6 flex flex-col justify-between transition-all duration-300 shadow-2xs hover:shadow-lg"
+                className="group bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#D49B27]/50 p-6 flex flex-col justify-between transition-all duration-300 shadow-2xs hover:shadow-md"
               >
                 <div className="space-y-4">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-[#E5E7EB] flex items-center justify-center group-hover:border-[#0876B4]/30 transition-colors shadow-2xs">
-                    <Icon className="w-4 h-4 text-[#0876B4]" />
+                  <div className="w-10 h-10 rounded-xl bg-[#FDF8EC] border border-[#F3E3B8] flex items-center justify-center">
+                    <Icon className="w-4 h-4 text-[#D49B27]" />
                   </div>
 
                   <div className="space-y-1.5">
-                    <h3 className="text-base sm:text-lg font-bold text-[#101828] group-hover:text-[#0876B4] transition-colors tracking-tight">
+                    <h3 className="text-base font-bold text-[#101828] group-hover:text-[#C69214] transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-xs sm:text-[13px] text-[#667085] leading-relaxed font-normal">
+                    <p className="text-xs text-[#667085] leading-relaxed font-normal">
                       {item.description}
                     </p>
                   </div>
                 </div>
 
-                <div className="pt-5 mt-5 border-t border-[#E5E7EB]/80 flex flex-wrap items-center gap-2">
+                <div className="pt-4 mt-5 border-t border-[#F2F4F7] flex flex-wrap items-center gap-1.5">
                   {item.pills.map((pill, pIdx) => (
                     <span
                       key={pIdx}
-                      className="px-2.5 py-1 rounded-full text-[11px] font-medium text-[#475467] bg-white border border-[#E5E7EB]"
+                      className="px-2.5 py-0.5 rounded-md text-[10px] font-semibold text-[#475467] bg-[#F8FAFC] border border-[#E5E7EB]"
                     >
                       {pill}
                     </span>

@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { 
   ShoppingBag, 
-  MessageCircle, 
   Menu, 
   X, 
   FileText,
@@ -17,7 +16,9 @@ import {
   Building2,
   LogOut,
   UserPlus,
-  LogIn
+  LogIn,
+  LayoutGrid,
+  Gift
 } from 'lucide-react';
 import { useQuote } from '../context/QuoteContext';
 
@@ -95,14 +96,18 @@ export const Navbar: React.FC = () => {
   }, [pathname]);
 
   const navLinks = [
-    { label: 'Products', href: '/products', hasChevron: true },
-    { label: 'Gift Sets', href: '/gift-sets', hasChevron: true },
-    { label: 'Bags', href: '/bags', hasChevron: true },
-    { label: 'Branding', href: '/branding', hasChevron: false },
-    { label: 'Solutions', href: '/solutions', hasChevron: true },
-    { label: 'About', href: '/about', hasChevron: false },
-    { label: 'Contact', href: '/contact', hasChevron: false },
+    { label: 'Branding', href: '/branding' },
+    { label: 'Solutions', href: '/solutions' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' },
   ];
+
+  const isCatalogRoute =
+    pathname === '/products' ||
+    pathname.startsWith('/products/') ||
+    pathname === '/gift-sets' ||
+    pathname === '/bags' ||
+    pathname.startsWith('/catalog-viewer');
 
   return (
     <header
@@ -112,7 +117,21 @@ export const Navbar: React.FC = () => {
           : 'bg-white border-b border-[#E5E7EB]'
       }`}
     >
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10">
+      {/* Top Dark Utility Bar matching reference */}
+      <div className="bg-[#0B111E] text-white/75 text-[10px] py-1.5 border-b border-white/10">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 lg:px-10 flex items-center justify-between gap-4">
+          <div className="truncate font-medium tracking-wider uppercase">
+            Direct Factory Corporate Gifting &amp; Executive Carrywear &bull; Bengaluru Atelier &bull; 100% In-House Branding
+          </div>
+          <div className="hidden md:flex items-center gap-4 shrink-0 font-medium text-white/85">
+            <a href="tel:+919900020456" className="hover:text-[#E8B43A] transition-colors">+91 99000 20456</a>
+            <span className="text-white/30">&bull;</span>
+            <a href="mailto:enquiry@globrandslifestyle.com" className="hover:text-[#E8B43A] transition-colors">enquiry@globrandslifestyle.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-8 lg:px-10">
         <div className="flex items-center justify-between h-16">
           
           {/* Logo Presentation */}
@@ -137,50 +156,76 @@ export const Navbar: React.FC = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1.5">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`relative inline-flex items-center gap-1 px-3 py-1.5 text-[13px] font-semibold tracking-tight rounded-lg transition-all ${
-                    isActive
-                      ? 'text-[#0876B4] font-bold bg-[#0876B4]/8'
-                      : 'text-[#101828] hover:text-[#0876B4] hover:bg-[#F5F7FA]'
-                  }`}
-                >
-                  <span>{link.label}</span>
-                  {link.hasChevron && (
-                    <ChevronDown className="w-3 h-3 text-[#667085] opacity-75" />
-                  )}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#0876B4] rounded-full" />
-                  )}
-                </Link>
-              );
-            })}
-
-            {/* Catalogues Dropdown */}
-            <div className="relative ml-1" ref={dropdownRef}>
+          <nav className="hidden lg:flex items-center gap-2 xl:gap-4">
+            {/* Unified Catalogues Dropdown */}
+            <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setCatalogDropdownOpen(!catalogDropdownOpen)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-                  pathname.startsWith('/catalog-viewer') || catalogDropdownOpen
-                    ? 'text-[#0876B4] bg-[#0876B4]/8 font-bold'
+                className={`relative inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-lg whitespace-nowrap transition-all cursor-pointer ${
+                  isCatalogRoute || catalogDropdownOpen
+                    ? 'text-[#0876B4] bg-[#0876B4]/8 font-semibold'
                     : 'text-[#101828] hover:text-[#0876B4] hover:bg-[#F5F7FA]'
                 }`}
               >
                 <FileText className="w-3.5 h-3.5 text-[#0876B4]" />
                 <span>Catalogues</span>
-                <ChevronDown className={`w-3 h-3 text-[#667085] transition-transform duration-200 ${catalogDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 text-[#667085] transition-transform duration-200 ${catalogDropdownOpen ? 'rotate-180' : ''}`} />
+                {isCatalogRoute && (
+                  <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#0876B4] rounded-full" />
+                )}
               </button>
 
               {catalogDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white border border-[#E5E7EB] rounded-2xl shadow-xl p-2 space-y-1 animate-in fade-in slide-in-from-top-1 duration-150 z-50 text-left">
+                <div className="absolute left-0 mt-2 w-72 bg-white border border-[#E5E7EB] rounded-2xl shadow-xl p-2 space-y-1 animate-in fade-in slide-in-from-top-1 duration-150 z-50 text-left">
+                  <div className="px-2.5 pt-1.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-[#667085]">
+                    Product Collections
+                  </div>
+
                   <Link
-                    href="/catalog-viewer?type=bags"
-                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#F5F7FA] transition-colors group text-left"
+                    href="/products"
+                    className={`flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#F5F7FA] transition-colors group text-left ${
+                      pathname === '/products' ? 'bg-[#0876B4]/6' : ''
+                    }`}
+                    onClick={() => setCatalogDropdownOpen(false)}
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
+                      <LayoutGrid className="w-4 h-4 text-[#101828]" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-[#101828] group-hover:text-[#0876B4]">
+                        All Products Catalogue
+                      </p>
+                      <p className="text-[11px] text-[#667085]">
+                        183+ Verified Corporate SKUs
+                      </p>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/gift-sets"
+                    className={`flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#F5F7FA] transition-colors group text-left ${
+                      pathname === '/gift-sets' ? 'bg-[#0876B4]/6' : ''
+                    }`}
+                    onClick={() => setCatalogDropdownOpen(false)}
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
+                      <Gift className="w-4 h-4 text-[#E8B43A]" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-[#101828] group-hover:text-[#0876B4]">
+                        Executive Gift Sets
+                      </p>
+                      <p className="text-[11px] text-[#667085]">
+                        Curated 5-in-1, 4-in-1 &amp; Bamboo Hampers
+                      </p>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/bags"
+                    className={`flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#F5F7FA] transition-colors group text-left ${
+                      pathname === '/bags' ? 'bg-[#0876B4]/6' : ''
+                    }`}
                     onClick={() => setCatalogDropdownOpen(false)}
                   >
                     <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
@@ -188,7 +233,31 @@ export const Navbar: React.FC = () => {
                     </div>
                     <div>
                       <p className="text-xs font-bold text-[#101828] group-hover:text-[#0876B4]">
-                        Bag Catalogue
+                        Bags &amp; Backpacks
+                      </p>
+                      <p className="text-[11px] text-[#667085]">
+                        Ninja Gear &amp; ADMA London Carrywear
+                      </p>
+                    </div>
+                  </Link>
+
+                  <div className="my-1.5 border-t border-[#E5E7EB]" />
+
+                  <div className="px-2.5 pt-1 pb-1 text-[10px] font-bold uppercase tracking-wider text-[#667085]">
+                    Digital PDF Flipbooks
+                  </div>
+
+                  <Link
+                    href="/catalog-viewer?type=bags"
+                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#F5F7FA] transition-colors group text-left"
+                    onClick={() => setCatalogDropdownOpen(false)}
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                      <FileText className="w-4 h-4 text-[#0876B4]" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-[#101828] group-hover:text-[#0876B4]">
+                        Bag PDF Catalogue
                       </p>
                       <p className="text-[11px] text-[#667085]">
                         36 Pages &bull; Ninja Gear &amp; ADMA
@@ -206,7 +275,7 @@ export const Navbar: React.FC = () => {
                     </div>
                     <div>
                       <p className="text-xs font-bold text-[#101828] group-hover:text-[#0876B4]">
-                        All-in-One Gifting
+                        All-in-One Gifting PDF
                       </p>
                       <p className="text-[11px] text-[#667085]">
                         146 Pages &bull; Hampers, Bottles, Tech
@@ -216,28 +285,36 @@ export const Navbar: React.FC = () => {
                 </div>
               )}
             </div>
+
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`relative inline-flex items-center gap-1 px-3 py-1.5 text-[13px] font-medium tracking-tight rounded-lg whitespace-nowrap transition-all ${
+                    isActive
+                      ? 'text-[#0876B4] font-semibold bg-[#0876B4]/8'
+                      : 'text-[#101828] hover:text-[#0876B4] hover:bg-[#F5F7FA]'
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  {isActive && (
+                    <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#0876B4] rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* Right-Side Action Area */}
-          <div className="flex items-center gap-2.5">
+          {/* Right-Side Action Area (Minimal) */}
+          <div className="flex items-center gap-2 shrink-0">
             
-            {/* WhatsApp B2B Desk */}
-            <a
-              href="https://wa.me/919900020456?text=Hi%20Globrands%20Lifestyle,%20I%20am%20interested%20in%20your%20Corporate%20Gifting%20and%20Bag%20Catalogues."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition-colors"
-              title="Chat with B2B Sales on WhatsApp"
-            >
-              <MessageCircle className="w-3.5 h-3.5 text-emerald-600 fill-emerald-600" />
-              <span className="hidden sm:inline">WhatsApp</span>
-            </a>
-
             {/* Account Dropdown */}
             <div className="relative" ref={accountRef}>
               <button
                 onClick={() => setAccountDropdownOpen(!accountDropdownOpen)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors border cursor-pointer ${
+                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors border cursor-pointer ${
                   user
                     ? 'bg-blue-50 text-[#0876B4] border-blue-200 hover:bg-blue-100'
                     : 'bg-white text-[#101828] border-[#E5E7EB] hover:bg-[#F5F7FA]'
@@ -285,10 +362,17 @@ export const Navbar: React.FC = () => {
                       <Link
                         href="/quote"
                         onClick={() => setAccountDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#101828] hover:bg-[#F5F7FA] transition-colors"
+                        className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-[#101828] hover:bg-[#F5F7FA] transition-colors"
                       >
-                        <ShoppingBag className="w-4 h-4 text-[#0876B4]" />
-                        <span>My Quote Requests</span>
+                        <span className="flex items-center gap-2.5">
+                          <ShoppingBag className="w-4 h-4 text-[#0876B4]" />
+                          <span>My Quote Requests</span>
+                        </span>
+                        {mounted && totalItems > 0 && (
+                          <span className="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold bg-[#E8B43A] text-[#0B111E] rounded-full">
+                            {totalItems}
+                          </span>
+                        )}
                       </Link>
 
                       <button
@@ -303,7 +387,7 @@ export const Navbar: React.FC = () => {
                     <>
                       <div className="p-2.5 border-b border-neutral-100 mb-1">
                         <p className="font-bold text-xs text-[#101828]">Corporate Portal</p>
-                        <p className="text-[11px] text-[#667085]">Sign in to manage bulk RFQs & orders</p>
+                        <p className="text-[11px] text-[#667085]">Sign in to manage bulk RFQs &amp; orders</p>
                       </div>
 
                       <Link
@@ -322,6 +406,22 @@ export const Navbar: React.FC = () => {
                       >
                         <UserPlus className="w-4 h-4 text-emerald-600" />
                         <span>Create Corporate Account</span>
+                      </Link>
+
+                      <Link
+                        href="/quote"
+                        onClick={() => setAccountDropdownOpen(false)}
+                        className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-[#101828] hover:bg-[#F5F7FA] transition-colors"
+                      >
+                        <span className="flex items-center gap-2.5">
+                          <ShoppingBag className="w-4 h-4 text-[#0876B4]" />
+                          <span>My RFQ Basket</span>
+                        </span>
+                        {mounted && totalItems > 0 && (
+                          <span className="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold bg-[#E8B43A] text-[#0B111E] rounded-full">
+                            {totalItems}
+                          </span>
+                        )}
                       </Link>
 
                       <div className="pt-1 border-t border-neutral-100 mt-1">
@@ -343,21 +443,6 @@ export const Navbar: React.FC = () => {
               )}
             </div>
 
-            {/* Bulk RFQ Cart Button */}
-            <Link
-              href="/quote"
-              className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#101828] hover:bg-[#0876B4] text-white text-xs font-semibold tracking-tight transition-all shadow-xs cursor-pointer"
-              title="View Bulk RFQ Basket"
-            >
-              <FileText className="w-3.5 h-3.5 text-white/90" />
-              <span>Request RFQ</span>
-              {mounted && totalItems > 0 && (
-                <span className="inline-flex items-center justify-center w-4 h-4 text-[10px] font-black bg-[#E8B43A] text-[#101828] rounded-full">
-                  {totalItems}
-                </span>
-              )}
-            </Link>
-
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -373,6 +458,47 @@ export const Navbar: React.FC = () => {
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <div className="lg:hidden py-4 border-t border-[#E5E7EB] space-y-2 animate-in fade-in duration-200 text-left bg-white">
+            <div className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-[#667085]">
+              Catalogues &amp; Collections
+            </div>
+            {[
+              { label: 'All Products Catalogue', href: '/products' },
+              { label: 'Executive Gift Sets', href: '/gift-sets' },
+              { label: 'Bags & Backpacks', href: '/bags' },
+            ].map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`block px-3 py-2 rounded-xl text-sm font-semibold transition-colors ${
+                    isActive
+                      ? 'bg-[#0876B4]/10 text-[#0876B4] font-bold'
+                      : 'text-[#101828] hover:bg-[#F5F7FA]'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+
+            <div className="grid grid-cols-2 gap-2 px-1 pb-2 border-b border-[#E5E7EB]">
+              <Link
+                href="/catalog-viewer?type=bags"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-[#F5F7FA] text-xs font-bold text-[#101828]"
+              >
+                <FileText className="w-4 h-4 text-[#0876B4]" />
+                <span>Bags PDF (36p)</span>
+              </Link>
+              <Link
+                href="/catalog-viewer?type=gifts"
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-[#F5F7FA] text-xs font-bold text-[#101828]"
+              >
+                <BookOpen className="w-4 h-4 text-[#E8B43A]" />
+                <span>Gifts PDF (146p)</span>
+              </Link>
+            </div>
+
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -389,23 +515,6 @@ export const Navbar: React.FC = () => {
                 </Link>
               );
             })}
-
-            <div className="pt-2 border-t border-[#E5E7EB] grid grid-cols-2 gap-2 px-1">
-              <Link
-                href="/catalog-viewer?type=bags"
-                className="flex items-center gap-2 p-2.5 rounded-xl bg-[#F5F7FA] text-xs font-bold text-[#101828]"
-              >
-                <Briefcase className="w-4 h-4 text-[#0876B4]" />
-                <span>Bags (36p)</span>
-              </Link>
-              <Link
-                href="/catalog-viewer?type=gifts"
-                className="flex items-center gap-2 p-2.5 rounded-xl bg-[#F5F7FA] text-xs font-bold text-[#101828]"
-              >
-                <BookOpen className="w-4 h-4 text-[#E8B43A]" />
-                <span>Gifts (146p)</span>
-              </Link>
-            </div>
           </div>
         )}
 
