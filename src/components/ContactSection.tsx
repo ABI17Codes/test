@@ -1,110 +1,192 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Sparkles, 
   Send, 
   CheckCircle2, 
   MessageSquare, 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Clock 
+  RefreshCw,
+  AlertCircle,
+  Briefcase,
+  Gift
 } from 'lucide-react';
+import { CONTACT_CONFIG, COMPANY_INFO } from '../data/siteContent';
 
 export const ContactSection: React.FC = () => {
+  const { header, pathways, quantitySlabs } = CONTACT_CONFIG;
+  const [activePathway, setActivePathway] = useState<'manufacturing' | 'gifting'>('manufacturing');
+  
   const [formData, setFormData] = useState({
     name: '',
     company: '',
     email: '',
     phone: '',
-    category: 'Corporate Gift Sets',
-    quantity: '100 - 250 pcs',
+    category: pathways.manufacturing.categories[0].value,
+    quantity: quantitySlabs[1].value,
     message: ''
   });
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [quoteNumber, setQuoteNumber] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.authenticated && data?.user) {
+          setFormData((prev) => ({
+            ...prev,
+            name: prev.name || data.user.name || '',
+            company: prev.company || data.user.company_name || '',
+            email: prev.email || data.user.email || '',
+            phone: prev.phone || data.user.phone || '',
+          }));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handlePathwayChange = (pathwayKey: 'manufacturing' | 'gifting') => {
+    setActivePathway(pathwayKey);
+    setFormData((prev) => ({ 
+      ...prev, 
+      category: pathways[pathwayKey].categories[0].value 
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setErrorMsg('');
+
     try {
-      const leads = JSON.parse(localStorage.getItem('globrands_contact_inquiries') || '[]');
-      leads.unshift({ ...formData, timestamp: new Date().toISOString() });
-      localStorage.setItem('globrands_contact_inquiries', JSON.stringify(leads));
-    } catch (err) {
-      console.error(err);
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.name,
+          companyName: formData.company,
+          email: formData.email,
+          phone: formData.phone,
+          category: formData.category,
+          estimatedQuantity: formData.quantity,
+          requirements: formData.message,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to submit inquiry');
+      }
+
+      setQuoteNumber(data.inquiry?.quote_number || data.quote?.quote_number || '');
+      setFormSubmitted(true);
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Could not submit inquiry. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
-    setFormSubmitted(true);
   };
 
   const getDirectWhatsAppUrl = () => {
     const text = encodeURIComponent(
-      `Hello Globrands Lifestyle,\n\nI am planning a corporate gifting campaign:\n• Name: ${formData.name || 'Corporate Buyer'}\n• Company: ${formData.company || 'Not Specified'}\n• Category: ${formData.category}\n• Quantity: ${formData.quantity}\n• Message: ${formData.message || 'Please send available options & quote'}`
+      `Hello ${COMPANY_INFO.legalName},\n\nI am planning a requirement:\n• Pathway: ${pathways[activePathway].label}\n• Name: ${formData.name || 'Corporate Buyer'}\n• Company: ${formData.company || 'Not Specified'}\n• Category: ${formData.category}\n• Quantity: ${formData.quantity}\n• Notes: ${formData.message || 'Please share factory options & B2B quote'}`
     );
-    return `https://wa.me/919900020456?text=${text}`;
+    return `https://wa.me/${COMPANY_INFO.contact.phoneRaw}?text=${text}`;
   };
 
   return (
-    <section id="contact" className="py-20 relative bg-white border-t border-[#E5E7EB]">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+    <section id="contact" className="py-20 sm:py-24 relative bg-[#F5F0E8] border-t border-[#EAE3D8] text-left">
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 shadow-2xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#0876B4]" />
-            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#0876B4]">
-              DIRECT ATELIER CONCIERGE &bull; START A CONVERSATION
-            </span>
-          </div>
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <span className="text-[11px] uppercase tracking-[0.22em] font-extrabold text-[#A98554] block">
+            {header.tag}
+          </span>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#101828] tracking-tight">
-            Planning Your Next <br />
-            <span className="brand-gradient-text">Corporate Gifting Campaign?</span>
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#211D1A] tracking-tight uppercase font-sans">
+            {header.title}
           </h2>
 
-          <p className="text-sm sm:text-base text-[#667085] font-normal leading-relaxed">
-            Tell us what you are looking for. Our senior corporate gifting specialists will guide you through curated solutions, custom mockups, and tiered factory pricing.
+          <p className="text-sm sm:text-base text-[#69635C] font-normal leading-relaxed">
+            Discuss your custom backpack manufacturing requirements or corporate gifting campaign directly with our Bengaluru factory desk at <strong className="text-[#211D1A]">{COMPANY_INFO.legalName}</strong>
           </p>
+
+          {/* Dual Enquiry Pathway Switcher */}
+          <div className="pt-4 flex justify-center">
+            <div className="inline-flex p-1.5 rounded-2xl bg-white border border-[#EAE3D8] shadow-sm">
+              <button
+                type="button"
+                onClick={() => handlePathwayChange('manufacturing')}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                  activePathway === 'manufacturing'
+                    ? 'bg-[#211D1A] text-white shadow-md'
+                    : 'text-[#69635C] hover:text-[#211D1A]'
+                }`}
+              >
+                <Briefcase className="w-3.5 h-3.5" />
+                <span>{pathways.manufacturing.label}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handlePathwayChange('gifting')}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                  activePathway === 'gifting'
+                    ? 'bg-[#211D1A] text-white shadow-md'
+                    : 'text-[#69635C] hover:text-[#211D1A]'
+                }`}
+              >
+                <Gift className="w-3.5 h-3.5" />
+                <span>{pathways.gifting.label}</span>
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Contact Form & Direct Channels Grid */}
-        <div className="max-w-4xl mx-auto rounded-3xl bg-[#F5F7FA] p-6 sm:p-12 border border-[#E5E7EB] shadow-xs">
+        {/* Form Container */}
+        <div className="max-w-3xl mx-auto rounded-3xl bg-white p-8 sm:p-14 border border-[#EAE3D8] shadow-xl">
           
           {formSubmitted ? (
-            <div className="text-center py-12 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-200 shadow-xs">
-                <CheckCircle2 className="w-8 h-8" />
+            <div className="text-center py-10 space-y-4">
+              <div className="w-16 h-16 rounded-full bg-[#EAE3D8] text-[#211D1A] flex items-center justify-center mx-auto border border-[#C5A16D]/40 shadow-sm">
+                <CheckCircle2 className="w-8 h-8 text-[#A98554]" />
               </div>
-              <h3 className="text-2xl font-bold text-[#101828]">
-                Thank You for Reaching Out!
+              <h3 className="text-2xl font-bold text-[#211D1A]">
+                Thank You for Reaching Out! {quoteNumber ? `(${quoteNumber})` : ''}
               </h3>
-              <p className="text-sm text-[#667085] max-w-md mx-auto leading-relaxed">
-                Your campaign request has been received. Our Bengaluru corporate desk will follow up with pricing, stock availability, and 3D digital mockups within 2 hours.
+              <p className="text-sm text-[#69635C] max-w-md mx-auto leading-relaxed">
+                Your request has been delivered to our factory desk. A senior representative will contact you with 3D mockups and B2B pricing within 2 hours.
               </p>
               <div className="pt-4 flex flex-col sm:flex-row justify-center gap-3">
                 <a
                   href={getDirectWhatsAppUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-md transition-colors"
+                  className="px-8 py-3.5 rounded-xl bg-[#211D1A] hover:bg-[#40352D] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-colors"
                 >
-                  <MessageSquare className="w-4 h-4" />
-                  <span>Send Fast Message on WhatsApp</span>
+                  <MessageSquare className="w-4 h-4 text-[#C5A16D]" />
+                  <span>Send WhatsApp Message</span>
                 </a>
                 <button
                   onClick={() => setFormSubmitted(false)}
-                  className="px-6 py-3 rounded-full bg-white border border-[#E5E7EB] text-[#101828] text-xs font-semibold hover:bg-neutral-100 shadow-xs transition-colors cursor-pointer"
+                  className="px-6 py-3.5 rounded-xl bg-[#F5F0E8] border border-[#EAE3D8] text-[#211D1A] text-xs font-semibold hover:bg-[#EAE3D8] transition-colors cursor-pointer"
                 >
                   Submit Another Inquiry
                 </button>
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5 text-left">
+            <form onSubmit={handleSubmit} className="space-y-6 text-left">
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="text-xs font-bold text-[#101828] block mb-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#211D1A] block mb-2">
                     Your Full Name *
                   </label>
                   <input
@@ -113,12 +195,12 @@ export const ContactSection: React.FC = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Ramesh Kumar"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-sm text-[#101828] placeholder-[#667085] focus:outline-none focus:border-[#0876B4] shadow-xs"
+                    className="w-full px-4 py-3 rounded-xl bg-[#F5F0E8] border border-[#EAE3D8] text-sm text-[#211D1A] placeholder-[#69635C] focus:outline-none focus:border-[#C5A16D] focus:bg-white transition-all shadow-2xs"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-[#101828] block mb-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#211D1A] block mb-2">
                     Company Name *
                   </label>
                   <input
@@ -126,15 +208,15 @@ export const ContactSection: React.FC = () => {
                     required
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    placeholder="e.g. Wipro / Amazon / Start-up"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-sm text-[#101828] placeholder-[#667085] focus:outline-none focus:border-[#0876B4] shadow-xs"
+                    placeholder="e.g. Wipro / Amazon / Enterprise"
+                    className="w-full px-4 py-3 rounded-xl bg-[#F5F0E8] border border-[#EAE3D8] text-sm text-[#211D1A] placeholder-[#69635C] focus:outline-none focus:border-[#C5A16D] focus:bg-white transition-all shadow-2xs"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="text-xs font-bold text-[#101828] block mb-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#211D1A] block mb-2">
                     Official Work Email *
                   </label>
                   <input
@@ -143,12 +225,12 @@ export const ContactSection: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="ramesh@company.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-sm text-[#101828] placeholder-[#667085] focus:outline-none focus:border-[#0876B4] shadow-xs"
+                    className="w-full px-4 py-3 rounded-xl bg-[#F5F0E8] border border-[#EAE3D8] text-sm text-[#211D1A] placeholder-[#69635C] focus:outline-none focus:border-[#C5A16D] focus:bg-white transition-all shadow-2xs"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-[#101828] block mb-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#211D1A] block mb-2">
                     Phone / WhatsApp Number *
                   </label>
                   <input
@@ -156,78 +238,94 @@ export const ContactSection: React.FC = () => {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="+91 99000 20456"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-sm text-[#101828] placeholder-[#667085] focus:outline-none focus:border-[#0876B4] shadow-xs"
+                    placeholder={COMPANY_INFO.contact.corporatePhone}
+                    className="w-full px-4 py-3 rounded-xl bg-[#F5F0E8] border border-[#EAE3D8] text-sm text-[#211D1A] placeholder-[#69635C] focus:outline-none focus:border-[#C5A16D] focus:bg-white transition-all shadow-2xs"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="text-xs font-bold text-[#101828] block mb-1.5">
-                    Primary Category of Interest
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#211D1A] block mb-2">
+                    {activePathway === 'manufacturing' ? 'Product Category' : 'Gifting Solution'}
                   </label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-sm text-[#101828] focus:outline-none focus:border-[#0876B4] shadow-xs"
+                    className="w-full px-4 py-3 rounded-xl bg-[#F5F0E8] border border-[#EAE3D8] text-sm text-[#211D1A] focus:outline-none focus:border-[#C5A16D] focus:bg-white transition-all shadow-2xs"
                   >
-                    <option value="Corporate Gift Sets">Corporate Gift Sets (HGS 2-in-1 to 5-in-1)</option>
-                    <option value="Corporate Backpacks">Corporate Backpacks (Ninja Gear / ADMA London)</option>
-                    <option value="Employee Welcome Kits">Employee Welcome Kits &amp; Onboarding</option>
-                    <option value="Smart Drinkware & Bottles">Smart Drinkware &amp; Bottles (Temp Display)</option>
-                    <option value="Executive Diaries">Executive Diaries &amp; Notebooks</option>
-                    <option value="Festival & Diwali Hampers">Festival &amp; Diwali Corporate Hampers</option>
+                    {pathways[activePathway].categories.map((cat, idx) => (
+                      <option key={idx} value={cat.value}>
+                        {cat.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-[#101828] block mb-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#211D1A] block mb-2">
                     Estimated Quantity
                   </label>
                   <select
                     value={formData.quantity}
                     onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-sm text-[#101828] focus:outline-none focus:border-[#0876B4] shadow-xs"
+                    className="w-full px-4 py-3 rounded-xl bg-[#F5F0E8] border border-[#EAE3D8] text-sm text-[#211D1A] focus:outline-none focus:border-[#C5A16D] focus:bg-white transition-all shadow-2xs"
                   >
-                    <option value="50 - 100 pcs">50 &ndash; 100 units</option>
-                    <option value="100 - 250 pcs">100 &ndash; 250 units</option>
-                    <option value="250 - 500 pcs">250 &ndash; 500 units</option>
-                    <option value="500 - 1000 pcs">500 &ndash; 1,000 units</option>
-                    <option value="1000+ pcs">1,000+ units (Enterprise Contract)</option>
+                    {quantitySlabs.map((slab, idx) => (
+                      <option key={idx} value={slab.value}>
+                        {slab.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#101828] block mb-1.5">
-                  Specific Requirements or Event Date
+                <label className="text-xs font-bold uppercase tracking-wider text-[#211D1A] block mb-2">
+                  Project Notes or Timeline
                 </label>
                 <textarea
                   rows={3}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell us about the branding, preferred colors, packaging, or delivery deadline..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E5E7EB] text-sm text-[#101828] placeholder-[#667085] focus:outline-none focus:border-[#0876B4] shadow-xs"
+                  placeholder="Share details regarding your preferred model, branding requirements, target delivery date, or multi-city dispatch..."
+                  className="w-full px-4 py-3 rounded-xl bg-[#F5F0E8] border border-[#EAE3D8] text-sm text-[#211D1A] placeholder-[#69635C] focus:outline-none focus:border-[#C5A16D] focus:bg-white transition-all shadow-2xs resize-none"
                 />
               </div>
 
-              <div className="pt-2 flex flex-col sm:flex-row items-center gap-4">
+              {errorMsg && (
+                <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{errorMsg}</span>
+                </div>
+              )}
+
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                 <button
                   type="submit"
-                  className="w-full sm:flex-1 py-3.5 px-6 rounded-full bg-[#101828] hover:bg-[#0876B4] text-white text-xs font-bold tracking-wide shadow-md flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  disabled={isSubmitting}
+                  className="flex-1 py-4 px-8 rounded-xl bg-[#211D1A] hover:bg-[#40352D] text-white text-xs font-bold uppercase tracking-[0.14em] shadow-lg flex items-center justify-center gap-2.5 transition-all cursor-pointer disabled:opacity-50"
                 >
-                  <Send className="w-4 h-4 text-[#E8B43A]" />
-                  <span>REQUEST CORPORATE PROPOSAL</span>
+                  {isSubmitting ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin text-white" />
+                      <span>SUBMITTING REQUEST...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 text-[#C5A16D]" />
+                      <span>SUBMIT FACTORY ENQUIRY</span>
+                    </>
+                  )}
                 </button>
 
                 <a
                   href={getDirectWhatsAppUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto py-3.5 px-6 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold flex items-center justify-center gap-2 transition-colors whitespace-nowrap shadow-xs"
+                  className="py-4 px-8 rounded-xl bg-white hover:bg-[#F5F0E8] text-[#211D1A] border border-[#40352D]/30 hover:border-[#C5A16D] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors whitespace-nowrap shadow-2xs"
                 >
-                  <MessageSquare className="w-4 h-4 text-emerald-600" />
+                  <MessageSquare className="w-4 h-4 text-[#A98554]" />
                   <span>Chat on WhatsApp</span>
                 </a>
               </div>

@@ -9,8 +9,8 @@ import { FloatingWhatsApp } from '../components/FloatingWhatsApp';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://globrandslifestyle.com'),
-  title: 'Globrands Lifestyle | Corporate Laptop Bags, Backpacks & Executive Gifting Manufacturer Bangalore',
-  description: 'India\'s leading manufacturer of corporate laptop bags, customized backpacks, executive gift hampers, and premium merchandise. Official makers of Ninja Gear Original & ADMA London bags with 1-year warranty and in-house logo branding.',
+  title: 'Globrands Lifestyle Pvt. Ltd. | Direct Factory Backpack Manufacturers & Corporate Gifting',
+  description: 'Globrands Lifestyle Pvt. Ltd. is India\'s premier direct factory backpack manufacturer and corporate gifting partner in Bengaluru. Makers of Ninja Gear Original & ADMA London carrywear with 1-year replacement warranty, alongside curated corporate gifting hampers.',
   keywords: [
     // Top-Tier B2B & High-Intent Commercial Keywords
     'laptop bags corporate gifts',
@@ -52,11 +52,12 @@ export const metadata: Metadata = {
     // Proprietary Brand Keywords
     'Ninja Gear Original',
     'ADMA London bags',
-    'Globrands Lifestyle Bangalore'
+    'Globrands Lifestyle Bangalore',
+    'Globrands Lifestyle Pvt. Ltd.'
   ],
-  authors: [{ name: 'Globrands Lifestyle Pvt Ltd', url: 'https://globrandslifestyle.com' }],
-  creator: 'Globrands Lifestyle',
-  publisher: 'Globrands Lifestyle',
+  authors: [{ name: 'Globrands Lifestyle Pvt. Ltd.', url: 'https://globrandslifestyle.com' }],
+  creator: 'Globrands Lifestyle Pvt. Ltd.',
+  publisher: 'Globrands Lifestyle Pvt. Ltd.',
   formatDetection: {
     email: false,
     address: false,
@@ -66,16 +67,16 @@ export const metadata: Metadata = {
     canonical: 'https://globrandslifestyle.com',
   },
   openGraph: {
-    title: 'Globrands Lifestyle | Corporate Laptop Bags & Premium Executive Gifting',
-    description: 'Direct Bangalore factory manufacturer of premium corporate laptop bags, engineered backpacks, executive gift hampers, and custom merchandise for India\'s leading enterprises.',
+    title: 'Globrands Lifestyle Pvt. Ltd. | Direct Factory Backpack Manufacturers & Corporate Gifting',
+    description: 'Direct Bangalore factory backpack manufacturer of Ninja Gear Original & ADMA London carrywear, executive gift hampers, and custom merchandise for India\'s leading enterprises.',
     url: 'https://globrandslifestyle.com',
-    siteName: 'Globrands Lifestyle',
+    siteName: 'Globrands Lifestyle Pvt. Ltd.',
     images: [
       {
         url: '/globrands-logo.jpg',
         width: 1200,
         height: 630,
-        alt: 'Globrands Lifestyle Corporate Gifting & Executive Bags',
+        alt: 'Globrands Lifestyle Pvt. Ltd. Backpack Manufacturers & Corporate Gifting',
       },
     ],
     locale: 'en_IN',
@@ -83,8 +84,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Globrands Lifestyle | Corporate Laptop Bags & Executive Gifting',
-    description: 'Engineered corporate laptop bags, executive hampers & custom merchandise direct from Bengaluru atelier.',
+    title: 'Globrands Lifestyle Pvt. Ltd. | Backpack Manufacturers & Corporate Gifting',
+    description: 'Engineered corporate backpacks, executive hampers & custom merchandise direct from Bengaluru atelier.',
     images: ['/globrands-logo.jpg'],
   },
   robots: {
@@ -108,10 +109,10 @@ export default function RootLayout({
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Globrands Lifestyle',
+    name: 'Globrands Lifestyle Pvt. Ltd.',
     url: 'https://globrandslifestyle.com',
     logo: 'https://globrandslifestyle.com/globrands-logo.jpg',
-    description: 'Premier B2B corporate gifting and executive bag manufacturer in Bengaluru, India. Proprietary brands include Ninja Gear Original and ADMA London.',
+    description: 'Premier direct factory backpack manufacturer and B2B corporate gifting partner in Bengaluru, India. Proprietary brands include Ninja Gear Original and ADMA London.',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Bengaluru',
@@ -157,15 +158,15 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-[#F8FAFC] text-[#0F172A] font-sans antialiased selection:bg-[#0E679C] selection:text-white">
+      <body className="min-h-screen bg-[#F5F0E8] text-[#292725] font-sans antialiased selection:bg-[#211D1A] selection:text-white">
         <QuoteProvider>
           {/* Global Sticky Navbar */}
-          <Suspense fallback={<div className="h-16 bg-white" />}>
+          <Suspense fallback={null}>
             <Navbar />
           </Suspense>
 
           {/* Page Body */}
-          <main className="min-h-[85vh] pt-[92px]">
+          <main className="min-h-[85vh]">
             {children}
           </main>
 

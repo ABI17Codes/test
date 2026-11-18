@@ -8,7 +8,7 @@ const TESTIMONIALS = [
     name: 'Aditi Sharma',
     role: 'Head of People Operations',
     company: 'Tech Mahindra, Bengaluru',
-    text: 'Globrands Lifestyle took care of our 650+ new-hire welcome kits across 4 offices. The custom laser engraving on the smart bottles and the ADMA London bags exceeded our executive expectations. Arrived 2 days ahead of schedule!',
+    text: 'Globrands Lifestyle Pvt. Ltd. took care of our 650+ new-hire welcome kits across 4 offices. The custom laser engraving on the smart bottles and the ADMA London bags exceeded our executive expectations. Arrived 2 days ahead of schedule!',
     rating: 5,
     avatar: 'AS',
     pill: '650+ Welcome Kits'

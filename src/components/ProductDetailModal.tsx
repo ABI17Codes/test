@@ -39,7 +39,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
   const getWhatsAppEnquiryUrl = () => {
     const text = encodeURIComponent(
-      `Hello Globrands Lifestyle,\n\nI am requesting a corporate quote for:\n• Product: ${product.name}\n• Code: ${product.code}\n• Brand: ${product.brand}\n• Quantity: ${selectedQuantity} units\n• Color: ${selectedColor}\n• Branding: ${selectedCustomization}\n\nPlease share B2B tiered rates and mockups.`
+      `Hello Globrands Lifestyle Pvt. Ltd.,\n\nI am requesting a corporate quote for:\n• Product: ${product.name}\n• Code: ${product.code}\n• Brand: ${product.brand}\n• Quantity: ${selectedQuantity} units\n• Color: ${selectedColor}\n• Branding: ${selectedCustomization}\n\nPlease share B2B tiered rates and mockups.`
     );
     return `https://wa.me/919900020456?text=${text}`;
   };

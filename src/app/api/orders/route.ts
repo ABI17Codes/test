@@ -1,48 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import { withIdempotency } from '@/lib/idempotency';
 import { createOrderRecord, listOrders } from '@/lib/db';
-
-const OrderItemSchema = z.object({
-  productId: z.string(),
-  name: z.string(),
-  code: z.string().optional(),
-  quantity: z.number().min(1),
-  unitPrice: z.number().min(0).default(0),
-  customization: z.string().optional(),
-  color: z.string().optional()
-});
-
-const CreateOrderSchema = z.object({
-  customerName: z.string().min(2, 'Customer name is required'),
-  companyName: z.string().min(2, 'Company name is required'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(10, 'Valid phone number is required'),
-  items: z.array(OrderItemSchema).min(1, 'Order must contain at least one item'),
-  shippingAddress: z.object({
-    addressLine: z.string().optional(),
-    city: z.string().optional(),
-    state: z.string().optional(),
-    pincode: z.string().optional(),
-    country: z.string().default('India')
-  }).optional(),
-  customizationDetails: z.object({
-    brandingType: z.string().optional(),
-    logoNotes: z.string().optional(),
-    laserEngravingText: z.string().optional()
-  }).optional(),
-  paymentMethod: z.enum(['razorpay', 'stripe', 'bank_transfer', 'po']).default('razorpay'),
-  notes: z.string().optional()
-});
+import { CreateOrderSchema, OrderQuerySchema, formatZodError } from '@/lib/validation/schemas';
 
 // GET /api/orders - List all orders (with optional status filter)
 export async function GET(req: NextRequest) {
   try {
     const url = req.nextUrl;
-    const status = url.searchParams.get('status') || undefined;
-    const limit = parseInt(url.searchParams.get('limit') || '50', 10);
-    const offset = parseInt(url.searchParams.get('offset') || '0', 10);
+    const queryParsed = OrderQuerySchema.safeParse({
+      status: url.searchParams.get('status') || undefined,
+      limit: url.searchParams.get('limit') || '50',
+      offset: url.searchParams.get('offset') || '0',
+    });
 
+    if (!queryParsed.success) {
+      return NextResponse.json(formatZodError(queryParsed.error), { status: 400 });
+    }
+
+    const { status, limit, offset } = queryParsed.data;
     const orders = await listOrders({ status, limit, offset });
 
     return NextResponse.json({
@@ -66,14 +41,7 @@ export async function POST(req: NextRequest) {
     // 1. Validate payload
     const parsed = CreateOrderSchema.safeParse(body);
     if (!parsed.success) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: 'Validation error',
-          details: parsed.error.issues
-        },
-        { status: 400 }
-      );
+      return NextResponse.json(formatZodError(parsed.error), { status: 400 });
     }
 
     const data = parsed.data;

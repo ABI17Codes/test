@@ -131,7 +131,7 @@ export default function AdminCustomersPage() {
     const cleanPhone = user.phone.replace(/[^0-9]/g, '');
     const phoneWithCountry = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`;
     const text = encodeURIComponent(
-      `Hello ${user.name},\n\nGreetings from Globrands Lifestyle Corporate Concierge! We are glad to have ${user.company_name} in our network. Do you have any upcoming bulk gifting, conference kit, or executive bag requirements we can assist with?`
+      `Hello ${user.name},\n\nGreetings from Globrands Lifestyle Pvt. Ltd. Corporate Concierge! We are glad to have ${user.company_name} in our network. Do you have any upcoming bulk gifting, conference kit, or executive bag requirements we can assist with?`
     );
     return `https://wa.me/${phoneWithCountry}?text=${text}`;
   };

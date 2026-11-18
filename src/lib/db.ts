@@ -1,6 +1,7 @@
 import { QueryResult, QueryResultRow } from 'pg';
 import fs from 'fs';
 import path from 'path';
+import crypto from 'node:crypto';
 import { PRODUCTS } from '../data/products';
 import { db, schema, pool } from '@/db';
 import { eq, and, gt, sql, desc, or, ilike, type SQL } from 'drizzle-orm';
@@ -22,6 +23,7 @@ interface LocalDatabase {
   orders: Record<string, any>;
   products: Record<string, any>;
   quotes: Record<string, any>;
+  inquiries: Record<string, any>;
   payments: Record<string, any>;
 }
 
@@ -61,7 +63,7 @@ function ensureDataFile(): LocalDatabase {
       'usr-admin-1': {
         id: 'usr-admin-1',
         name: 'Globrands Admin',
-        company_name: 'Globrands Lifestyle Pvt Ltd',
+        company_name: 'Globrands Lifestyle Pvt. Ltd.',
         email: 'admin@globrandslifestyle.com',
         phone: '+91 99000 20456',
         password_hash: '9f584e0c4b3734a706598c47493a3ec7:08b3ba945e99d8544b62db4fe1da35d8868ee3df9f928e4e73b22a00c6d9bb60ad2b3226dbdd330f836932fc36e398188179e8eefdb268759fb8f3f886f34584',
@@ -154,6 +156,7 @@ function ensureDataFile(): LocalDatabase {
           created_at: new Date(Date.now() - 3600000).toISOString()
         }
       },
+      inquiries: {},
       payments: {}
     };
 
@@ -164,6 +167,13 @@ function ensureDataFile(): LocalDatabase {
   try {
     const raw = fs.readFileSync(DATA_FILE, 'utf-8');
     const parsed = JSON.parse(raw);
+    parsed.users = parsed.users || {};
+    parsed.idempotency_keys = parsed.idempotency_keys || {};
+    parsed.orders = parsed.orders || {};
+    parsed.products = parsed.products || {};
+    parsed.quotes = parsed.quotes || {};
+    parsed.inquiries = parsed.inquiries || {};
+    parsed.payments = parsed.payments || {};
     return parsed;
   } catch {
     return {
@@ -172,9 +182,145 @@ function ensureDataFile(): LocalDatabase {
       orders: {},
       products: {},
       quotes: {},
+      inquiries: {},
       payments: {}
     };
   }
+}
+
+let pgInitPromise: Promise<void> | null = null;
+
+export async function ensurePostgresTables(): Promise<void> {
+  if (!pool) return;
+  if (!pgInitPromise) {
+    pgInitPromise = (async () => {
+      try {
+        await pool.query(`
+          CREATE TABLE IF NOT EXISTS "users" (
+            "id" varchar(100) PRIMARY KEY NOT NULL,
+            "name" varchar(255) NOT NULL,
+            "company_name" varchar(255) NOT NULL,
+            "email" varchar(255) NOT NULL UNIQUE,
+            "phone" varchar(50),
+            "password_hash" varchar(255) NOT NULL,
+            "role" varchar(50) DEFAULT 'client',
+            "gstin" varchar(50),
+            "city" varchar(100),
+            "is_active" boolean DEFAULT true,
+            "created_at" timestamp with time zone DEFAULT now(),
+            "updated_at" timestamp with time zone DEFAULT now()
+          );
+          CREATE TABLE IF NOT EXISTS "idempotency_keys" (
+            "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+            "key" varchar(255) NOT NULL UNIQUE,
+            "request_path" varchar(255) NOT NULL,
+            "request_hash" varchar(64) NOT NULL,
+            "status" varchar(50) DEFAULT 'processing' NOT NULL,
+            "status_code" integer,
+            "response_body" jsonb,
+            "created_at" timestamp with time zone DEFAULT now(),
+            "expires_at" timestamp with time zone
+          );
+          CREATE TABLE IF NOT EXISTS "products" (
+            "id" varchar(100) PRIMARY KEY NOT NULL,
+            "code" varchar(100) NOT NULL UNIQUE,
+            "name" varchar(255) NOT NULL,
+            "category" varchar(100) NOT NULL,
+            "brand" varchar(100) NOT NULL,
+            "description" text,
+            "moq" integer DEFAULT 50,
+            "price" numeric(12, 2) DEFAULT '0',
+            "image_url" text,
+            "tags" text[],
+            "specifications" jsonb DEFAULT '{}'::jsonb,
+            "branding_options" text[],
+            "colors" jsonb DEFAULT '[]'::jsonb,
+            "catalog_page" integer,
+            "is_active" boolean DEFAULT true,
+            "created_at" timestamp with time zone DEFAULT now(),
+            "updated_at" timestamp with time zone DEFAULT now()
+          );
+          CREATE TABLE IF NOT EXISTS "orders" (
+            "id" varchar(100) PRIMARY KEY NOT NULL,
+            "idempotency_key" varchar(255) NOT NULL UNIQUE,
+            "order_number" varchar(100) NOT NULL UNIQUE,
+            "customer_name" varchar(255) NOT NULL,
+            "company_name" varchar(255) NOT NULL,
+            "email" varchar(255) NOT NULL,
+            "phone" varchar(50) NOT NULL,
+            "status" varchar(50) DEFAULT 'pending',
+            "payment_status" varchar(50) DEFAULT 'unpaid',
+            "payment_method" varchar(50) DEFAULT 'razorpay',
+            "payment_id" varchar(255),
+            "currency" varchar(10) DEFAULT 'INR',
+            "subtotal" numeric(12, 2) NOT NULL,
+            "tax" numeric(12, 2) DEFAULT '0',
+            "total_amount" numeric(12, 2) NOT NULL,
+            "items" jsonb NOT NULL,
+            "shipping_address" jsonb,
+            "customization_details" jsonb,
+            "notes" text,
+            "created_at" timestamp with time zone DEFAULT now(),
+            "updated_at" timestamp with time zone DEFAULT now()
+          );
+          CREATE TABLE IF NOT EXISTS "quotes" (
+            "id" varchar(100) PRIMARY KEY NOT NULL,
+            "idempotency_key" varchar(255),
+            "quote_number" varchar(100) NOT NULL UNIQUE,
+            "customer_name" varchar(255) NOT NULL,
+            "company_name" varchar(255) NOT NULL,
+            "email" varchar(255) NOT NULL,
+            "phone" varchar(50) NOT NULL,
+            "city" varchar(100),
+            "category" varchar(150),
+            "estimated_quantity" varchar(100),
+            "status" varchar(50) DEFAULT 'new',
+            "target_date" varchar(100),
+            "estimated_budget" varchar(100),
+            "items" jsonb NOT NULL,
+            "branding_requirements" text,
+            "notes" text,
+            "internal_notes" text,
+            "created_at" timestamp with time zone DEFAULT now(),
+            "updated_at" timestamp with time zone DEFAULT now()
+          );
+          ALTER TABLE "quotes" ADD COLUMN IF NOT EXISTS "category" varchar(150);
+          ALTER TABLE "quotes" ADD COLUMN IF NOT EXISTS "estimated_quantity" varchar(100);
+          CREATE TABLE IF NOT EXISTS "inquiries" (
+            "id" varchar(100) PRIMARY KEY NOT NULL,
+            "quote_number" varchar(100),
+            "full_name" varchar(255) NOT NULL,
+            "company_name" varchar(255) NOT NULL,
+            "email" varchar(255) NOT NULL,
+            "phone" varchar(50) NOT NULL,
+            "category" varchar(150) NOT NULL,
+            "estimated_quantity" varchar(100) NOT NULL,
+            "requirements" text,
+            "status" varchar(50) DEFAULT 'new',
+            "created_at" timestamp with time zone DEFAULT now(),
+            "updated_at" timestamp with time zone DEFAULT now()
+          );
+          CREATE TABLE IF NOT EXISTS "payments" (
+            "id" varchar(100) PRIMARY KEY NOT NULL,
+            "order_id" varchar(100),
+            "gateway" varchar(50) NOT NULL,
+            "gateway_order_id" varchar(255),
+            "gateway_payment_id" varchar(255),
+            "amount" numeric(12, 2) NOT NULL,
+            "currency" varchar(10) DEFAULT 'INR',
+            "status" varchar(50) DEFAULT 'created' NOT NULL,
+            "signature" varchar(255),
+            "payload" jsonb,
+            "created_at" timestamp with time zone DEFAULT now()
+          );
+        `);
+      } catch (e) {
+        pgInitPromise = null;
+        console.warn('PostgreSQL schema initialization skipped:', e);
+      }
+    })();
+  }
+  return pgInitPromise;
 }
 
 function saveLocalStore(data: LocalDatabase): void {
@@ -266,24 +412,8 @@ export async function saveIdempotencyProcessing(
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
   const createdAt = new Date();
 
-  try {
-    await db
-      .insert(schema.idempotencyKeys)
-      .values({
-        key,
-        request_path: requestPath,
-        request_hash: requestHash,
-        status: 'processing',
-        expires_at: expiresAt
-      })
-      .onConflictDoNothing({ target: schema.idempotencyKeys.key });
-    return true;
-  } catch (e) {
-    console.warn('Drizzle saveIdempotencyProcessing failed, using local store:', e);
-  }
-
   const store = ensureDataFile();
-  if (store.idempotency_keys[key]) {
+  if (store.idempotency_keys[key] && new Date(store.idempotency_keys[key].expires_at) > new Date()) {
     return false;
   }
 
@@ -296,6 +426,24 @@ export async function saveIdempotencyProcessing(
     expires_at: expiresAt.toISOString()
   };
   saveLocalStore(store);
+
+  try {
+    await ensurePostgresTables();
+    await db
+      .insert(schema.idempotencyKeys)
+      .values({
+        id: crypto.randomUUID(),
+        key,
+        request_path: requestPath,
+        request_hash: requestHash,
+        status: 'processing',
+        expires_at: expiresAt
+      })
+      .onConflictDoNothing({ target: schema.idempotencyKeys.key });
+  } catch (e) {
+    console.warn('Drizzle saveIdempotencyProcessing failed, using local store:', e);
+  }
+
   return true;
 }
 
@@ -304,7 +452,16 @@ export async function saveIdempotencyCompleted(
   statusCode: number,
   responseBody: any
 ): Promise<void> {
+  const store = ensureDataFile();
+  if (store.idempotency_keys[key]) {
+    store.idempotency_keys[key].status = 'completed';
+    store.idempotency_keys[key].status_code = statusCode;
+    store.idempotency_keys[key].response_body = responseBody;
+    saveLocalStore(store);
+  }
+
   try {
+    await ensurePostgresTables();
     await db
       .update(schema.idempotencyKeys)
       .set({
@@ -313,35 +470,26 @@ export async function saveIdempotencyCompleted(
         response_body: responseBody
       })
       .where(eq(schema.idempotencyKeys.key, key));
-    return;
   } catch (e) {
     console.warn('Drizzle saveIdempotencyCompleted failed, using local store:', e);
-  }
-
-  const store = ensureDataFile();
-  if (store.idempotency_keys[key]) {
-    store.idempotency_keys[key].status = 'completed';
-    store.idempotency_keys[key].status_code = statusCode;
-    store.idempotency_keys[key].response_body = responseBody;
-    saveLocalStore(store);
   }
 }
 
 export async function saveIdempotencyFailed(key: string): Promise<void> {
-  try {
-    await db
-      .update(schema.idempotencyKeys)
-      .set({ status: 'failed' })
-      .where(eq(schema.idempotencyKeys.key, key));
-    return;
-  } catch (e) {
-    console.warn('Drizzle saveIdempotencyFailed failed, using local store:', e);
-  }
-
   const store = ensureDataFile();
   if (store.idempotency_keys[key]) {
     store.idempotency_keys[key].status = 'failed';
     saveLocalStore(store);
+  }
+
+  try {
+    await ensurePostgresTables();
+    await db
+      .update(schema.idempotencyKeys)
+      .set({ status: 'failed' })
+      .where(eq(schema.idempotencyKeys.key, key));
+  } catch (e) {
+    console.warn('Drizzle saveIdempotencyFailed failed, using local store:', e);
   }
 }
 
@@ -357,7 +505,15 @@ export async function createOrderRecord(orderData: any): Promise<any> {
     return existing || store.orders[orderData.id];
   }
 
+  store.orders[orderData.id] = {
+    ...orderData,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+  saveLocalStore(store);
+
   try {
+    await ensurePostgresTables();
     const [inserted] = await db
       .insert(schema.orders)
       .values({
@@ -395,15 +551,9 @@ export async function createOrderRecord(orderData: any): Promise<any> {
 
     if (existing) return existing;
   } catch (err: any) {
-    console.warn('Drizzle createOrderRecord error, saving locally:', err);
+    console.warn('Drizzle createOrderRecord error, saved locally:', err);
   }
 
-  store.orders[orderData.id] = {
-    ...orderData,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  };
-  saveLocalStore(store);
   return store.orders[orderData.id];
 }
 
@@ -510,6 +660,80 @@ export async function deleteOrderRecord(id: string): Promise<boolean> {
 // PRODUCTS REPOSITORY (DRIZZLE ORM)
 // ---------------------------------------------------------------------------
 
+function normalizeProductRecord(raw: any): any {
+  if (!raw) return null;
+  const staticProd = PRODUCTS.find(
+    (sp) =>
+      sp.id.toLowerCase() === String(raw.id || '').toLowerCase() ||
+      sp.code.toLowerCase() === String(raw.code || '').toLowerCase()
+  );
+
+  const img = raw.image_url || raw.image || staticProd?.image || '/catalog/crops/hgs_h74.jpg';
+  const numPrice = Number(raw.price ?? raw.mrp ?? staticProd?.mrp) || 450;
+  const specsList = Array.isArray(raw.specifications)
+    ? raw.specifications
+    : Array.isArray(raw.specs)
+    ? raw.specs
+    : staticProd?.specs || [];
+  const brandingList =
+    Array.isArray(raw.branding_options) && raw.branding_options.length > 0
+      ? raw.branding_options
+      : Array.isArray(raw.brandingOptions) && raw.brandingOptions.length > 0
+      ? raw.brandingOptions
+      : staticProd?.brandingOptions || ['Laser Engraving', 'Screen Printing'];
+  const tagsList =
+    Array.isArray(raw.tags) && raw.tags.length > 0
+      ? raw.tags
+      : staticProd?.tags || ['B2B Direct'];
+  const colorsList =
+    Array.isArray(raw.colors) && raw.colors.length > 0
+      ? raw.colors
+      : staticProd?.colors || [];
+  const moqStr =
+    typeof raw.moq === 'number'
+      ? `${raw.moq} pcs`
+      : raw.moq || staticProd?.moq || '50 pcs';
+  const catalogType =
+    raw.catalogType || staticProd?.catalogType || (raw.category === 'bags' ? 'bags' : 'gifts');
+  const pageNumber =
+    Number(raw.pageNumber ?? (typeof raw.catalog_page === 'number' ? raw.catalog_page : undefined) ?? staticProd?.pageNumber) || 1;
+  const catalogPage =
+    (typeof raw.catalogPage === 'string' && raw.catalogPage) ||
+    (typeof raw.catalog_page === 'string' && raw.catalog_page) ||
+    staticProd?.catalogPage ||
+    (catalogType === 'bags'
+      ? `/catalog/bags/page_${String(pageNumber).padStart(2, '0')}.jpg`
+      : `/catalog/gifts/page_${String(pageNumber).padStart(3, '0')}.jpg`);
+
+  return {
+    ...staticProd,
+    ...raw,
+    id: raw.id || staticProd?.id,
+    code: raw.code || staticProd?.code,
+    name: raw.name || staticProd?.name,
+    category: raw.category || staticProd?.category || 'gift-sets',
+    brand: raw.brand || staticProd?.brand || 'Globrands Lifestyle Pvt. Ltd.',
+    description: raw.description ?? staticProd?.description ?? '',
+    price: numPrice,
+    mrp: numPrice,
+    moq: moqStr,
+    image: img,
+    image_url: img,
+    specs: specsList,
+    specifications: raw.specifications ?? specsList,
+    brandingOptions: brandingList,
+    branding_options: brandingList,
+    tags: tagsList,
+    colors: colorsList,
+    composition: raw.composition || staticProd?.composition,
+    catalogType,
+    pageNumber,
+    catalogPage,
+    catalog_page: raw.catalog_page ?? pageNumber,
+    is_active: raw.is_active !== false,
+  };
+}
+
 export async function listProductsFromDb(filters: { category?: string; brand?: string; search?: string; includeInactive?: boolean } = {}): Promise<any[]> {
   try {
     const conditions: SQL[] = filters.includeInactive ? [] : [eq(schema.products.is_active, true)];
@@ -538,15 +762,7 @@ export async function listProductsFromDb(filters: { category?: string; brand?: s
       .orderBy(desc(schema.products.created_at));
 
     if (rows && rows.length > 0) {
-      return rows.map((r) => ({
-        ...r,
-        price: Number(r.price) || 450,
-        mrp: Number(r.price) || 450,
-        image: r.image_url,
-        specs: r.specifications,
-        brandingOptions: r.branding_options,
-        catalogPage: r.catalog_page
-      }));
+      return rows.map((r) => normalizeProductRecord(r));
     }
   } catch (e) {
     console.warn('Drizzle listProductsFromDb error, using local store:', e);
@@ -555,6 +771,9 @@ export async function listProductsFromDb(filters: { category?: string; brand?: s
   const store = ensureDataFile();
   let list = Object.values(store.products);
 
+  if (!filters.includeInactive) {
+    list = list.filter((p: any) => p.is_active !== false);
+  }
   if (filters.category && filters.category !== 'all') {
     list = list.filter((p: any) => p.category === filters.category);
   }
@@ -570,7 +789,7 @@ export async function listProductsFromDb(filters: { category?: string; brand?: s
     );
   }
 
-  return list;
+  return list.map((p: any) => normalizeProductRecord(p));
 }
 
 export async function getProductByIdFromDb(idOrCode: string): Promise<any | null> {
@@ -587,15 +806,7 @@ export async function getProductByIdFromDb(idOrCode: string): Promise<any | null
       .limit(1);
 
     if (p) {
-      return {
-        ...p,
-        price: Number(p.price) || 450,
-        mrp: Number(p.price) || 450,
-        image: rImage(p.image_url),
-        specs: p.specifications,
-        brandingOptions: p.branding_options,
-        catalogPage: p.catalog_page
-      };
+      return normalizeProductRecord(p);
     }
   } catch (e) {
     console.warn('Drizzle getProductByIdFromDb error, using local store:', e);
@@ -606,11 +817,7 @@ export async function getProductByIdFromDb(idOrCode: string): Promise<any | null
     item.id.toLowerCase() === idOrCode.toLowerCase() || 
     item.code.toLowerCase() === idOrCode.toLowerCase()
   );
-  return localP || null;
-}
-
-function rImage(img: string | null) {
-  return img || '/catalog/crops/hgs_h74.jpg';
+  return localP ? normalizeProductRecord(localP) : null;
 }
 
 export async function createProductInDb(productData: any): Promise<any> {
@@ -623,7 +830,11 @@ export async function createProductInDb(productData: any): Promise<any> {
     updated_at: new Date().toISOString()
   };
 
+  store.products[id] = record;
+  saveLocalStore(store);
+
   try {
+    await ensurePostgresTables();
     const [inserted] = await db
       .insert(schema.products)
       .values({
@@ -631,7 +842,7 @@ export async function createProductInDb(productData: any): Promise<any> {
         code: productData.code,
         name: productData.name,
         category: productData.category,
-        brand: productData.brand || 'Globrands Lifestyle',
+        brand: productData.brand || 'Globrands Lifestyle Pvt. Ltd.',
         description: productData.description || '',
         moq: parseInt(productData.moq || '50', 10) || 50,
         price: String(productData.price || productData.mrp || 450),
@@ -657,14 +868,12 @@ export async function createProductInDb(productData: any): Promise<any> {
       })
       .returning();
 
-    if (inserted) return inserted;
+    if (inserted) return normalizeProductRecord(inserted);
   } catch (e) {
-    console.warn('Drizzle createProductInDb error, saving locally:', e);
+    console.warn('Drizzle createProductInDb error, saved locally:', e);
   }
 
-  store.products[id] = record;
-  saveLocalStore(store);
-  return record;
+  return normalizeProductRecord(record);
 }
 
 export async function updateProductInDb(id: string, updates: any): Promise<any | null> {
@@ -694,7 +903,7 @@ export async function updateProductInDb(id: string, updates: any): Promise<any |
       .where(eq(schema.products.id, p.id))
       .returning();
 
-    if (updated) return updated;
+    if (updated) return normalizeProductRecord(updated);
   } catch (e) {
     console.warn('Drizzle updateProductInDb error, updating locally:', e);
   }
@@ -706,7 +915,7 @@ export async function updateProductInDb(id: string, updates: any): Promise<any |
   };
   store.products[p.id] = localUpdated;
   saveLocalStore(store);
-  return localUpdated;
+  return normalizeProductRecord(localUpdated);
 }
 
 export async function deleteProductInDb(id: string): Promise<boolean> {
@@ -745,12 +954,19 @@ export async function createQuoteRecord(quoteData: any): Promise<any> {
   const record = {
     ...quoteData,
     id,
+    category: quoteData.category || '',
+    estimated_quantity: quoteData.estimated_quantity || '',
     status: quoteData.status || 'new',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   };
 
+  // Always persist in local store first so data is never lost
+  store.quotes[id] = record;
+  saveLocalStore(store);
+
   try {
+    await ensurePostgresTables();
     const [inserted] = await db
       .insert(schema.quotes)
       .values({
@@ -762,6 +978,8 @@ export async function createQuoteRecord(quoteData: any): Promise<any> {
         email: quoteData.email,
         phone: quoteData.phone,
         city: quoteData.city || '',
+        category: quoteData.category || '',
+        estimated_quantity: quoteData.estimated_quantity || '',
         status: quoteData.status || 'new',
         target_date: quoteData.target_date || '',
         estimated_budget: quoteData.estimated_budget || '',
@@ -774,28 +992,162 @@ export async function createQuoteRecord(quoteData: any): Promise<any> {
 
     if (inserted) return inserted;
   } catch (e) {
-    console.warn('Drizzle createQuoteRecord error, saving locally:', e);
+    console.warn('Drizzle createQuoteRecord error, saved locally:', e);
   }
 
-  store.quotes[id] = record;
-  saveLocalStore(store);
   return record;
 }
 
-export async function listQuotesFromDb(status?: string): Promise<any[]> {
+export async function createInquiryRecord(inquiryData: {
+  id?: string;
+  quote_number?: string;
+  full_name: string;
+  company_name: string;
+  email: string;
+  phone: string;
+  category: string;
+  estimated_quantity: string;
+  requirements?: string;
+  idempotency_key?: string;
+}): Promise<any> {
+  const store = ensureDataFile();
+  const timestamp = Date.now().toString().slice(-6);
+  const id = inquiryData.id || `inq_${timestamp}_${Math.random().toString(36).substring(2, 6)}`;
+  const quoteNumber = inquiryData.quote_number || `RFQ-${new Date().getFullYear()}-${timestamp}`;
+  const nowIso = new Date().toISOString();
+
+  const inquiryRecord = {
+    id,
+    quote_number: quoteNumber,
+    full_name: inquiryData.full_name,
+    company_name: inquiryData.company_name,
+    email: inquiryData.email,
+    phone: inquiryData.phone,
+    category: inquiryData.category,
+    estimated_quantity: inquiryData.estimated_quantity,
+    requirements: inquiryData.requirements || '',
+    status: 'new',
+    created_at: nowIso,
+    updated_at: nowIso,
+  };
+
+  store.inquiries[id] = inquiryRecord;
+  saveLocalStore(store);
+
   try {
+    await ensurePostgresTables();
+    await db
+      .insert(schema.inquiries)
+      .values({
+        id,
+        quote_number: quoteNumber,
+        full_name: inquiryData.full_name,
+        company_name: inquiryData.company_name,
+        email: inquiryData.email,
+        phone: inquiryData.phone,
+        category: inquiryData.category,
+        estimated_quantity: inquiryData.estimated_quantity,
+        requirements: inquiryData.requirements || '',
+        status: 'new',
+      });
+  } catch (e) {
+    console.warn('Drizzle createInquiryRecord error, saved locally:', e);
+  }
+
+  // Also save into quotes table so Admin -> Quotes & RFQs and Profile -> My RFQs display it seamlessly
+  const parsedQty = parseInt(String(inquiryData.estimated_quantity).replace(/[^0-9]/g, ''), 10) || 100;
+  const quoteRecord = await createQuoteRecord({
+    id: `rfq_${id}`,
+    idempotency_key: inquiryData.idempotency_key || null,
+    quote_number: quoteNumber,
+    customer_name: inquiryData.full_name,
+    company_name: inquiryData.company_name,
+    email: inquiryData.email,
+    phone: inquiryData.phone,
+    city: '',
+    category: inquiryData.category,
+    estimated_quantity: inquiryData.estimated_quantity,
+    target_date: '',
+    estimated_budget: inquiryData.estimated_quantity,
+    items: [
+      {
+        product: {
+          id: 'campaign-inquiry',
+          code: 'CAMPAIGN-RFQ',
+          name: `${inquiryData.category} (${inquiryData.estimated_quantity})`,
+          category: inquiryData.category,
+          moq: inquiryData.estimated_quantity,
+          mrp: 450,
+        },
+        quantity: parsedQty,
+        customization: 'Custom Corporate Branding',
+      },
+    ],
+    branding_requirements: `Category: ${inquiryData.category} | Estimated Quantity: ${inquiryData.estimated_quantity}`,
+    notes: inquiryData.requirements || '',
+    status: 'new',
+  });
+
+  return { inquiry: inquiryRecord, quote: quoteRecord };
+}
+
+export async function listInquiriesFromDb(): Promise<any[]> {
+  const store = ensureDataFile();
+  const byId = new Map<string, any>();
+
+  for (const item of Object.values(store.inquiries || {})) {
+    if (item && (item as any).id) {
+      byId.set((item as any).id, item);
+    }
+  }
+
+  try {
+    await ensurePostgresTables();
+    const rows = await db
+      .select()
+      .from(schema.inquiries)
+      .orderBy(desc(schema.inquiries.created_at));
+    if (rows) {
+      for (const r of rows) {
+        byId.set(r.id, r);
+      }
+    }
+  } catch (e) {
+    console.warn('Drizzle listInquiriesFromDb error, using local store:', e);
+  }
+
+  return Array.from(byId.values()).sort(
+    (a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
+}
+
+export async function listQuotesFromDb(status?: string): Promise<any[]> {
+  const store = ensureDataFile();
+  const byId = new Map<string, any>();
+
+  for (const item of Object.values(store.quotes || {})) {
+    if (item && (item as any).id) {
+      byId.set((item as any).id, item);
+    }
+  }
+
+  try {
+    await ensurePostgresTables();
     let q = db.select().from(schema.quotes);
     if (status) {
       q = q.where(eq(schema.quotes.status, status)) as any;
     }
     const rows = await q.orderBy(desc(schema.quotes.created_at));
-    if (rows) return rows;
+    if (rows) {
+      for (const r of rows) {
+        byId.set(r.id, r);
+      }
+    }
   } catch (e) {
     console.warn('Drizzle listQuotesFromDb error, using local store:', e);
   }
 
-  const store = ensureDataFile();
-  let list = Object.values(store.quotes);
+  let list = Array.from(byId.values());
   if (status) {
     list = list.filter((q: any) => q.status === status);
   }
@@ -979,7 +1331,11 @@ export async function createUserInDb(userData: any): Promise<any> {
     updated_at: new Date().toISOString()
   };
 
+  store.users[id] = record;
+  saveLocalStore(store);
+
   try {
+    await ensurePostgresTables();
     const [inserted] = await db
       .insert(schema.users)
       .values({
@@ -997,11 +1353,9 @@ export async function createUserInDb(userData: any): Promise<any> {
 
     if (inserted) return inserted;
   } catch (e) {
-    console.warn('Drizzle createUserInDb error, saving locally:', e);
+    console.warn('Drizzle createUserInDb error, saved locally:', e);
   }
 
-  store.users[id] = record;
-  saveLocalStore(store);
   return record;
 }
 
@@ -1035,6 +1389,50 @@ export async function listUsersFromDb(): Promise<any[]> {
     phone: u.phone,
     role: u.role,
     city: u.city,
+    gstin: u.gstin,
     created_at: u.created_at
   }));
+}
+
+export async function updateUserInDb(
+  id: string,
+  updates: { name?: string; company_name?: string; phone?: string; city?: string; gstin?: string }
+): Promise<any | null> {
+  const store = ensureDataFile();
+  const existing = await getUserByIdFromDb(id);
+  if (!existing) return null;
+
+  try {
+    const [updated] = await db
+      .update(schema.users)
+      .set({
+        ...(updates.name !== undefined ? { name: updates.name } : {}),
+        ...(updates.company_name !== undefined ? { company_name: updates.company_name } : {}),
+        ...(updates.phone !== undefined ? { phone: updates.phone } : {}),
+        ...(updates.city !== undefined ? { city: updates.city } : {}),
+        ...(updates.gstin !== undefined ? { gstin: updates.gstin } : {}),
+        updated_at: new Date()
+      })
+      .where(eq(schema.users.id, id))
+      .returning();
+
+    if (updated) {
+      if (store.users[id]) {
+        store.users[id] = { ...store.users[id], ...updates, updated_at: new Date().toISOString() };
+        saveLocalStore(store);
+      }
+      return updated;
+    }
+  } catch (e) {
+    console.warn('Drizzle updateUserInDb error, updating locally:', e);
+  }
+
+  const localUpdated = {
+    ...existing,
+    ...updates,
+    updated_at: new Date().toISOString()
+  };
+  store.users[id] = localUpdated;
+  saveLocalStore(store);
+  return localUpdated;
 }

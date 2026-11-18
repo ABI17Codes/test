@@ -1,18 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import { hashPassword, createSessionToken } from '@/lib/auth';
 import { getUserByEmailFromDb, createUserInDb } from '@/lib/db';
-
-const RegisterSchema = z.object({
-  name: z.string().min(2, 'Full name is required'),
-  companyName: z.string().min(2, 'Company name is required'),
-  email: z.string().email('Valid work email is required'),
-  phone: z.string().min(10, 'Valid phone number is required'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  city: z.string().optional(),
-  gstin: z.string().optional(),
-  role: z.enum(['client', 'admin']).default('client')
-});
+import { RegisterSchema, formatZodError } from '@/lib/validation/schemas';
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,10 +9,7 @@ export async function POST(req: NextRequest) {
     const parsed = RegisterSchema.safeParse(body);
 
     if (!parsed.success) {
-      return NextResponse.json(
-        { success: false, error: 'Validation error', details: parsed.error.issues },
-        { status: 400 }
-      );
+      return NextResponse.json(formatZodError(parsed.error), { status: 400 });
     }
 
     const { name, companyName, email, phone, password, city, gstin, role } = parsed.data;

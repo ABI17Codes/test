@@ -2,228 +2,186 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { 
   MapPin, 
   Phone, 
   Mail, 
-  Globe, 
-  ArrowUp,
-  ArrowRight
+  ArrowUp, 
+  Factory, 
+  MessageSquare
 } from 'lucide-react';
+import { FOOTER_CONFIG, COMPANY_INFO } from '../data/siteContent';
 
 export const Footer: React.FC = () => {
+  const pathname = usePathname();
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const { aboutText, atelierBadge, backpackCollections, proprietaryBrands, secondarySegmentLinks, legalLinks } = FOOTER_CONFIG;
+
   return (
-    <footer className="bg-[#0B111E] border-t border-white/10 text-white/70 text-xs pt-16 pb-10">
-      <div className="max-w-[1320px] mx-auto px-4 sm:px-8 lg:px-10">
+    <footer className="bg-[#211D1A] border-t border-white/10 text-[#EAE3D8]/80 text-xs pt-16 pb-12">
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-10 space-y-14">
         
-        {/* Main Footer Grid matching slice_6.jpg */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/10 text-left">
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-14 border-b border-white/10 text-left">
           
-          {/* Brand & Summary */}
-          <div className="lg:col-span-4 space-y-4">
-            <Link href="/" className="inline-flex items-center gap-2.5 bg-white px-3.5 py-2 rounded-lg shadow-xs">
-              <div className="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center shrink-0">
+          {/* Brand & Factory Authority (4 cols) */}
+          <div className="lg:col-span-4 space-y-6">
+            <Link href="/" className="inline-flex items-center gap-3 bg-white px-4 py-2.5 rounded-xl shadow-md">
+              <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center shrink-0">
                 <img
                   src="/globrands-emblem-clean.png"
-                  alt="Globrands Lifestyle Logo"
+                  alt={`${COMPANY_INFO.legalName} Logo`}
                   className="w-full h-full object-contain"
                 />
               </div>
               <div className="flex flex-col text-left">
                 <span className="font-extrabold tracking-tight text-xs leading-none font-sans">
-                  <span className="text-[#0876B4]">GLOBRANDS</span>{' '}
-                  <span className="text-[#E8B43A]">LIFESTYLE</span>
+                  <span className="text-[#211D1A]">GLOBRANDS</span>{' '}
+                  <span className="text-[#C5A16D]">LIFESTYLE</span>{' '}
+                  <span className="text-[#69635C] text-[10px] font-bold">PVT. LTD.</span>
                 </span>
-                <span className="text-[8px] uppercase tracking-wider text-[#667085] font-semibold mt-0.5 font-mono">
-                  Corporate Gifting &amp; Bags
+                <span className="text-[8px] uppercase tracking-wider text-[#69635C] font-semibold mt-0.5 font-mono">
+                  {COMPANY_INFO.subtitle}
                 </span>
               </div>
             </Link>
 
-            <p className="text-white/65 leading-relaxed font-normal text-xs">
-              A premier corporate gifting and executive carrywear manufacturer helping enterprises build unforgettable brand moments through thoughtfully curated gift hampers, engineered bags, and in-house logo customisation.
+            <p className="text-[#EAE3D8]/90 leading-relaxed font-normal text-xs">
+              {aboutText}
             </p>
 
-            <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
-              <div className="text-[11px] text-white font-bold tracking-wider">
-                &ldquo;GIFTS THAT SPEAK YOUR BRAND.&rdquo;
+            <div className="p-4 rounded-xl bg-white/[0.04] border border-[#40352D] space-y-1.5">
+              <div className="text-[11px] text-[#C5A16D] font-bold tracking-wider flex items-center gap-1.5">
+                <Factory className="w-3.5 h-3.5" />
+                <span>{atelierBadge.title}</span>
               </div>
-              <div className="text-[11px] text-white/60 font-normal">
-                100% In-House Bengaluru Production &bull; 1-Year Warranty on Bags
-              </div>
-            </div>
-
-            <div className="text-[11px] font-semibold text-[#D49B27]">
-              Ninja Gear (Original) &bull; ADMA London
+              <p className="text-[11px] text-[#EAE3D8]/80 leading-relaxed">
+                {atelierBadge.text}
+              </p>
             </div>
           </div>
 
-          {/* Navigation */}
-          <div className="lg:col-span-2 space-y-3.5">
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-              Navigation
+          {/* Column 2: Backpack Manufacturing (3 cols) */}
+          <div className="lg:col-span-3 space-y-4">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/10 pb-2">
+              Backpack Collections
             </h4>
-            <ul className="space-y-2.5 text-white/65">
-              <li>
-                <Link href="/products" className="hover:text-[#E8B43A] transition-colors">
-                  Product Catalogue
-                </Link>
-              </li>
-              <li>
-                <Link href="/gift-sets" className="hover:text-[#E8B43A] transition-colors">
-                  Corporate Gift Sets
-                </Link>
-              </li>
-              <li>
-                <Link href="/bags" className="hover:text-[#E8B43A] transition-colors">
-                  Bags &amp; Backpacks
-                </Link>
-              </li>
-              <li>
-                <Link href="/solutions" className="hover:text-[#E8B43A] transition-colors">
-                  Corporate Solutions
-                </Link>
-              </li>
-              <li>
-                <Link href="/branding" className="hover:text-[#E8B43A] transition-colors">
-                  Branding Studio
-                </Link>
-              </li>
-              <li>
-                <Link href="/brands" className="hover:text-[#E8B43A] transition-colors">
-                  Proprietary Brands
-                </Link>
-              </li>
-              <li>
-                <Link href="/quote" className="hover:text-[#E8B43A] transition-colors">
-                  Bulk RFQ Basket
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-[#E8B43A] transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-[#E8B43A] transition-colors">
-                  Contact &amp; Helpdesk
-                </Link>
+            <ul className="space-y-3 text-[#EAE3D8]/90 text-xs">
+              {backpackCollections.map((link, idx) => (
+                <li key={idx}>
+                  <Link 
+                    href={link.href} 
+                    className={`transition-colors block ${
+                      link.highlight ? 'font-semibold text-[#C5A16D] hover:text-white' : 'hover:text-[#C5A16D]'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: In-House Brands & Gifting (2 cols) */}
+          <div className="lg:col-span-2 space-y-4">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/10 pb-2">
+              Proprietary Brands
+            </h4>
+            <ul className="space-y-3 text-[#EAE3D8]/90 text-xs">
+              {proprietaryBrands.map((link, idx) => (
+                <li key={idx}>
+                  <Link 
+                    href={link.href} 
+                    className={`transition-colors block ${link.bold ? 'font-bold text-white hover:text-[#C5A16D]' : 'hover:text-[#C5A16D]'}`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              
+              <li className="pt-2 border-t border-white/10">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#EAE3D8]/60 block mb-1">
+                  Secondary Segment
+                </span>
+                {secondarySegmentLinks.map((link, idx) => (
+                  <Link key={idx} href={link.href} className="hover:text-[#C5A16D] transition-colors block py-1">
+                    {link.label}
+                  </Link>
+                ))}
               </li>
             </ul>
           </div>
 
-          {/* Collections */}
-          <div className="lg:col-span-3 space-y-3.5">
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-              Collections
+          {/* Column 4: Factory Desk & Helpdesk (3 cols) */}
+          <div className="lg:col-span-3 space-y-4">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/10 pb-2">
+              Factory Helpdesk
             </h4>
-            <ul className="space-y-2.5 text-white/65">
-              <li>
-                <Link href="/products?category=gift-sets" className="hover:text-[#E8B43A] transition-colors block">
-                  Corporate Gift Sets (HGS 2-in-1 to 5-in-1)
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=bags" className="hover:text-[#E8B43A] transition-colors block">
-                  Corporate Bags (Ninja Gear &amp; ADMA London)
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=drinkware" className="hover:text-[#E8B43A] transition-colors block">
-                  Smart Temperature Bottles &amp; Flasks
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=diaries" className="hover:text-[#E8B43A] transition-colors block">
-                  Laser Color-Changer Notebooks &amp; Diaries
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=mugs" className="hover:text-[#E8B43A] transition-colors block">
-                  Cork-Base Ceramic &amp; Bamboo Mugs
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=desktop" className="hover:text-[#E8B43A] transition-colors block">
-                  Wooden Desk Organizers &amp; Clocks
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Details */}
-          <div className="lg:col-span-3 space-y-3.5">
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-              Bengaluru Atelier
-            </h4>
-            <div className="space-y-2.5 text-white/70">
+            
+            <div className="space-y-3 text-[#EAE3D8]/90 text-xs">
               <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#D49B27] shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-[#C5A16D] shrink-0 mt-0.5" />
                 <span className="leading-relaxed">
-                  #22, 2nd Floor, Sharadanagar Main Rd, opp. Vedantha College, Vasanthapura, Bengaluru, Karnataka &ndash; 560061
+                  {COMPANY_INFO.contact.address.full}
                 </span>
               </div>
 
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#D49B27] shrink-0" />
-                <div className="flex flex-col">
-                  <a href="tel:+919900020456" className="hover:text-[#E8B43A] font-bold text-white">+91 99000 20456</a>
-                  <a href="tel:+919900026645" className="hover:text-[#E8B43A] font-medium">+91 99000 26645</a>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#D49B27] shrink-0" />
-                <a href="mailto:enquiry@globrandslifestyle.com" className="hover:text-[#E8B43A] font-semibold text-[#E8B43A]">
-                  enquiry@globrandslifestyle.com
+                <Phone className="w-4 h-4 text-[#C5A16D] shrink-0" />
+                <a href={`tel:${COMPANY_INFO.contact.phoneRaw}`} className="text-white hover:text-[#C5A16D] transition-colors font-medium">
+                  {COMPANY_INFO.contact.corporatePhone} (Corporate Desk)
                 </a>
               </div>
 
               <div className="flex items-center gap-2.5">
-                <Globe className="w-4 h-4 text-[#D49B27] shrink-0" />
-                <span>www.globrandslifestyle.com</span>
+                <Mail className="w-4 h-4 text-[#C5A16D] shrink-0" />
+                <a href={`mailto:${COMPANY_INFO.contact.infoEmail}`} className="text-white hover:text-[#C5A16D] transition-colors font-medium">
+                  {COMPANY_INFO.contact.infoEmail}
+                </a>
               </div>
-            </div>
 
-            {/* Catalog shortcuts in footer */}
-            <div className="pt-2 space-y-2">
-              <Link
-                href="/catalog-viewer?type=bags"
-                className="w-full px-3.5 py-2 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/10 text-[11px] font-semibold flex items-center justify-between transition-colors"
-              >
-                <span>Browse Bag PDF (37p)</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#D49B27]" />
-              </Link>
-              <Link
-                href="/catalog-viewer?type=gifts"
-                className="w-full px-3.5 py-2 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/10 text-[11px] font-semibold flex items-center justify-between transition-colors"
-              >
-                <span>Browse Gifts PDF (146p)</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#D49B27]" />
-              </Link>
+              <div className="pt-2">
+                <a
+                  href={`https://wa.me/${COMPANY_INFO.contact.phoneRaw}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#40352D] hover:bg-[#292725] text-white border border-[#C5A16D]/30 hover:border-[#C5A16D] font-bold text-xs shadow-md transition-colors"
+                >
+                  <MessageSquare className="w-4 h-4 text-[#C5A16D]" />
+                  <span>Direct WhatsApp B2B Desk</span>
+                </a>
+              </div>
             </div>
           </div>
 
         </div>
 
-        {/* Bottom Rights & Back to Top */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/50">
+        {/* Bottom Bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[#EAE3D8]/60 text-[11px]">
           <div>
-            &copy; 2026 Globrands Lifestyle Pvt Ltd. All rights reserved.
+            &copy; {new Date().getFullYear()} <strong className="text-white">{COMPANY_INFO.legalName}</strong> All rights reserved. Registered Indian Trademark.
           </div>
 
           <div className="flex items-center gap-6">
-            <span>@admalondonblr &bull; @ninjagearblr</span>
+            {legalLinks.map((link, idx) => (
+              <Link key={idx} href={link.href} className="hover:text-[#C5A16D] transition-colors">
+                {link.label}
+              </Link>
+            ))}
             <button
               onClick={scrollToTop}
-              className="px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/10 flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-[#C5A16D] hover:text-white transition-colors font-semibold cursor-pointer"
             >
               <span>Back to Top</span>
-              <ArrowUp className="w-3.5 h-3.5 text-[#E8B43A]" />
+              <ArrowUp className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

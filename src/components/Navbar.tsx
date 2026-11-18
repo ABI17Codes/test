@@ -7,23 +7,21 @@ import {
   ShoppingBag, 
   Menu, 
   X, 
-  FileText,
-  ChevronDown,
-  BookOpen,
-  Briefcase,
-  User,
-  ShieldCheck,
-  Building2,
-  LogOut,
-  UserPlus,
-  LogIn,
-  LayoutGrid,
-  Gift
+  ChevronDown, 
+  User, 
+  LogIn, 
+  LogOut, 
+  UserPlus, 
+  Phone,
+  Mail,
+  MapPin,
+  Sparkles
 } from 'lucide-react';
 import { useQuote } from '../context/QuoteContext';
+import { NAVIGATION_CONFIG, COMPANY_INFO } from '../data/siteContent';
 
 export const Navbar: React.FC = () => {
-  const { items } = useQuote();
+  const { items, setIsDrawerOpen } = useQuote();
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -70,7 +68,7 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 15);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -95,430 +93,313 @@ export const Navbar: React.FC = () => {
     setAccountDropdownOpen(false);
   }, [pathname]);
 
-  const navLinks = [
-    { label: 'Branding', href: '/branding' },
-    { label: 'Solutions', href: '/solutions' },
-    { label: 'About', href: '/about' },
-    { label: 'Contact', href: '/contact' },
-  ];
+  // Hide storefront navbar on Admin Console routes
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
-  const isCatalogRoute =
-    pathname === '/products' ||
-    pathname.startsWith('/products/') ||
-    pathname === '/gift-sets' ||
-    pathname === '/bags' ||
-    pathname.startsWith('/catalog-viewer');
+  const { topUtilityStrip, primaryLinks, secondaryLinks, catalogDropdownItems } = NAVIGATION_CONFIG;
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-[#E5E7EB]'
-          : 'bg-white border-b border-[#E5E7EB]'
+          ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-[#EAE3D8]'
+          : 'bg-[#F5F0E8] border-b border-[#EAE3D8]'
       }`}
     >
-      {/* Top Dark Utility Bar matching reference */}
-      <div className="bg-[#0B111E] text-white/75 text-[10px] py-1.5 border-b border-white/10">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-8 lg:px-10 flex items-center justify-between gap-4">
-          <div className="truncate font-medium tracking-wider uppercase">
-            Direct Factory Corporate Gifting &amp; Executive Carrywear &bull; Bengaluru Atelier &bull; 100% In-House Branding
+      {/* Top Utility Strip (Deep Espresso #211D1A, auto-collapses on scroll) */}
+      <div 
+        className={`bg-[#211D1A] text-white/90 transition-all duration-300 overflow-hidden ${
+          isScrolled ? 'max-h-0 py-0 opacity-0' : 'max-h-8 py-1 opacity-100 border-b border-white/10'
+        }`}
+      >
+        <div className="max-w-[1280px] mx-auto px-6 sm:px-10 flex items-center justify-between gap-4 text-[10px]">
+          <div className="flex items-center gap-2 truncate font-medium uppercase tracking-wider text-[#EAE3D8]/90">
+            <span className="inline-flex items-center gap-1 text-[#C5A16D]">
+              <MapPin className="w-2.5 h-2.5" />
+              <span>{topUtilityStrip.atelierText}</span>
+            </span>
+            <span className="text-white/20 hidden sm:inline">&bull;</span>
+            <span className="hidden sm:inline">{topUtilityStrip.headline}</span>
           </div>
-          <div className="hidden md:flex items-center gap-4 shrink-0 font-medium text-white/85">
-            <a href="tel:+919900020456" className="hover:text-[#E8B43A] transition-colors">+91 99000 20456</a>
-            <span className="text-white/30">&bull;</span>
-            <a href="mailto:enquiry@globrandslifestyle.com" className="hover:text-[#E8B43A] transition-colors">enquiry@globrandslifestyle.com</a>
+          
+          <div className="flex items-center gap-3 shrink-0 font-medium text-[10px] text-white/90">
+            <a href={`tel:${COMPANY_INFO.contact.phoneRaw}`} className="flex items-center gap-1 hover:text-[#C5A16D] transition-colors">
+              <Phone className="w-2.5 h-2.5 text-[#C5A16D]" />
+              <span>{COMPANY_INFO.contact.corporatePhone}</span>
+            </a>
+            <span className="text-white/20 hidden md:inline">&bull;</span>
+            <a href={`mailto:${COMPANY_INFO.contact.enquiryEmail}`} className="hidden md:flex items-center gap-1 hover:text-[#C5A16D] transition-colors">
+              <Mail className="w-2.5 h-2.5 text-[#C5A16D]" />
+              <span>{COMPANY_INFO.contact.enquiryEmail}</span>
+            </a>
           </div>
         </div>
       </div>
 
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-8 lg:px-10">
-        <div className="flex items-center justify-between h-16">
+      {/* Main Navigation Bar */}
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-10">
+        <div className="flex items-center justify-between h-14">
           
-          {/* Logo Presentation */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="w-9 h-9 rounded-full overflow-hidden bg-white border border-[#E5E7EB] shadow-2xs flex items-center justify-center p-0.5 group-hover:scale-105 transition-transform">
+          {/* Brand Logo & Legal Identity (Original Logo Colours Preserved) */}
+          <Link href="/" className="flex items-center gap-2 group shrink-0">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden bg-white border border-[#EAE3D8] shadow-2xs flex items-center justify-center p-0.5 group-hover:scale-105 transition-transform">
               <img
                 src="/globrands-emblem-clean.png"
-                alt="Globrands Lifestyle Logo"
+                alt={`${COMPANY_INFO.legalName} Logo`}
                 className="w-full h-full object-contain"
               />
             </div>
             
             <div className="flex flex-col text-left">
-              <span className="font-extrabold tracking-tight text-sm leading-none font-sans">
-                <span className="text-[#0876B4]">GLOBRANDS</span>{' '}
-                <span className="text-[#E8B43A]">LIFESTYLE</span>
+              <span className="font-extrabold tracking-tight text-xs sm:text-[13px] leading-tight font-sans text-[#211D1A]">
+                GLOBRANDS <span className="text-[#C5A16D]">LIFESTYLE</span> <span className="text-[9px] font-bold text-[#69635C]">PVT. LTD.</span>
               </span>
-              <span className="text-[9px] uppercase tracking-wider text-[#667085] font-semibold mt-0.5 font-mono">
-                Corporate Gifting &amp; Bags
+              <span className="text-[7.5px] uppercase tracking-[0.12em] text-[#69635C] font-semibold font-mono">
+                {COMPANY_INFO.subtitle}
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-2 xl:gap-4">
-            {/* Unified Catalogues Dropdown */}
-            <div className="relative" ref={dropdownRef}>
-              <button
-                onClick={() => setCatalogDropdownOpen(!catalogDropdownOpen)}
-                className={`relative inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-lg whitespace-nowrap transition-all cursor-pointer ${
-                  isCatalogRoute || catalogDropdownOpen
-                    ? 'text-[#0876B4] bg-[#0876B4]/8 font-semibold'
-                    : 'text-[#101828] hover:text-[#0876B4] hover:bg-[#F5F7FA]'
-                }`}
-              >
-                <FileText className="w-3.5 h-3.5 text-[#0876B4]" />
-                <span>Catalogues</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-[#667085] transition-transform duration-200 ${catalogDropdownOpen ? 'rotate-180' : ''}`} />
-                {isCatalogRoute && (
-                  <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#0876B4] rounded-full" />
-                )}
-              </button>
-
-              {catalogDropdownOpen && (
-                <div className="absolute left-0 mt-2 w-72 bg-white border border-[#E5E7EB] rounded-2xl shadow-xl p-2 space-y-1 animate-in fade-in slide-in-from-top-1 duration-150 z-50 text-left">
-                  <div className="px-2.5 pt-1.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-[#667085]">
-                    Product Collections
-                  </div>
-
-                  <Link
-                    href="/products"
-                    className={`flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#F5F7FA] transition-colors group text-left ${
-                      pathname === '/products' ? 'bg-[#0876B4]/6' : ''
-                    }`}
-                    onClick={() => setCatalogDropdownOpen(false)}
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
-                      <LayoutGrid className="w-4 h-4 text-[#101828]" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-[#101828] group-hover:text-[#0876B4]">
-                        All Products Catalogue
-                      </p>
-                      <p className="text-[11px] text-[#667085]">
-                        183+ Verified Corporate SKUs
-                      </p>
-                    </div>
-                  </Link>
-
-                  <Link
-                    href="/gift-sets"
-                    className={`flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#F5F7FA] transition-colors group text-left ${
-                      pathname === '/gift-sets' ? 'bg-[#0876B4]/6' : ''
-                    }`}
-                    onClick={() => setCatalogDropdownOpen(false)}
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-                      <Gift className="w-4 h-4 text-[#E8B43A]" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-[#101828] group-hover:text-[#0876B4]">
-                        Executive Gift Sets
-                      </p>
-                      <p className="text-[11px] text-[#667085]">
-                        Curated 5-in-1, 4-in-1 &amp; Bamboo Hampers
-                      </p>
-                    </div>
-                  </Link>
-
-                  <Link
-                    href="/bags"
-                    className={`flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#F5F7FA] transition-colors group text-left ${
-                      pathname === '/bags' ? 'bg-[#0876B4]/6' : ''
-                    }`}
-                    onClick={() => setCatalogDropdownOpen(false)}
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
-                      <Briefcase className="w-4 h-4 text-[#0876B4]" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-[#101828] group-hover:text-[#0876B4]">
-                        Bags &amp; Backpacks
-                      </p>
-                      <p className="text-[11px] text-[#667085]">
-                        Ninja Gear &amp; ADMA London Carrywear
-                      </p>
-                    </div>
-                  </Link>
-
-                  <div className="my-1.5 border-t border-[#E5E7EB]" />
-
-                  <div className="px-2.5 pt-1 pb-1 text-[10px] font-bold uppercase tracking-wider text-[#667085]">
-                    Digital PDF Flipbooks
-                  </div>
-
-                  <Link
-                    href="/catalog-viewer?type=bags"
-                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#F5F7FA] transition-colors group text-left"
-                    onClick={() => setCatalogDropdownOpen(false)}
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
-                      <FileText className="w-4 h-4 text-[#0876B4]" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-[#101828] group-hover:text-[#0876B4]">
-                        Bag PDF Catalogue
-                      </p>
-                      <p className="text-[11px] text-[#667085]">
-                        36 Pages &bull; Ninja Gear &amp; ADMA
-                      </p>
-                    </div>
-                  </Link>
-
-                  <Link
-                    href="/catalog-viewer?type=gifts"
-                    className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#F5F7FA] transition-colors group text-left"
-                    onClick={() => setCatalogDropdownOpen(false)}
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-                      <BookOpen className="w-4 h-4 text-[#E8B43A]" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-[#101828] group-hover:text-[#0876B4]">
-                        All-in-One Gifting PDF
-                      </p>
-                      <p className="text-[11px] text-[#667085]">
-                        146 Pages &bull; Hampers, Bottles, Tech
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {navLinks.map((link) => {
+          {/* Desktop Navigation Links (Espresso with Champagne Gold Hover Indicators) */}
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
+            {primaryLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative inline-flex items-center gap-1 px-3 py-1.5 text-[13px] font-medium tracking-tight rounded-lg whitespace-nowrap transition-all ${
-                    isActive
-                      ? 'text-[#0876B4] font-semibold bg-[#0876B4]/8'
-                      : 'text-[#101828] hover:text-[#0876B4] hover:bg-[#F5F7FA]'
+                  className={`text-[12.5px] font-semibold tracking-normal transition-colors relative py-1 ${
+                    isActive ? 'text-[#A98554]' : 'text-[#211D1A] hover:text-[#C5A16D]'
                   }`}
                 >
                   <span>{link.label}</span>
                   {isActive && (
-                    <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#0876B4] rounded-full" />
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C5A16D] rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
+
+            {/* Catalogues & Capabilities Dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setCatalogDropdownOpen(!catalogDropdownOpen)}
+                className={`inline-flex items-center gap-1 text-[12.5px] font-semibold tracking-normal transition-colors py-1 cursor-pointer ${
+                  catalogDropdownOpen ? 'text-[#A98554]' : 'text-[#211D1A] hover:text-[#C5A16D]'
+                }`}
+              >
+                <span>Catalogues</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${catalogDropdownOpen ? 'rotate-180 text-[#C5A16D]' : ''}`} />
+              </button>
+
+              {catalogDropdownOpen && (
+                <div className="absolute left-0 mt-2 w-72 bg-white border border-[#EAE3D8] rounded-xl shadow-xl p-2 space-y-0.5 z-50 text-left">
+                  {catalogDropdownItems.map((item, idx) => {
+                    const ItemIcon = item.icon;
+                    return (
+                      <Link
+                        key={idx}
+                        href={item.href}
+                        className={`flex items-start gap-2.5 p-2 rounded-lg hover:bg-[#F5F0E8] transition-colors ${
+                          item.dividerAbove ? 'border-t border-[#EAE3D8] mt-1 pt-2' : ''
+                        }`}
+                        onClick={() => setCatalogDropdownOpen(false)}
+                      >
+                        <ItemIcon className="w-4 h-4 text-[#A98554] mt-0.5 shrink-0" />
+                        <div>
+                          <div className="text-xs font-bold text-[#211D1A]">{item.title}</div>
+                          <div className="text-[10px] text-[#69635C]">{item.description}</div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {secondaryLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-[12.5px] font-semibold tracking-normal transition-colors relative py-1 ${
+                    isActive ? 'text-[#A98554]' : 'text-[#211D1A] hover:text-[#C5A16D]'
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C5A16D] rounded-full" />
                   )}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Right-Side Action Area (Minimal) */}
-          <div className="flex items-center gap-2 shrink-0">
-            
-            {/* Account Dropdown */}
+          {/* Right Action Icons: Compact RFQ Pill & Account */}
+          <div className="flex items-center gap-2">
+            {/* RFQ Drawer Trigger Button */}
+            <button
+              onClick={() => setIsDrawerOpen(true)}
+              className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#EAE3D8] hover:border-[#C5A16D] text-[#211D1A] text-xs font-semibold transition-all shadow-2xs hover:shadow-xs cursor-pointer"
+              title="View RFQ Basket"
+            >
+              <ShoppingBag className="w-3.5 h-3.5 text-[#A98554]" />
+              <span className="hidden sm:inline">Quote</span>
+              {mounted && totalItems > 0 && (
+                <span className="min-w-4 h-4 px-1 rounded-full bg-[#211D1A] text-white text-[9px] font-bold flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+
+            {/* Corporate Account Button */}
             <div className="relative" ref={accountRef}>
               <button
                 onClick={() => setAccountDropdownOpen(!accountDropdownOpen)}
-                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors border cursor-pointer ${
-                  user
-                    ? 'bg-blue-50 text-[#0876B4] border-blue-200 hover:bg-blue-100'
-                    : 'bg-white text-[#101828] border-[#E5E7EB] hover:bg-[#F5F7FA]'
-                }`}
-                title="Account & Admin Portal"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#EAE3D8] hover:border-[#C5A16D] text-[#211D1A] text-xs font-semibold transition-all shadow-2xs hover:shadow-xs cursor-pointer"
               >
-                {user ? (
-                  <>
-                    <Building2 className="w-3.5 h-3.5 text-[#0876B4]" />
-                    <span className="max-w-[80px] truncate">{user.name?.split(' ')[0] || 'User'}</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  </>
-                ) : (
-                  <>
-                    <User className="w-3.5 h-3.5 text-[#667085]" />
-                    <span className="hidden sm:inline">Account</span>
-                  </>
-                )}
-                <ChevronDown className={`w-3 h-3 text-[#667085] transition-transform ${accountDropdownOpen ? 'rotate-180' : ''}`} />
+                <User className="w-3.5 h-3.5 text-[#A98554]" />
+                <span className="hidden md:inline">
+                  {mounted && user?.name ? user.name.split(' ')[0] : 'Account'}
+                </span>
+                <ChevronDown className="w-3 h-3 text-[#69635C]" />
               </button>
 
               {accountDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white border border-[#E5E7EB] rounded-2xl shadow-xl p-2 space-y-1 animate-in fade-in slide-in-from-top-1 duration-150 z-50 text-left">
+                <div className="absolute right-0 mt-2 w-60 bg-white border border-[#EAE3D8] rounded-xl shadow-xl p-2 space-y-1 z-50 text-left">
                   {user ? (
                     <>
-                      <div className="p-3 border-b border-neutral-100 mb-1">
-                        <p className="font-bold text-xs text-[#101828]">{user.name}</p>
-                        <p className="text-[11px] text-[#667085] truncate">{user.email}</p>
+                      <div className="px-3 py-2 border-b border-[#EAE3D8]">
+                        <div className="text-xs font-bold text-[#211D1A] truncate">{user.name}</div>
+                        <div className="text-[11px] text-[#69635C] truncate">{user.email}</div>
                         {user.company_name && (
-                          <p className="text-[10px] text-[#0876B4] font-medium mt-0.5">{user.company_name}</p>
+                          <div className="text-[10px] font-mono text-[#A98554] mt-0.5">{user.company_name}</div>
                         )}
                       </div>
-
+                      <Link
+                        href="/profile"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-[#211D1A] hover:bg-[#F5F0E8]"
+                        onClick={() => setAccountDropdownOpen(false)}
+                      >
+                        <User className="w-3.5 h-3.5 text-[#A98554]" />
+                        <span>My Profile &amp; RFQs</span>
+                      </Link>
                       {user.role === 'admin' && (
                         <Link
                           href="/admin"
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-[#A98554] hover:bg-[#F5F0E8]"
                           onClick={() => setAccountDropdownOpen(false)}
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-purple-700 hover:bg-purple-50 transition-colors"
                         >
-                          <ShieldCheck className="w-4 h-4 text-purple-600" />
+                          <Sparkles className="w-3.5 h-3.5 text-[#A98554]" />
                           <span>Admin Console</span>
                         </Link>
                       )}
-
-                      <Link
-                        href="/quote"
-                        onClick={() => setAccountDropdownOpen(false)}
-                        className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-[#101828] hover:bg-[#F5F7FA] transition-colors"
-                      >
-                        <span className="flex items-center gap-2.5">
-                          <ShoppingBag className="w-4 h-4 text-[#0876B4]" />
-                          <span>My Quote Requests</span>
-                        </span>
-                        {mounted && totalItems > 0 && (
-                          <span className="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold bg-[#E8B43A] text-[#0B111E] rounded-full">
-                            {totalItems}
-                          </span>
-                        )}
-                      </Link>
-
                       <button
                         onClick={handleLogout}
-                        className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-red-600 hover:bg-red-50 transition-colors text-left cursor-pointer"
+                        className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-rose-600 hover:bg-rose-50"
                       >
-                        <LogOut className="w-4 h-4" />
+                        <LogOut className="w-3.5 h-3.5" />
                         <span>Sign Out</span>
                       </button>
                     </>
                   ) : (
                     <>
-                      <div className="p-2.5 border-b border-neutral-100 mb-1">
-                        <p className="font-bold text-xs text-[#101828]">Corporate Portal</p>
-                        <p className="text-[11px] text-[#667085]">Sign in to manage bulk RFQs &amp; orders</p>
+                      <div className="px-3 py-2 border-b border-[#EAE3D8]">
+                        <div className="text-xs font-bold text-[#211D1A]">Corporate Portal</div>
+                        <div className="text-[10px] text-[#69635C]">Sign in to manage bulk RFQs &amp; orders</div>
                       </div>
-
                       <Link
                         href="/login"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-[#211D1A] hover:bg-[#F5F0E8]"
                         onClick={() => setAccountDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#101828] hover:bg-[#F5F7FA] transition-colors"
                       >
-                        <LogIn className="w-4 h-4 text-[#0876B4]" />
+                        <LogIn className="w-3.5 h-3.5 text-[#A98554]" />
                         <span>Sign In</span>
                       </Link>
-
                       <Link
                         href="/register"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-[#211D1A] hover:bg-[#F5F0E8]"
                         onClick={() => setAccountDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#667085] hover:bg-[#F5F7FA] transition-colors"
                       >
-                        <UserPlus className="w-4 h-4 text-emerald-600" />
+                        <UserPlus className="w-3.5 h-3.5 text-[#A98554]" />
                         <span>Create Corporate Account</span>
                       </Link>
-
-                      <Link
-                        href="/quote"
-                        onClick={() => setAccountDropdownOpen(false)}
-                        className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-[#101828] hover:bg-[#F5F7FA] transition-colors"
-                      >
-                        <span className="flex items-center gap-2.5">
-                          <ShoppingBag className="w-4 h-4 text-[#0876B4]" />
-                          <span>My RFQ Basket</span>
-                        </span>
-                        {mounted && totalItems > 0 && (
-                          <span className="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold bg-[#E8B43A] text-[#0B111E] rounded-full">
-                            {totalItems}
-                          </span>
-                        )}
-                      </Link>
-
-                      <div className="pt-1 border-t border-neutral-100 mt-1">
-                        <Link
-                          href="/admin"
-                          onClick={() => setAccountDropdownOpen(false)}
-                          className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-[#E8B43A] hover:bg-amber-50/50 transition-colors"
-                        >
-                          <span className="flex items-center gap-2">
-                            <ShieldCheck className="w-4 h-4 text-[#E8B43A]" />
-                            <span>Admin Console</span>
-                          </span>
-                          <span className="text-[10px] text-[#667085] font-normal">Demo</span>
-                        </Link>
-                      </div>
                     </>
                   )}
                 </div>
               )}
             </div>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-1.5 text-[#101828] hover:text-[#0876B4] rounded-lg hover:bg-neutral-100 transition-colors cursor-pointer ml-1"
-              aria-label="Toggle navigation menu"
+              className="lg:hidden p-1.5 rounded-lg bg-white border border-[#EAE3D8] text-[#211D1A] cursor-pointer"
+              aria-label="Toggle Navigation Menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
 
         </div>
-
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-[#E5E7EB] space-y-2 animate-in fade-in duration-200 text-left bg-white">
-            <div className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-[#667085]">
-              Catalogues &amp; Collections
-            </div>
-            {[
-              { label: 'All Products Catalogue', href: '/products' },
-              { label: 'Executive Gift Sets', href: '/gift-sets' },
-              { label: 'Bags & Backpacks', href: '/bags' },
-            ].map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`block px-3 py-2 rounded-xl text-sm font-semibold transition-colors ${
-                    isActive
-                      ? 'bg-[#0876B4]/10 text-[#0876B4] font-bold'
-                      : 'text-[#101828] hover:bg-[#F5F7FA]'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-
-            <div className="grid grid-cols-2 gap-2 px-1 pb-2 border-b border-[#E5E7EB]">
-              <Link
-                href="/catalog-viewer?type=bags"
-                className="flex items-center gap-2 p-2.5 rounded-xl bg-[#F5F7FA] text-xs font-bold text-[#101828]"
-              >
-                <FileText className="w-4 h-4 text-[#0876B4]" />
-                <span>Bags PDF (36p)</span>
-              </Link>
-              <Link
-                href="/catalog-viewer?type=gifts"
-                className="flex items-center gap-2 p-2.5 rounded-xl bg-[#F5F7FA] text-xs font-bold text-[#101828]"
-              >
-                <BookOpen className="w-4 h-4 text-[#E8B43A]" />
-                <span>Gifts PDF (146p)</span>
-              </Link>
-            </div>
-
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`block px-3 py-2 rounded-xl text-sm font-semibold transition-colors ${
-                    isActive
-                      ? 'bg-[#0876B4]/10 text-[#0876B4] font-bold'
-                      : 'text-[#101828] hover:bg-[#F5F7FA]'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </div>
-        )}
-
       </div>
+
+      {/* Mobile Navigation Drawer */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-white border-b border-[#EAE3D8] px-6 py-4 space-y-3 shadow-xl text-left max-w-[1280px] mx-auto">
+          <div className="space-y-1">
+            {primaryLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="block py-2 text-xs font-bold text-[#211D1A] hover:text-[#C5A16D]"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            {catalogDropdownItems.map((item, idx) => (
+              <Link
+                key={idx}
+                href={item.href}
+                className="block py-2 text-xs font-bold text-[#211D1A] hover:text-[#C5A16D]"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.title}
+              </Link>
+            ))}
+            {secondaryLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="block py-2 text-xs font-bold text-[#211D1A] hover:text-[#C5A16D]"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="pt-3 border-t border-[#EAE3D8] flex items-center justify-between">
+            <a
+              href={`tel:${COMPANY_INFO.contact.phoneRaw}`}
+              className="text-xs font-bold text-[#A98554] flex items-center gap-1.5"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              <span>{COMPANY_INFO.contact.corporatePhone}</span>
+            </a>
+            <Link
+              href="/login"
+              className="text-xs font-bold text-[#211D1A]"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Sign In &rarr;
+            </Link>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

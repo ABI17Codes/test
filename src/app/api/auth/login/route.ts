@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import { verifyPassword, createSessionToken } from '@/lib/auth';
 import { getUserByEmailFromDb } from '@/lib/db';
-
-const LoginSchema = z.object({
-  email: z.string().email('Valid work email is required'),
-  password: z.string().min(1, 'Password is required')
-});
+import { LoginSchema, formatZodError } from '@/lib/validation/schemas';
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,10 +9,7 @@ export async function POST(req: NextRequest) {
     const parsed = LoginSchema.safeParse(body);
 
     if (!parsed.success) {
-      return NextResponse.json(
-        { success: false, error: 'Validation error', details: parsed.error.issues },
-        { status: 400 }
-      );
+      return NextResponse.json(formatZodError(parsed.error), { status: 400 });
     }
 
     const { email, password } = parsed.data;

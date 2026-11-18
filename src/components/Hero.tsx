@@ -2,254 +2,126 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { 
-  ArrowRight, 
-  ShieldCheck, 
-  Sparkles, 
-  Award, 
-  Truck, 
-  ShoppingBag,
-  Eye,
-  Check
-} from 'lucide-react';
-import { useQuote } from '../context/QuoteContext';
-import { PRODUCTS } from '../data/products';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { HERO_CONTENT } from '../data/siteContent';
 
 export const Hero: React.FC = () => {
-  const { addToQuote, items } = useQuote();
-  const flagshipProduct = PRODUCTS.find((p) => p.id === 'hgs-h74') || PRODUCTS[0];
-  const isAlreadyInQuote = items.some((i) => i.product.id === flagshipProduct.id);
-
-  const hamperComponents = [
-    '500ml Smart LED Flask',
-    'Wireless Optical Mouse',
-    'A5 PU Leather Diary',
-    'Metal Card Holder',
-    'Executive Pen',
-  ];
+  const { 
+    badge, 
+    pretitle, 
+    title, 
+    titleHighlight, 
+    subheading, 
+    description, 
+    image, 
+    imageAlt, 
+    imageBadge, 
+    primaryCta, 
+    secondaryCta, 
+    stats 
+  } = HERO_CONTENT;
 
   return (
-    <section className="relative py-12 lg:py-16 bg-white border-b border-[#E5E7EB] overflow-hidden">
-      <div className="max-w-[1320px] mx-auto px-4 sm:px-8 lg:px-10 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+    <section className="relative bg-gradient-to-br from-[#211D1A] via-[#292725] to-[#40352D] text-white overflow-hidden border-b border-white/10">
+      {/* Background Subtle Ambience Glows */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#C5A16D]/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#211D1A]/90 rounded-full blur-[130px] pointer-events-none" />
+
+      {/* Main Two-Column Hero Container */}
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-10 py-14 sm:py-16 lg:py-20 min-h-[560px] lg:min-h-[600px] flex flex-col justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           
-          {/* Left Column */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          {/* Left Column (6 / 12 cols, max 540px width) */}
+          <div className="lg:col-span-6 flex flex-col justify-center items-start space-y-6 text-left max-w-[540px] order-2 lg:order-1">
             
-            {/* Warm Gold Eyebrow Pill matching slice_1.jpg */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDF8EC] border border-[#F3E3B8]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D49B27] shrink-0" />
-              <span className="text-[10px] uppercase tracking-[0.12em] font-bold text-[#B8860B]">
-                Bespoke Corporate Gifting &amp; Executive Merchandise
+            {/* Small Company Identity Label */}
+            <div className="space-y-1">
+              <span className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#C5A16D] font-bold block">
+                {pretitle}
+              </span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#EAE3D8]/70 block">
+                {badge}
               </span>
             </div>
 
-            {/* Editorial Serif Headline with Gold Italic */}
-            <div className="space-y-4">
-              <h1 className="font-editorial text-4xl sm:text-5xl lg:text-[56px] font-bold text-[#101828] leading-[1.08] tracking-[-0.02em]">
-                Thoughtful corporate <br />
-                gifting. <br />
-                <span className="italic text-[#D49B27] font-semibold">
-                  Engineered for enduring <br />
-                  impressions.
-                </span>
-              </h1>
+            {/* Main Master Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black uppercase tracking-tight leading-[1.04] text-white font-sans">
+              {title} <br />
+              <span className="text-[#C5A16D]">{titleHighlight}</span>
+            </h1>
 
-              <p className="text-xs sm:text-sm lg:text-[15px] text-[#475467] max-w-xl font-normal leading-relaxed">
-                Partner with India&apos;s premier corporate gifting manufacturer. Explore 180+ curated executive hampers, Ninja Gear &amp; ADMA London carrywear, and custom-branded merchandise crafted in-house at our Bengaluru facility.
+            {/* Supporting Description */}
+            <div className="space-y-2.5">
+              <p className="text-sm sm:text-base font-bold text-[#F5F0E8] uppercase tracking-wide">
+                {subheading}
+              </p>
+              <p className="text-sm text-[#EAE3D8]/90 font-normal leading-relaxed">
+                {description}
               </p>
             </div>
 
-            {/* Primary & Secondary CTAs */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-1">
+            {/* Primary & Secondary CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2 w-full sm:w-auto">
               <Link
-                href="/products"
-                className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-lg bg-[#0B111E] hover:bg-[#101828] text-white text-xs sm:text-sm font-bold transition-all duration-200 shadow-xs group"
+                href={primaryCta.href}
+                className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-[#C5A16D] hover:bg-[#A98554] text-[#211D1A] text-xs font-bold uppercase tracking-[0.14em] transition-all shadow-lg group whitespace-nowrap"
               >
-                <span>Explore Our Collection</span>
-                <ArrowRight className="w-4 h-4 text-[#E8B43A] group-hover:translate-x-1 transition-transform" />
+                <span>{primaryCta.label}</span>
+                <ArrowRight className="w-4 h-4 text-[#211D1A] group-hover:translate-x-1 transition-transform" />
               </Link>
 
-              <Link
-                href="/quote"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-white hover:bg-[#F9FAFB] text-[#101828] border border-[#E5E7EB] text-xs sm:text-sm font-bold transition-all duration-200 shadow-2xs"
+              <a
+                href={secondaryCta.href}
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-[#40352D]/35 hover:bg-[#40352D]/70 border border-white/20 hover:border-[#C5A16D] text-[#F5F0E8] text-xs font-bold uppercase tracking-[0.14em] transition-all backdrop-blur-sm whitespace-nowrap"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#D49B27]" />
-                <span>Request Bulk Quote</span>
-              </Link>
-            </div>
-
-            {/* Bordered 4-Column Trust Bar matching slice_1.jpg */}
-            <div className="pt-2">
-              <div className="p-3.5 rounded-xl bg-[#FCFBFA] border border-[#E5E7EB] grid grid-cols-2 sm:grid-cols-4 gap-3 sm:divide-x divide-[#E5E7EB]">
-                <div className="flex items-center gap-2.5 pr-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#FDF8EC] border border-[#F3E3B8] flex items-center justify-center shrink-0">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#D49B27]" />
-                  </div>
-                  <div>
-                    <div className="text-[11px] font-bold text-[#101828] leading-tight">5-Stage QC</div>
-                    <div className="text-[10px] text-[#667085]">Zero-Defect Promise</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2.5 sm:pl-3 pr-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#FDF8EC] border border-[#F3E3B8] flex items-center justify-center shrink-0">
-                    <Award className="w-3.5 h-3.5 text-[#D49B27]" />
-                  </div>
-                  <div>
-                    <div className="text-[11px] font-bold text-[#101828] leading-tight">1-Year Warranty</div>
-                    <div className="text-[10px] text-[#667085]">On Corporate Bags</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2.5 sm:pl-3 pr-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#FDF8EC] border border-[#F3E3B8] flex items-center justify-center shrink-0">
-                    <Sparkles className="w-3.5 h-3.5 text-[#D49B27]" />
-                  </div>
-                  <div>
-                    <div className="text-[11px] font-bold text-[#101828] leading-tight">Custom Branding</div>
-                    <div className="text-[10px] text-[#667085]">Laser &amp; UV Print</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2.5 sm:pl-3">
-                  <div className="w-7 h-7 rounded-lg bg-[#FDF8EC] border border-[#F3E3B8] flex items-center justify-center shrink-0">
-                    <Truck className="w-3.5 h-3.5 text-[#D49B27]" />
-                  </div>
-                  <div>
-                    <div className="text-[11px] font-bold text-[#101828] leading-tight">Direct Dispatch</div>
-                    <div className="text-[10px] text-[#667085]">Bengaluru Hub</div>
-                  </div>
-                </div>
-              </div>
+                <span>{secondaryCta.label}</span>
+                <ArrowUpRight className="w-4 h-4 text-[#C5A16D]" />
+              </a>
             </div>
 
           </div>
 
-          {/* Right Column: Dark Studio Showcase Card matching slice_1.jpg */}
-          <div className="lg:col-span-5">
-            <div className="bg-white rounded-2xl border border-[#E5E7EB] shadow-[0_20px_50px_rgba(16,24,40,0.08)] overflow-hidden">
+          {/* Right Column: 52% (6 / 12 cols, Vertically Centered 440px-480px Image) */}
+          <div className="lg:col-span-6 flex justify-center items-center order-1 lg:order-2 w-full">
+            <div className="relative w-full h-[360px] sm:h-[440px] lg:h-[480px] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#292725] group">
+              <img
+                src={image}
+                alt={imageAlt}
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                fetchPriority="high"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/75 via-transparent to-transparent pointer-events-none" />
               
-              {/* Top Dark Studio Frame */}
-              <div className="bg-[#0B111E] relative">
-                {/* Top Header Strip inside Dark Frame */}
-                <div className="flex items-center justify-between px-4 pt-3.5 pb-2 border-b border-white/10">
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E8B43A]" />
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">
-                      Executive Gift Hamper
-                    </span>
-                  </div>
-                  <span className="px-2.5 py-0.5 rounded bg-[#E8B43A]/20 text-[#E8B43A] border border-[#E8B43A]/40 text-[9px] font-bold uppercase tracking-wider">
-                    Flagship Hamper 2026
-                  </span>
-                </div>
-
-                {/* Dark Studio Hamper Photography */}
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <img
-                    src="/images/home/dark-hero-hamper.jpg"
-                    alt={flagshipProduct.name}
-                    className="w-full h-full object-cover object-center"
-                  />
-
-                  {/* Bottom Floating Pills inside Dark Image Frame */}
-                  <div className="absolute bottom-3 left-3.5 right-3.5 flex items-center justify-between gap-2">
-                    <span className="px-2.5 py-1 rounded-md bg-white text-[#101828] text-[10px] font-bold shadow-xs">
-                      SKU: {flagshipProduct.code}
-                    </span>
-
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white text-[#101828] text-[10px] font-bold shadow-xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                      <span>In-Stock / Ready</span>
-                    </span>
-                  </div>
-                </div>
+              <div className="absolute bottom-5 left-5 pointer-events-none">
+                <span className="px-3.5 py-1.5 rounded-full bg-[#211D1A]/85 backdrop-blur-md border border-white/15 text-[#F5F0E8] font-mono text-[11px] tracking-wider">
+                  {imageBadge}
+                </span>
               </div>
-
-              {/* Bottom White Card Body */}
-              <div className="p-5 space-y-3.5 text-left">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#C69214]">
-                    {flagshipProduct.brand}
-                  </span>
-                  <span className="text-[10px] font-semibold text-[#667085]">
-                    MOQ: {flagshipProduct.moq}
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="font-editorial text-lg font-bold text-[#101828] leading-snug">
-                    {flagshipProduct.name}
-                  </h3>
-                  <p className="text-[11px] text-[#667085] leading-relaxed mt-1 line-clamp-2">
-                    {flagshipProduct.description}
-                  </p>
-                </div>
-
-                {/* 5 Component Pills */}
-                <div className="flex flex-wrap gap-1.5">
-                  {hamperComponents.map((comp, idx) => (
-                    <span
-                      key={idx}
-                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#F8FAFC] border border-[#E5E7EB] text-[10px] text-[#475467] font-medium"
-                    >
-                      <Check className="w-2.5 h-2.5 text-[#D49B27]" />
-                      <span>{comp}</span>
-                    </span>
-                  ))}
-                </div>
-
-                {/* 2 Gray Spec Boxes */}
-                <div className="grid grid-cols-2 gap-2.5 pt-1">
-                  <div className="p-2.5 rounded-lg bg-[#F8FAFC] border border-[#E5E7EB]">
-                    <span className="text-[9px] uppercase tracking-wider text-[#667085] font-semibold block">
-                      Minimum Order
-                    </span>
-                    <span className="text-xs font-bold text-[#101828]">
-                      {flagshipProduct.moq}
-                    </span>
-                  </div>
-
-                  <div className="p-2.5 rounded-lg bg-[#F8FAFC] border border-[#E5E7EB]">
-                    <span className="text-[9px] uppercase tracking-wider text-[#667085] font-semibold block">
-                      Custom Branding
-                    </span>
-                    <span className="text-xs font-bold text-[#C69214]">
-                      Laser / Screen Print
-                    </span>
-                  </div>
-                </div>
-
-                {/* 2 Action Buttons */}
-                <div className="grid grid-cols-2 gap-2.5 pt-1">
-                  <button
-                    onClick={() => addToQuote(flagshipProduct, 50)}
-                    className={`py-2.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                      isAlreadyInQuote
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                        : 'bg-[#0B111E] hover:bg-[#101828] text-white'
-                    }`}
-                  >
-                    <ShoppingBag className="w-3.5 h-3.5 text-[#E8B43A]" />
-                    <span>{isAlreadyInQuote ? 'Added to RFQ' : 'Add to Bulk Quote'}</span>
-                  </button>
-
-                  <Link
-                    href={`/products/${flagshipProduct.id}`}
-                    className="py-2.5 px-3 rounded-lg bg-white hover:bg-[#F8FAFC] text-[#101828] border border-[#E5E7EB] text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
-                  >
-                    <Eye className="w-3.5 h-3.5 text-[#667085]" />
-                    <span>View Full Details</span>
-                  </Link>
-                </div>
-
-              </div>
-
             </div>
           </div>
 
         </div>
+
+        {/* Minimalist Bottom Stat Bar */}
+        <div className="mt-14 pt-6 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6 text-left">
+          {stats.map((stat, idx) => (
+            <div 
+              key={idx} 
+              className={`space-y-0.5 border-l-2 pl-3.5 ${stat.highlight ? 'border-[#C5A16D]' : 'border-white/20'}`}
+            >
+              <div className="text-[10px] font-mono uppercase tracking-widest text-[#C5A16D]">
+                {stat.category}
+              </div>
+              <div className="text-xs sm:text-sm font-bold text-white">
+                {stat.title}
+              </div>
+              <div className="text-[11px] text-[#EAE3D8]/70">
+                {stat.subtitle}
+              </div>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   );

@@ -33,7 +33,7 @@ export const users = pgTable('users', {
 
 // 2. Idempotency Keys Table
 export const idempotencyKeys = pgTable('idempotency_keys', {
-  id: uuid('id').default(sql`uuid_generate_v4()`).primaryKey(),
+  id: uuid('id').defaultRandom().primaryKey(),
   key: varchar('key', { length: 255 }).notNull().unique(),
   request_path: varchar('request_path', { length: 255 }).notNull(),
   request_hash: varchar('request_hash', { length: 64 }).notNull(),
@@ -112,6 +112,8 @@ export const quotes = pgTable('quotes', {
   email: varchar('email', { length: 255 }).notNull(),
   phone: varchar('phone', { length: 50 }).notNull(),
   city: varchar('city', { length: 100 }),
+  category: varchar('category', { length: 150 }),
+  estimated_quantity: varchar('estimated_quantity', { length: 100 }),
   status: varchar('status', { length: 50 }).default('new'),
   target_date: varchar('target_date', { length: 100 }),
   estimated_budget: varchar('estimated_budget', { length: 100 }),
@@ -124,6 +126,25 @@ export const quotes = pgTable('quotes', {
 }, (table) => [
   index('idx_quotes_created_at').on(table.created_at),
   index('idx_quotes_status').on(table.status)
+]);
+
+// 6. Corporate Campaign Inquiries Table ("Planning Your Next Corporate Gifting Campaign?")
+export const inquiries = pgTable('inquiries', {
+  id: varchar('id', { length: 100 }).primaryKey(),
+  quote_number: varchar('quote_number', { length: 100 }),
+  full_name: varchar('full_name', { length: 255 }).notNull(),
+  company_name: varchar('company_name', { length: 255 }).notNull(),
+  email: varchar('email', { length: 255 }).notNull(),
+  phone: varchar('phone', { length: 50 }).notNull(),
+  category: varchar('category', { length: 150 }).notNull(),
+  estimated_quantity: varchar('estimated_quantity', { length: 100 }).notNull(),
+  requirements: text('requirements'),
+  status: varchar('status', { length: 50 }).default('new'),
+  created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow()
+}, (table) => [
+  index('idx_inquiries_created_at').on(table.created_at),
+  index('idx_inquiries_email').on(table.email)
 ]);
 
 // 6. Payments Table
@@ -156,6 +177,9 @@ export type NewOrder = typeof orders.$inferInsert;
 
 export type Quote = typeof quotes.$inferSelect;
 export type NewQuote = typeof quotes.$inferInsert;
+
+export type Inquiry = typeof inquiries.$inferSelect;
+export type NewInquiry = typeof inquiries.$inferInsert;
 
 export type Payment = typeof payments.$inferSelect;
 export type NewPayment = typeof payments.$inferInsert;

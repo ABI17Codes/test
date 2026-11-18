@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getProductByIdFromDb, updateProductInDb, deleteProductInDb } from '@/lib/db';
 import { parseUpdateProduct } from '@/lib/validation/product';
+import { IdParamSchema, formatZodError } from '@/lib/validation/schemas';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -9,7 +10,11 @@ interface RouteContext {
 // GET /api/products/[id] - Get product details
 export async function GET(req: NextRequest, context: RouteContext) {
   try {
-    const { id } = await context.params;
+    const paramsParsed = IdParamSchema.safeParse(await context.params);
+    if (!paramsParsed.success) {
+      return NextResponse.json(formatZodError(paramsParsed.error), { status: 400 });
+    }
+    const { id } = paramsParsed.data;
     const product = await getProductByIdFromDb(id);
 
     if (!product) {
@@ -34,7 +39,11 @@ export async function GET(req: NextRequest, context: RouteContext) {
 // PUT /api/products/[id] - Update product details
 export async function PUT(req: NextRequest, context: RouteContext) {
   try {
-    const { id } = await context.params;
+    const paramsParsed = IdParamSchema.safeParse(await context.params);
+    if (!paramsParsed.success) {
+      return NextResponse.json(formatZodError(paramsParsed.error), { status: 400 });
+    }
+    const { id } = paramsParsed.data;
     const body = await req.json();
     const parsed = parseUpdateProduct(body);
 
@@ -74,7 +83,11 @@ export async function PUT(req: NextRequest, context: RouteContext) {
 // DELETE /api/products/[id] - Delete a product
 export async function DELETE(req: NextRequest, context: RouteContext) {
   try {
-    const { id } = await context.params;
+    const paramsParsed = IdParamSchema.safeParse(await context.params);
+    if (!paramsParsed.success) {
+      return NextResponse.json(formatZodError(paramsParsed.error), { status: 400 });
+    }
+    const { id } = paramsParsed.data;
     const deleted = await deleteProductInDb(id);
 
     if (!deleted) {

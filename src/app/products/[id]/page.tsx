@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState, use } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { 
   PRODUCTS, 
   Product 
@@ -33,61 +32,112 @@ interface ProductDetailPageProps {
 
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const resolvedParams = use(params);
-  const productId = resolvedParams.id;
+  const productId = decodeURIComponent(resolvedParams.id);
   
-  const product = PRODUCTS.find(
+  const staticMatch = PRODUCTS.find(
     (p) =>
       p.id.toLowerCase() === productId.toLowerCase() ||
       p.code.toLowerCase() === productId.toLowerCase()
   );
 
-  if (!product) {
-    return notFound();
-  }
+  const [product, setProduct] = useState<Product | null>(staticMatch || null);
+  const [allProducts, setAllProducts] = useState<Product[]>(PRODUCTS);
+  const [loading, setLoading] = useState(!staticMatch);
+
+  useEffect(() => {
+    fetch(`/api/products/${encodeURIComponent(productId)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.success && data.product) {
+          setProduct(data.product);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+
+    fetch('/api/products')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.success && Array.isArray(data.products) && data.products.length > 0) {
+          setAllProducts(data.products);
+        }
+      })
+      .catch(() => {});
+  }, [productId]);
 
   const { addToQuote, items } = useQuote();
-  const isAlreadyInQuote = items.some((i) => i.product.id === product.id);
-
   const [selectedQuantity, setSelectedQuantity] = useState(50);
   const [selectedCustomization, setSelectedCustomization] = useState(
-    product.brandingOptions?.[0] || 'Laser Engraving'
+    staticMatch?.brandingOptions?.[0] || 'Laser Engraving'
   );
   const [selectedColor, setSelectedColor] = useState<string>(
-    product.colors?.[0]?.name || 'Standard'
+    staticMatch?.colors?.[0]?.name || 'Standard'
   );
 
-  const relatedProducts = PRODUCTS.filter(
+  useEffect(() => {
+    if (product) {
+      if (product.brandingOptions?.[0]) {
+        setSelectedCustomization(product.brandingOptions[0]);
+      }
+      if (product.colors?.[0]?.name) {
+        setSelectedColor(product.colors[0].name);
+      }
+    }
+  }, [product?.id]);
+
+  if (loading && !product) {
+    return (
+      <div className="py-24 text-center text-sm font-semibold text-[#69635C]">
+        Loading Product Specifications...
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="py-24 text-center space-y-4">
+        <h2 className="text-2xl font-bold text-[#211D1A]">Product Not Found</h2>
+        <Link href="/products" className="inline-block px-5 py-2.5 rounded-full bg-[#A98554] text-white text-xs font-bold">
+          Return to Catalogue
+        </Link>
+      </div>
+    );
+  }
+
+  const isAlreadyInQuote = items.some((i) => i.product.id === product.id);
+
+  const relatedProducts = allProducts.filter(
     (p) => p.category === product.category && p.id !== product.id
   ).slice(0, 4);
 
   const getWhatsAppEnquiryUrl = () => {
     const text = encodeURIComponent(
-      `Hello Globrands Lifestyle,\n\nI am requesting a corporate quotation for:\n• Product: ${product.name}\n• Product Code: ${product.code}\n• Brand: ${product.brand}\n• Quantity Required: ${selectedQuantity} units\n• Color Preference: ${selectedColor}\n• Branding Method: ${selectedCustomization}\n\nPlease share availability, tiered B2B pricing, and digital mockups.`
+      `Hello Globrands Lifestyle Pvt. Ltd.,\n\nI am requesting a corporate quotation for:\n• Product: ${product.name}\n• Product Code: ${product.code}\n• Brand: ${product.brand}\n• Quantity Required: ${selectedQuantity} units\n• Color Preference: ${selectedColor}\n• Branding Method: ${selectedCustomization}\n\nPlease share availability, tiered factory B2B pricing, and digital mockups.`
     );
     return `https://wa.me/919900020456?text=${text}`;
   };
 
   const getBrandBadge = () => {
-    if (product.brand === 'Ninja Gear') return 'bg-[#101828] text-white border-[#101828]';
-    if (product.brand === 'ADMA London') return 'bg-[#0876B4] text-white border-[#0876B4]';
-    return 'bg-blue-50 text-[#0876B4] border-blue-200/80';
+    if (product.brand === 'Ninja Gear') return 'bg-[#211D1A] text-white border-[#211D1A]';
+    if (product.brand === 'ADMA London') return 'bg-[#A98554] text-white border-[#A98554]';
+    return 'bg-blue-50 text-[#A98554] border-blue-200/80';
   };
 
   return (
-    <div className="py-10 bg-[#F5F7FA] min-h-screen">
+    <div className="py-10 bg-[#F5F0E8] min-h-screen">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 space-y-10">
         
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs text-[#667085] text-left">
-          <Link href="/" className="hover:text-[#101828]">Home</Link>
+        <div className="flex items-center gap-2 text-xs text-[#69635C] text-left">
+          <Link href="/" className="hover:text-[#211D1A]">Home</Link>
           <ChevronRight className="w-3.5 h-3.5" />
-          <Link href="/products" className="hover:text-[#101828]">Products</Link>
+          <Link href="/products" className="hover:text-[#211D1A]">Products</Link>
           <ChevronRight className="w-3.5 h-3.5" />
-          <Link href={`/products?category=${product.category}`} className="capitalize hover:text-[#101828]">
+          <Link href={`/products?category=${product.category}`} className="capitalize hover:text-[#211D1A]">
             {product.category.replace('-', ' ')}
           </Link>
           <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-[#0876B4] font-semibold">{product.code}</span>
+          <span className="text-[#A98554] font-semibold">{product.code}</span>
         </div>
 
         {/* Product Hero Layout */}
@@ -95,7 +145,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
           
           {/* Left Column: Visual Showcase & Catalog Source */}
           <div className="lg:col-span-6 space-y-6">
-            <div className="relative rounded-3xl bg-white border border-[#E5E7EB] p-8 shadow-xs flex items-center justify-center overflow-hidden aspect-square">
+            <div className="relative rounded-3xl bg-white border border-[#EAE3D8] p-8 shadow-xs flex items-center justify-center overflow-hidden aspect-square">
               
               {/* Brand and Tag */}
               <div className="absolute top-5 left-5 z-10 flex flex-col gap-1.5 items-start">
@@ -103,7 +153,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                   {product.brand}
                 </span>
                 {product.tags?.[0] && (
-                  <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[#F5F7FA] text-[#667085] border border-[#E5E7EB]">
+                  <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[#F5F0E8] text-[#69635C] border border-[#EAE3D8]">
                     {product.tags[0]}
                   </span>
                 )}
@@ -111,7 +161,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
 
               {/* Product Code Badge */}
               <div className="absolute top-5 right-5 z-10">
-                <span className="font-mono text-xs font-bold text-[#101828] bg-[#F5F7FA] border border-[#E5E7EB] px-3 py-1 rounded-lg shadow-2xs">
+                <span className="font-mono text-xs font-bold text-[#211D1A] bg-[#F5F0E8] border border-[#EAE3D8] px-3 py-1 rounded-lg shadow-2xs">
                   {product.code}
                 </span>
               </div>
@@ -125,41 +175,41 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             </div>
 
             {/* Official Catalogue Jump Box */}
-            <div className="p-5 rounded-2xl bg-white border border-[#E5E7EB] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">
+            <div className="p-5 rounded-2xl bg-white border border-[#EAE3D8] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">
               <div>
-                <span className="text-[10px] text-[#667085] font-bold uppercase tracking-wider block">
+                <span className="text-[10px] text-[#69635C] font-bold uppercase tracking-wider block">
                   Original Catalogue Source
                 </span>
-                <span className="text-sm font-bold text-[#101828]">
+                <span className="text-sm font-bold text-[#211D1A]">
                   Page {product.pageNumber} &bull; {product.catalogType === 'bags' ? 'Globrands Bags Collection' : 'ALL In One Corporate Gifts'}
                 </span>
               </div>
 
               <Link
                 href={`/catalog-viewer?type=${product.catalogType}&page=${product.pageNumber}`}
-                className="px-4 py-2 rounded-xl bg-[#F5F7FA] hover:bg-neutral-200/70 border border-[#E5E7EB] text-xs font-bold text-[#101828] flex items-center gap-1.5 transition-colors whitespace-nowrap"
+                className="px-4 py-2 rounded-xl bg-[#F5F0E8] hover:bg-neutral-200/70 border border-[#EAE3D8] text-xs font-bold text-[#211D1A] flex items-center gap-1.5 transition-colors whitespace-nowrap"
               >
-                <FileText className="w-4 h-4 text-[#0876B4]" />
+                <FileText className="w-4 h-4 text-[#A98554]" />
                 <span>Inspect PDF Page {product.pageNumber}</span>
               </Link>
             </div>
 
             {/* Enterprise Quality Badges */}
             <div className="grid grid-cols-3 gap-3">
-              <div className="p-3.5 rounded-2xl bg-white border border-[#E5E7EB] text-center space-y-1 shadow-2xs">
-                <ShieldCheck className="w-5 h-5 text-[#0876B4] mx-auto" />
-                <div className="text-xs font-bold text-[#101828]">1-Yr Warranty</div>
-                <div className="text-[10px] text-[#667085]">Corporate Bags</div>
+              <div className="p-3.5 rounded-2xl bg-white border border-[#EAE3D8] text-center space-y-1 shadow-2xs">
+                <ShieldCheck className="w-5 h-5 text-[#A98554] mx-auto" />
+                <div className="text-xs font-bold text-[#211D1A]">1-Yr Warranty</div>
+                <div className="text-[10px] text-[#69635C]">Corporate Bags</div>
               </div>
-              <div className="p-3.5 rounded-2xl bg-white border border-[#E5E7EB] text-center space-y-1 shadow-2xs">
-                <Factory className="w-5 h-5 text-[#0876B4] mx-auto" />
-                <div className="text-xs font-bold text-[#101828]">100% In-House</div>
-                <div className="text-[10px] text-[#667085]">Bengaluru Atelier</div>
+              <div className="p-3.5 rounded-2xl bg-white border border-[#EAE3D8] text-center space-y-1 shadow-2xs">
+                <Factory className="w-5 h-5 text-[#A98554] mx-auto" />
+                <div className="text-xs font-bold text-[#211D1A]">100% In-House</div>
+                <div className="text-[10px] text-[#69635C]">Bengaluru Atelier</div>
               </div>
-              <div className="p-3.5 rounded-2xl bg-white border border-[#E5E7EB] text-center space-y-1 shadow-2xs">
-                <Award className="w-5 h-5 text-[#E8B43A] mx-auto" />
-                <div className="text-xs font-bold text-[#101828]">5-Stage QC</div>
-                <div className="text-[10px] text-[#667085]">Zero Defect Promise</div>
+              <div className="p-3.5 rounded-2xl bg-white border border-[#EAE3D8] text-center space-y-1 shadow-2xs">
+                <Award className="w-5 h-5 text-[#C5A16D] mx-auto" />
+                <div className="text-xs font-bold text-[#211D1A]">5-Stage QC</div>
+                <div className="text-[10px] text-[#69635C]">Zero Defect Promise</div>
               </div>
             </div>
 
@@ -168,12 +218,12 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
           {/* Right Column: Specifications, Customization & RFQ Form */}
           <div className="lg:col-span-6 space-y-6">
             
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E5E7EB] space-y-6 shadow-xs">
+            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#EAE3D8] space-y-6 shadow-xs">
               
               {/* Product Header */}
-              <div className="space-y-2 border-b border-[#E5E7EB] pb-5">
+              <div className="space-y-2 border-b border-[#EAE3D8] pb-5">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-bold text-[#0876B4]">
+                  <span className="text-xs font-mono font-bold text-[#A98554]">
                     SKU: {product.code}
                   </span>
                   <span className="text-neutral-300">&bull;</span>
@@ -183,25 +233,25 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                   </span>
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-[#101828] tracking-tight leading-tight">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-[#211D1A] tracking-tight leading-tight">
                   {product.name}
                 </h1>
 
-                <p className="text-sm text-[#667085] leading-relaxed font-normal pt-1">
+                <p className="text-sm text-[#69635C] leading-relaxed font-normal pt-1">
                   {product.description}
                 </p>
               </div>
 
               {/* Gift Set Components (if applicable) */}
               {product.composition && product.composition.length > 0 && (
-                <div className="p-4 rounded-2xl bg-[#F5F7FA] border border-[#E5E7EB] space-y-2.5">
-                  <span className="text-xs font-bold text-[#0876B4] uppercase tracking-wider block">
+                <div className="p-4 rounded-2xl bg-[#F5F0E8] border border-[#EAE3D8] space-y-2.5">
+                  <span className="text-xs font-bold text-[#A98554] uppercase tracking-wider block">
                     Luxury Gift Box Components:
                   </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-[#101828] font-medium">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-[#211D1A] font-medium">
                     {product.composition.map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#E8B43A] shrink-0" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#C5A16D] shrink-0" />
                         <span>{item}</span>
                       </div>
                     ))}
@@ -212,14 +262,14 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               {/* Verified Technical Specs Table */}
               {product.specs && product.specs.length > 0 && (
                 <div className="space-y-3">
-                  <span className="text-xs font-bold text-[#101828] uppercase tracking-wider block">
+                  <span className="text-xs font-bold text-[#211D1A] uppercase tracking-wider block">
                     Verified Technical Specifications:
                   </span>
                   <div className="grid grid-cols-2 gap-2.5 text-xs">
                     {product.specs.map((s, idx) => (
-                      <div key={idx} className="p-3 rounded-xl bg-[#F5F7FA] border border-[#E5E7EB]">
-                        <span className="text-[#667085] text-[10px] block uppercase font-medium">{s.label}</span>
-                        <span className="text-[#101828] font-bold block truncate mt-0.5">{s.value}</span>
+                      <div key={idx} className="p-3 rounded-xl bg-[#F5F0E8] border border-[#EAE3D8]">
+                        <span className="text-[#69635C] text-[10px] block uppercase font-medium">{s.label}</span>
+                        <span className="text-[#211D1A] font-bold block truncate mt-0.5">{s.value}</span>
                       </div>
                     ))}
                   </div>
@@ -228,9 +278,9 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
 
               {/* Color Shade Selection */}
               {product.colors && product.colors.length > 0 && (
-                <div className="space-y-2.5 pt-3 border-t border-[#E5E7EB]">
-                  <span className="text-xs font-bold text-[#101828] uppercase tracking-wider block">
-                    Available Shades: <b className="text-[#0876B4] font-semibold">{selectedColor}</b>
+                <div className="space-y-2.5 pt-3 border-t border-[#EAE3D8]">
+                  <span className="text-xs font-bold text-[#211D1A] uppercase tracking-wider block">
+                    Available Shades: <b className="text-[#A98554] font-semibold">{selectedColor}</b>
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {product.colors.map((c) => (
@@ -239,8 +289,8 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                         onClick={() => setSelectedColor(c.name)}
                         className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs transition-all border cursor-pointer ${
                           selectedColor === c.name
-                            ? 'bg-blue-50 border-[#0876B4] text-[#0876B4] font-bold shadow-2xs'
-                            : 'bg-white border-[#E5E7EB] text-[#667085] hover:text-[#101828] hover:border-neutral-300'
+                            ? 'bg-blue-50 border-[#A98554] text-[#A98554] font-bold shadow-2xs'
+                            : 'bg-white border-[#EAE3D8] text-[#69635C] hover:text-[#211D1A] hover:border-neutral-300'
                         }`}
                       >
                         <span
@@ -255,8 +305,8 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               )}
 
               {/* In-House Branding Technique Selector */}
-              <div className="space-y-2.5 pt-3 border-t border-[#E5E7EB]">
-                <span className="text-xs font-bold text-[#101828] uppercase tracking-wider block">
+              <div className="space-y-2.5 pt-3 border-t border-[#EAE3D8]">
+                <span className="text-xs font-bold text-[#211D1A] uppercase tracking-wider block">
                   Select Custom Logo Branding:
                 </span>
                 <div className="grid grid-cols-2 gap-2">
@@ -266,8 +316,8 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                       onClick={() => setSelectedCustomization(opt)}
                       className={`p-2.5 rounded-xl text-xs text-left transition-all border cursor-pointer ${
                         selectedCustomization === opt
-                          ? 'bg-blue-50 border-[#0876B4] text-[#0876B4] font-bold shadow-2xs'
-                          : 'bg-white border-[#E5E7EB] text-[#667085] hover:text-[#101828] hover:border-neutral-300'
+                          ? 'bg-blue-50 border-[#A98554] text-[#A98554] font-bold shadow-2xs'
+                          : 'bg-white border-[#EAE3D8] text-[#69635C] hover:text-[#211D1A] hover:border-neutral-300'
                       }`}
                     >
                       {opt}
@@ -277,11 +327,11 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               </div>
 
               {/* Quantity Tiers & Minimum Order Counter */}
-              <div className="space-y-2.5 pt-3 border-t border-[#E5E7EB]">
+              <div className="space-y-2.5 pt-3 border-t border-[#EAE3D8]">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-xs font-bold text-[#101828] block">Required Order Quantity</span>
-                    <span className="text-[11px] text-[#667085]">Min. Bulk Order: {product.moq}</span>
+                    <span className="text-xs font-bold text-[#211D1A] block">Required Order Quantity</span>
+                    <span className="text-[11px] text-[#69635C]">Min. Bulk Order: {product.moq}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     {[50, 100, 250, 500, 1000].map((qty) => (
@@ -290,8 +340,8 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                         onClick={() => setSelectedQuantity(qty)}
                         className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                           selectedQuantity === qty
-                            ? 'bg-[#101828] text-white font-bold shadow-2xs'
-                            : 'bg-[#F5F7FA] text-[#667085] hover:bg-neutral-200'
+                            ? 'bg-[#211D1A] text-white font-bold shadow-2xs'
+                            : 'bg-[#F5F0E8] text-[#69635C] hover:bg-neutral-200'
                         }`}
                       >
                         {qty}
@@ -302,13 +352,13 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               </div>
 
               {/* Action Buttons: Add to RFQ Basket & Instant WhatsApp */}
-              <div className="pt-4 border-t border-[#E5E7EB] space-y-3">
+              <div className="pt-4 border-t border-[#EAE3D8] space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <button
                     onClick={() => addToQuote(product, selectedQuantity, selectedCustomization)}
-                    className="w-full py-3.5 px-5 rounded-full bg-[#0876B4] hover:bg-[#075f91] text-white text-xs font-bold tracking-wide shadow-md flex items-center justify-center gap-2 transition-all cursor-pointer"
+                    className="w-full py-3.5 px-5 rounded-full bg-[#A98554] hover:bg-[#40352D] text-white text-xs font-bold tracking-wide shadow-md flex items-center justify-center gap-2 transition-all cursor-pointer"
                   >
-                    <ShoppingBag className="w-4 h-4 text-[#E8B43A]" />
+                    <ShoppingBag className="w-4 h-4 text-[#C5A16D]" />
                     <span>{isAlreadyInQuote ? 'IN RFQ BASKET ✓' : 'ADD TO BULK RFQ BASKET'}</span>
                   </button>
 
@@ -323,9 +373,9 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                   </a>
                 </div>
 
-                <div className="flex items-center justify-between text-[11px] text-[#667085] pt-1">
+                <div className="flex items-center justify-between text-[11px] text-[#69635C] pt-1">
                   <span>Direct response within 2 hours with tiered pricing</span>
-                  <Link href="/branding" className="text-[#0876B4] hover:underline font-semibold">
+                  <Link href="/branding" className="text-[#A98554] hover:underline font-semibold">
                     Preview In Branding Simulator &rarr;
                   </Link>
                 </div>
@@ -339,19 +389,19 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
 
         {/* Related Products Recommendation Row */}
         {relatedProducts.length > 0 && (
-          <div className="mt-16 pt-10 border-t border-[#E5E7EB] text-left space-y-6">
+          <div className="mt-16 pt-10 border-t border-[#EAE3D8] text-left space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#0876B4]">
+                <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#A98554]">
                   RECOMMENDED ALTERNATIVES
                 </span>
-                <h3 className="text-2xl font-bold text-[#101828] mt-0.5">
+                <h3 className="text-2xl font-bold text-[#211D1A] mt-0.5">
                   Similar Models in {product.category.replace('-', ' ').toUpperCase()}
                 </h3>
               </div>
               <Link
                 href={`/products?category=${product.category}`}
-                className="text-xs font-bold text-[#0876B4] hover:underline flex items-center gap-1"
+                className="text-xs font-bold text-[#A98554] hover:underline flex items-center gap-1"
               >
                 <span>View All In Category</span>
                 <ChevronRight className="w-3.5 h-3.5" />

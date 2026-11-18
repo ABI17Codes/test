@@ -56,7 +56,7 @@ function CatalogViewerContent() {
   const getPageWhatsAppUrl = () => {
     const catalogName = type === 'bags' ? 'Globrands Bag Catalogue 2025' : 'ALL In One Corporate Gift Catalogue';
     const text = encodeURIComponent(
-      `Hello Globrands Lifestyle, I am reviewing your ${catalogName} on Page ${currentPage} of ${totalPages} and would like to request bulk pricing and quotation for the products shown on this page.`
+      `Hello Globrands Lifestyle Pvt. Ltd., I am reviewing your ${catalogName} on Page ${currentPage} of ${totalPages} and would like to request bulk pricing and quotation for the products shown on this page.`
     );
     return `https://wa.me/919900020456?text=${text}`;
   };

@@ -36,8 +36,8 @@ export interface ProductFormValues {
 export const EMPTY_PRODUCT: ProductFormValues = {
   code: '',
   name: '',
-  category: 'gift-sets',
-  brand: 'Globrands Lifestyle',
+  category: 'bags',
+  brand: 'Globrands Lifestyle Pvt. Ltd.',
   description: '',
   price: '',
   moq: 50,
@@ -59,7 +59,7 @@ const CATEGORY_OPTIONS = [
   { value: 'desktop', label: 'Desk Organizers & Clocks' }
 ];
 
-const BRAND_OPTIONS = ['Globrands Lifestyle', 'Ninja Gear', 'ADMA London'];
+const BRAND_OPTIONS = ['Globrands Lifestyle Pvt. Ltd.', 'Ninja Gear', 'ADMA London'];
 
 const BRANDING_METHODS = [
   'Laser Engraving',
@@ -420,20 +420,44 @@ export default function ProductForm({ mode, productId, initialValues }: ProductF
                 </div>
               )}
             </div>
-            <div>
-              <label className={labelCls}>Image URL / Path</label>
-              <input
-                value={values.image_url}
-                onChange={(e) => {
-                  setImageError(false);
-                  set('image_url', e.target.value);
-                }}
-                placeholder="/catalog/crops/hgs_h74.jpg"
-                className={`${inputCls} font-mono text-[11px]`}
-              />
-              <p className="text-[10px] text-neutral-400 mt-1">
-                Use a path inside <code>/public</code> or a full https:// URL.
-              </p>
+            <div className="space-y-2">
+              <label className="w-full py-2 px-3 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 text-xs font-bold text-neutral-700 flex items-center justify-center gap-1.5 cursor-pointer transition-colors">
+                <Plus className="w-3.5 h-3.5 text-[#2563eb]" />
+                <span>Upload Image File</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      if (typeof reader.result === 'string') {
+                        setImageError(false);
+                        set('image_url', reader.result);
+                      }
+                    };
+                    reader.readAsDataURL(file);
+                  }}
+                />
+              </label>
+
+              <div>
+                <label className={labelCls}>Or Image URL / Path</label>
+                <input
+                  value={values.image_url}
+                  onChange={(e) => {
+                    setImageError(false);
+                    set('image_url', e.target.value);
+                  }}
+                  placeholder="/catalog/crops/hgs_h74.jpg"
+                  className={`${inputCls} font-mono text-[11px]`}
+                />
+                <p className="text-[10px] text-neutral-400 mt-1">
+                  Upload a file above, use a path inside <code>/public</code>, or paste a full https:// URL.
+                </p>
+              </div>
             </div>
           </section>
 

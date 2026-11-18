@@ -1,26 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import { withIdempotency } from '@/lib/idempotency';
 import { createQuoteRecord, listQuotesFromDb } from '@/lib/db';
-
-const CreateQuoteSchema = z.object({
-  customerName: z.string().min(2, 'Name is required'),
-  companyName: z.string().min(2, 'Company name is required'),
-  email: z.string().email('Valid email is required'),
-  phone: z.string().min(10, 'Valid phone is required'),
-  city: z.string().optional(),
-  targetDate: z.string().optional(),
-  estimatedBudget: z.string().optional(),
-  items: z.array(z.any()).min(1, 'Quote must include at least one product item'),
-  brandingRequirements: z.string().optional(),
-  notes: z.string().optional()
-});
+import { CreateQuoteSchema, QuoteQuerySchema, formatZodError } from '@/lib/validation/schemas';
 
 // GET /api/quotes - List quotes
 export async function GET(req: NextRequest) {
   try {
-    const status = req.nextUrl.searchParams.get('status') || undefined;
-    const quotes = await listQuotesFromDb(status);
+    const queryParsed = QuoteQuerySchema.safeParse({
+      status: req.nextUrl.searchParams.get('status') || undefined,
+    });
+    if (!queryParsed.success) {
+      return NextResponse.json(formatZodError(queryParsed.error), { status: 400 });
+    }
+
+    const quotes = await listQuotesFromDb(queryParsed.data.status);
 
     return NextResponse.json({
       success: true,
@@ -40,10 +33,7 @@ export async function POST(req: NextRequest) {
   return withIdempotency(req, async (idempotencyKey, body) => {
     const parsed = CreateQuoteSchema.safeParse(body);
     if (!parsed.success) {
-      return NextResponse.json(
-        { success: false, error: 'Validation error', details: parsed.error.issues },
-        { status: 400 }
-      );
+      return NextResponse.json(formatZodError(parsed.error), { status: 400 });
     }
 
     const data = parsed.data;
@@ -60,6 +50,8 @@ export async function POST(req: NextRequest) {
       email: data.email,
       phone: data.phone,
       city: data.city || '',
+      category: data.category || '',
+      estimated_quantity: data.estimatedQuantity || '',
       target_date: data.targetDate || '',
       estimated_budget: data.estimatedBudget || '',
       items: data.items,

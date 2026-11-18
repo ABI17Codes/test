@@ -16,7 +16,8 @@ import {
   ShieldCheck,
   Building2,
   ChevronRight,
-  Bell
+  Bell,
+  PlusCircle
 } from 'lucide-react';
 
 export default function AdminLayout({
@@ -57,6 +58,7 @@ export default function AdminLayout({
     { label: 'Overview', href: '/admin', icon: LayoutDashboard },
     { label: 'Orders & Payments', href: '/admin/orders', icon: ShoppingBag },
     { label: 'Product Catalog', href: '/admin/products', icon: Package },
+    { label: 'Add New Product', href: '/admin/products/new', icon: PlusCircle },
     { label: 'Quotes & RFQs', href: '/admin/quotes', icon: FileText },
     { label: 'Corporate Accounts', href: '/admin/customers', icon: Users },
   ];
@@ -115,7 +117,9 @@ export default function AdminLayout({
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive =
-                item.href === '/admin' ? pathname === item.href : pathname.startsWith(item.href);
+                item.href === '/admin' || item.href === '/admin/products'
+                  ? pathname === item.href
+                  : pathname.startsWith(item.href);
               return (
                 <Link
                   key={item.href}

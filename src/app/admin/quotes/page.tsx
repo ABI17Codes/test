@@ -49,6 +49,8 @@ interface Quote {
   email: string;
   phone: string;
   city?: string;
+  category?: string;
+  estimated_quantity?: string;
   target_date?: string;
   estimated_budget?: string;
   items: QuoteItem[];
@@ -149,7 +151,7 @@ export default function AdminQuotesPage() {
     const cleanPhone = quote.phone.replace(/[^0-9]/g, '');
     const phoneWithCountry = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`;
     const text = encodeURIComponent(
-      `Hello ${quote.customer_name},\n\nThank you for reaching out to Globrands Lifestyle for quotation #${quote.quote_number || quote.id} for ${quote.company_name}.\n\nWe have reviewed your request for ${quote.items.length} items and would like to share the official price quote and branding proposal with you. Are you available for a quick discussion?`
+      `Hello ${quote.customer_name},\n\nThank you for reaching out to Globrands Lifestyle Pvt. Ltd. for quotation #${quote.quote_number || quote.id} for ${quote.company_name}.\n\nWe have reviewed your request for ${quote.items.length} items and would like to share the official price quote and branding proposal with you. Are you available for a quick discussion?`
     );
     return `https://wa.me/${phoneWithCountry}?text=${text}`;
   };
@@ -357,17 +359,25 @@ export default function AdminQuotesPage() {
                       </td>
 
                       <td className="py-3.5 px-4">
+                        {q.category && (
+                          <div className="mb-1">
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-amber-50 text-amber-800 border border-amber-200">
+                              <Sparkles className="w-3 h-3 text-amber-600" />
+                              Proposal Enquiry
+                            </span>
+                          </div>
+                        )}
                         <div className="font-semibold text-neutral-800">
-                          {q.items?.length || 0} product line{q.items?.length !== 1 ? 's' : ''}
+                          {q.category ? q.category : `${q.items?.length || 0} product line${q.items?.length !== 1 ? 's' : ''}`}
                         </div>
                         <div className="text-[11px] text-neutral-500 truncate max-w-xs mt-0.5">
-                          {q.items?.map((it) => it.product?.name || it.product?.code).filter(Boolean).join(', ')}
+                          {q.notes || q.items?.map((it) => it.product?.name || it.product?.code).filter(Boolean).join(', ')}
                         </div>
                       </td>
 
                       <td className="py-3.5 px-4">
                         <div className="font-medium text-neutral-800">
-                          {q.estimated_budget ? `₹ ${q.estimated_budget}` : 'Standard Catalog'}
+                          {q.estimated_quantity ? `Est. Qty: ${q.estimated_quantity}` : q.estimated_budget ? `₹ ${q.estimated_budget}` : 'Standard Catalog'}
                         </div>
                         {q.target_date && (
                           <div className="text-[10px] text-neutral-400 flex items-center gap-1 mt-0.5">

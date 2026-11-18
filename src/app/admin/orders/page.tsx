@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { 
   ShoppingBag, 
   Search, 
@@ -17,7 +18,9 @@ import {
   Copy,
   Check,
   RefreshCw,
-  AlertCircle
+  AlertCircle,
+  FileText,
+  ArrowRight
 } from 'lucide-react';
 
 export default function AdminOrdersPage() {
@@ -137,6 +140,28 @@ export default function AdminOrdersPage() {
           <RefreshCw className="w-3.5 h-3.5" />
           <span>Refresh</span>
         </button>
+      </div>
+
+      {/* Corporate Gifting & RFQ Notice Banner */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-xs shadow-2xs">
+        <div className="flex items-center gap-2.5 text-amber-900">
+          <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
+            <FileText className="w-4 h-4 text-amber-700" />
+          </div>
+          <div>
+            <p className="font-bold text-amber-950">Looking for Corporate Campaign Proposals &amp; Factory Inquiries?</p>
+            <p className="text-[11px] text-amber-800">
+              Inquiries from &ldquo;Planning Your Next Corporate Gifting Campaign?&rdquo; and custom factory requests are managed under <strong>Quotes &amp; RFQs</strong>.
+            </p>
+          </div>
+        </div>
+        <Link
+          href="/admin/quotes"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-900 hover:bg-amber-950 text-white font-bold text-xs shrink-0 shadow-2xs transition-colors self-start sm:self-auto"
+        >
+          <span>View Quotes &amp; RFQs</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
 
       {/* Filter Tabs & Search Bar */}

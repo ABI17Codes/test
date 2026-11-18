@@ -1,18 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { listUsersFromDb, getUserByEmailFromDb, createUserInDb } from '@/lib/db';
 import { hashPassword } from '@/lib/auth';
-import { z } from 'zod';
-
-const CreateUserSchema = z.object({
-  name: z.string().min(2, 'Name is required'),
-  companyName: z.string().min(2, 'Company name is required'),
-  email: z.string().email('Valid work email is required'),
-  phone: z.string().min(10, 'Valid phone number is required'),
-  password: z.string().min(6, 'Temporary password must be at least 6 characters').default('Welcome@123'),
-  role: z.enum(['client', 'admin']).default('client'),
-  city: z.string().optional(),
-  gstin: z.string().optional()
-});
+import { CreateUserSchema, formatZodError } from '@/lib/validation/schemas';
 
 export async function GET(req: NextRequest) {
   try {
@@ -36,10 +25,7 @@ export async function POST(req: NextRequest) {
     const parsed = CreateUserSchema.safeParse(body);
 
     if (!parsed.success) {
-      return NextResponse.json(
-        { success: false, error: 'Validation error', details: parsed.error.issues },
-        { status: 400 }
-      );
+      return NextResponse.json(formatZodError(parsed.error), { status: 400 });
     }
 
     const { name, companyName, email, phone, password, role, city, gstin } = parsed.data;

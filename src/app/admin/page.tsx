@@ -60,7 +60,7 @@ export default function AdminDashboardPage() {
 
         <div className="flex items-center gap-2">
           <Link
-            href="/admin/products"
+            href="/admin/products/new"
             className="px-3.5 py-2 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />

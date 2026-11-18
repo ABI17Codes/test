@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Briefcase, 
@@ -15,16 +15,31 @@ import {
   Laptop,
   CheckCircle2,
   Truck,
-  Sparkles
+  Sparkles,
+  Factory,
+  Layers,
+  Check
 } from 'lucide-react';
-import { PRODUCTS } from '../../data/products';
+import { PRODUCTS, Product } from '../../data/products';
 import { ProductCard } from '../../components/ProductCard';
 
 export default function BagsPage() {
   const [selectedBrand, setSelectedBrand] = useState<'all' | 'Ninja Gear' | 'ADMA London'>('all');
   const [bagTypeFilter, setBagTypeFilter] = useState<string>('all');
+  const [allBags, setAllBags] = useState<Product[]>(() =>
+    PRODUCTS.filter((p) => p.category === 'bags')
+  );
 
-  const allBags = PRODUCTS.filter((p) => p.category === 'bags');
+  useEffect(() => {
+    fetch('/api/products?category=bags')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.success && Array.isArray(data.products) && data.products.length > 0) {
+          setAllBags(data.products);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const filteredBags = allBags.filter((bag) => {
     const matchesBrand = selectedBrand === 'all' || bag.brand === selectedBrand;
@@ -35,43 +50,43 @@ export default function BagsPage() {
     const matchesType =
       bagTypeFilter === 'all' ||
       (bagTypeFilter === 'antitheft' && (tagsLower.includes('antitheft') || descLower.includes('anti-theft') || descLower.includes('antitheft'))) ||
-      (bagTypeFilter === 'laptop' && (nameLower.includes('backpack') || nameLower.includes('boxer') || nameLower.includes('volvo') || nameLower.includes('smart'))) ||
+      (bagTypeFilter === 'laptop' && (nameLower.includes('backpack') || nameLower.includes('boxer') || nameLower.includes('volvo') || nameLower.includes('smart') || nameLower.includes('jio') || nameLower.includes('inspire') || nameLower.includes('vip') || nameLower.includes('nexa'))) ||
       (bagTypeFilter === '17inch' && (nameLower.includes('volvo') || nameLower.includes('boxer') || descLower.includes('17') || descLower.includes('15.6'))) ||
-      (bagTypeFilter === 'waterproof' && (descLower.includes('rain cover') || descLower.includes('water') || tagsLower.includes('weather'))) ||
-      (bagTypeFilter === 'duffle' && (nameLower.includes('duffle') || nameLower.includes('gym') || nameLower.includes('overnighter'))) ||
-      (bagTypeFilter === 'sleeve' && (nameLower.includes('sleeve') || nameLower.includes('sling') || nameLower.includes('pouch'))) ||
-      (bagTypeFilter === 'travel' && (nameLower.includes('rucksack') || nameLower.includes('trolley') || nameLower.includes('kamiliant') || nameLower.includes('mountain')));
+      (bagTypeFilter === 'waterproof' && (descLower.includes('rain cover') || descLower.includes('water') || tagsLower.includes('weather') || descLower.includes('weather'))) ||
+      (bagTypeFilter === 'duffle' && (nameLower.includes('duffle') || nameLower.includes('gym') || nameLower.includes('overnighter') || nameLower.includes('shine'))) ||
+      (bagTypeFilter === 'sleeve' && (nameLower.includes('sleeve') || nameLower.includes('sling') || nameLower.includes('pouch') || nameLower.includes('waist') || nameLower.includes('strings'))) ||
+      (bagTypeFilter === 'travel' && (nameLower.includes('rucksack') || nameLower.includes('kamiliant') || nameLower.includes('mountain') || nameLower.includes('volvo')));
     return matchesBrand && matchesType;
   });
 
   return (
-    <div className="py-10 bg-[#F5F7FA] min-h-screen">
+    <div className="py-10 bg-gradient-to-b from-[#F5F0E8] via-[#F5F0E8] to-[#F5F0E8] min-h-screen">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 space-y-10">
         
         {/* Breadcrumb & Header */}
-        <div className="text-left space-y-3">
-          <div className="flex items-center gap-2 text-xs text-[#667085]">
-            <Link href="/" className="hover:text-[#101828]">Home</Link>
+        <div className="text-left space-y-4">
+          <div className="flex items-center gap-2 text-xs text-[#69635C]">
+            <Link href="/" className="hover:text-[#211D1A]">Home</Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-[#0876B4] font-semibold">Corporate Bags &amp; Laptop Backpacks</span>
+            <span className="text-[#A98554] font-semibold">Backpack Manufacturing (Primary Focus)</span>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 shadow-2xs">
-            <Briefcase className="w-3.5 h-3.5 text-[#0876B4]" />
-            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#0876B4]">
-              GLOBRANDS BAG CATALOGUE 2026 &bull; B2B DIRECT FACTORY
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EAE3D8] border border-[#C5A16D] shadow-2xs">
+            <Factory className="w-3.5 h-3.5 text-[#A98554]" />
+            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#A98554]">
+              GLOBRANDS LIFESTYLE PVT. LTD. &bull; DIRECT FACTORY BACKPACK MANUFACTURERS
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#101828] tracking-tight">
-            Corporate Laptop Bags, Backpacks &amp;{' '}
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#211D1A] tracking-tight">
+            Direct Factory Backpack Manufacturing &amp;{' '}
             <span className="brand-gradient-text">
-              Travel Carrywear
+              Corporate Carrywear
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-[#667085] max-w-3xl font-normal leading-relaxed">
-            Engineered, patented, and manufactured by Globrands Lifestyle in Bengaluru. Featuring proprietary sub-brands <strong>Ninja Gear Original</strong> and <strong>ADMA London</strong> with an authentic 1-Year Direct Factory Replacement Warranty on all corporate orders.
+          <p className="text-sm sm:text-base text-[#69635C] max-w-4xl font-normal leading-relaxed">
+            <strong className="text-[#211D1A]">Globrands Lifestyle Pvt. Ltd.</strong> is India&apos;s premier direct factory backpack manufacturer, operating a specialized production atelier in Bengaluru. Unlike third-party gifting resellers, we manufacture 32 proprietary backpack and carrywear models in-house under our registered brands—<strong>Ninja Gear Original</strong> and <strong>ADMA London</strong>—backed by our unconditional 1-Year Direct Factory Replacement Warranty.
           </p>
         </div>
 
@@ -83,32 +98,34 @@ export default function BagsPage() {
             onClick={() => setSelectedBrand(selectedBrand === 'Ninja Gear' ? 'all' : 'Ninja Gear')}
             className={`p-6 sm:p-8 rounded-3xl cursor-pointer transition-all border flex flex-col justify-between group ${
               selectedBrand === 'Ninja Gear'
-                ? 'bg-white border-[#0876B4] shadow-lg ring-2 ring-[#0876B4]/30'
-                : 'bg-white border-[#E5E7EB] hover:border-neutral-300 shadow-2xs'
+                ? 'bg-white border-[#A98554] shadow-xl ring-2 ring-[#A98554]/30'
+                : 'bg-white border-[#EAE3D8] hover:border-amber-400/70 shadow-xs hover:shadow-lg'
             }`}
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <img
-                  src="/catalog/brands/ninja_gear_logo.jpg"
-                  alt="Ninja Gear Original Corporate Laptop Bags"
-                  className="h-12 object-contain rounded-lg"
-                />
+                <div className="h-14 p-2 bg-white rounded-xl border border-slate-200 flex items-center justify-center">
+                  <img
+                    src="/catalog/brands/ninja_gear_logo.jpg"
+                    alt="Ninja Gear Original Corporate Laptop Bags"
+                    className="max-h-full max-w-full object-contain rounded"
+                  />
+                </div>
                 <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
-                  Tech &amp; Antitheft Series
+                  Tactical &bull; Antitheft &bull; USB
                 </span>
               </div>
-              <h3 className="text-xl font-bold text-[#101828]">
+              <h3 className="text-xl font-bold text-[#211D1A]">
                 NINJA GEAR ORIGINAL
               </h3>
-              <p className="text-xs text-[#667085] mt-2 leading-relaxed">
-                Engineered with concealed anti-theft zipper geometry, quick-access RFID card pockets, external USB fast-charging ports, and reinforced tear-resistant ballistic poly fabric.
+              <p className="text-xs text-[#69635C] mt-2 leading-relaxed">
+                Engineered with concealed anti-theft zipper geometry, quick-access security pockets, external USB fast-charging ports, suspended 17&quot; laptop cradles, and tear-resistant ballistic poly fabric.
               </p>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-[#E5E7EB] flex items-center justify-between text-xs font-bold text-[#0876B4]">
-              <span>{selectedBrand === 'Ninja Gear' ? 'Showing Ninja Gear Bags ✓' : 'Filter Ninja Gear Bags'}</span>
-              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-[#E8B43A]" />
+            <div className="mt-6 pt-4 border-t border-[#EAE3D8] flex items-center justify-between text-xs font-bold text-[#A98554]">
+              <span>{selectedBrand === 'Ninja Gear' ? 'Showing Ninja Gear Range (12 Models) ✓' : 'Filter Ninja Gear Bags'}</span>
+              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-[#C5A16D]" />
             </div>
           </div>
 
@@ -117,57 +134,59 @@ export default function BagsPage() {
             onClick={() => setSelectedBrand(selectedBrand === 'ADMA London' ? 'all' : 'ADMA London')}
             className={`p-6 sm:p-8 rounded-3xl cursor-pointer transition-all border flex flex-col justify-between group ${
               selectedBrand === 'ADMA London'
-                ? 'bg-white border-[#0876B4] shadow-lg ring-2 ring-[#0876B4]/30'
-                : 'bg-white border-[#E5E7EB] hover:border-neutral-300 shadow-2xs'
+                ? 'bg-white border-[#A98554] shadow-xl ring-2 ring-[#A98554]/30'
+                : 'bg-white border-[#EAE3D8] hover:border-sky-400/70 shadow-xs hover:shadow-lg'
             }`}
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <img
-                  src="/catalog/brands/adma_london_logo.jpg"
-                  alt="ADMA London A Real Companion Corporate Bags"
-                  className="h-12 object-contain rounded-lg"
-                />
+                <div className="h-14 p-2 bg-white rounded-xl border border-slate-200 flex items-center justify-center">
+                  <img
+                    src="/catalog/brands/adma_london_logo.jpg"
+                    alt="ADMA London A Real Companion Corporate Bags"
+                    className="max-h-full max-w-full object-contain rounded"
+                  />
+                </div>
                 <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-200">
-                  Corporate &amp; Office Series
+                  Executive &bull; Weatherproof &bull; Travel
                 </span>
               </div>
-              <h3 className="text-xl font-bold text-[#101828]">
+              <h3 className="text-xl font-bold text-[#211D1A]">
                 ADMA LONDON
               </h3>
-              <p className="text-xs text-[#667085] mt-2 leading-relaxed">
-                &ldquo;A Real Companion&rdquo; for everyday executive travel. Features integrated waterproof rain covers, cushioned 15.6&quot; to 17&quot; laptop protection compartments, and professional corporate messengers.
+              <p className="text-xs text-[#69635C] mt-2 leading-relaxed">
+                &ldquo;A Real Companion&rdquo; for modern enterprise travel. Features integrated deployable waterproof rain covers, front RFID-blocking pockets, 38L–40L jumbo compartments, and isolated shoe sacks.
               </p>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-[#E5E7EB] flex items-center justify-between text-xs font-bold text-[#0876B4]">
-              <span>{selectedBrand === 'ADMA London' ? 'Showing ADMA London Bags ✓' : 'Filter ADMA London Bags'}</span>
-              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-[#E8B43A]" />
+            <div className="mt-6 pt-4 border-t border-[#EAE3D8] flex items-center justify-between text-xs font-bold text-[#A98554]">
+              <span>{selectedBrand === 'ADMA London' ? 'Showing ADMA London Range (20 Models) ✓' : 'Filter ADMA London Bags'}</span>
+              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-[#C5A16D]" />
             </div>
           </div>
 
         </div>
 
-        {/* Filter Toolbar - High Intent Search Filters */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-[#E5E7EB] shadow-2xs">
+        {/* Filter Toolbar */}
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 p-4 rounded-3xl bg-white border border-[#EAE3D8] shadow-xs">
           <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none w-full lg:w-auto pb-1 sm:pb-0">
             {[
-              { id: 'all', label: 'All Bags' },
+              { id: 'all', label: `All In-House Bags (${allBags.length})` },
               { id: 'laptop', label: 'Laptop Backpacks' },
-              { id: '17inch', label: '17" & 15.6" Vault Bags' },
-              { id: 'antitheft', label: 'Antitheft & USB' },
-              { id: 'waterproof', label: 'Water-Resistant & Rain Cover' },
-              { id: 'duffle', label: 'Duffle & Travel' },
-              { id: 'sleeve', label: 'Laptop Sleeves & Slings' },
-              { id: 'travel', label: 'Rucksacks & Trolley' }
+              { id: '17inch', label: '17" & 15.6" Laptop Holders' },
+              { id: 'antitheft', label: 'Antitheft & USB Fast-Charge' },
+              { id: 'waterproof', label: 'Rain Cover & Weatherproof' },
+              { id: 'duffle', label: 'Duffles & Gym Bags' },
+              { id: 'sleeve', label: 'Sleeves, Slings & Pouches' },
+              { id: 'travel', label: 'Expedition Rucksacks' }
             ].map((type) => (
               <button
                 key={type.id}
                 onClick={() => setBagTypeFilter(type.id)}
                 className={`text-xs px-3.5 py-2 rounded-xl font-bold transition-all whitespace-nowrap cursor-pointer ${
                   bagTypeFilter === type.id
-                    ? 'bg-[#101828] text-white shadow-xs'
-                    : 'bg-[#F5F7FA] hover:bg-neutral-200/70 text-[#667085]'
+                    ? 'bg-[#211D1A] text-white shadow-xs'
+                    : 'bg-[#F5F0E8] hover:bg-slate-200/80 text-[#69635C]'
                 }`}
               >
                 {type.label}
@@ -176,110 +195,112 @@ export default function BagsPage() {
           </div>
 
           <div className="flex items-center gap-3 text-xs font-semibold shrink-0">
-            <span className="text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4" />
-              1-Year Warranty
+            <span className="text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5 font-bold">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              1-Year Factory Warranty
             </span>
             <Link
               href="/catalog-viewer?type=bags"
-              className="text-[#0E679C] hover:underline font-bold"
+              className="text-[#A98554] hover:underline font-bold"
             >
-              Open 36-Page Bag PDF →
+              Open Bag PDF Catalogue &rarr;
             </Link>
           </div>
         </div>
 
-        {/* Bags Grid */}
+        {/* Bags Grid: 32 Studio Models */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
           {filteredBags.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
 
-        {/* ======================================================= */}
-        {/* SEO & CORPORATE PROCUREMENT INTELLIGENCE SECTION        */}
-        {/* Target: High-Volume & High-CPC Commercial Search Intent */}
-        {/* ======================================================= */}
-        <section className="pt-12 pb-6 border-t border-neutral-200/90 text-left space-y-8">
+        {/* Factory Production & Quality Protocol Section */}
+        <section className="pt-12 pb-6 border-t border-[#EAE3D8] text-left space-y-8">
           
           <div className="max-w-3xl space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#0E679C] text-[11px] font-bold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#A98554] text-[11px] font-bold">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Bengaluru Factory Atelier &bull; Direct Corporate Gifting</span>
+              <span>In-House Production Protocol &bull; Zero Defects</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A]">
-              Corporate Laptop Bags &amp; Backpacks Manufactured in Bangalore
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#211D1A]">
+              5-Stage Quality Control &amp; Direct Factory Assurance
             </h2>
-            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-              Globrands Lifestyle is India&apos;s trusted direct-from-factory manufacturer of corporate laptop bags, executive travel duffles, and tech backpacks. We eliminate intermediary commissions and deliver directly to enterprise offices in Bengaluru, Mumbai, Delhi NCR, Hyderabad, and Pune.
+            <p className="text-xs sm:text-sm text-[#69635C] leading-relaxed">
+              At <strong className="text-[#211D1A]">Globrands Lifestyle Pvt. Ltd.</strong>, every backpack passes through 5 distinct quality checkpoints before leaving our Bengaluru atelier for dispatch across India.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div className="p-6 rounded-2xl bg-white border border-neutral-200/80 shadow-2xs space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0E679C] flex items-center justify-center font-bold">
-                <Laptop className="w-5 h-5" />
+          {/* 5 QC Stages from PDF Page 36 */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="p-5 rounded-2xl bg-white border border-[#EAE3D8] shadow-2xs space-y-2">
+              <div className="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 font-bold text-xs flex items-center justify-center">
+                01
               </div>
-              <h3 className="text-base font-bold text-neutral-900">
-                15.6&quot; &amp; 17&quot; Laptop Compartment Architecture
-              </h3>
-              <p className="text-xs text-neutral-600 leading-relaxed">
-                Engineered with high-density EVA shock-absorbing foam vaults, dedicated iPad sleeves, and anti-scratch velvet linings to protect enterprise IT assets during daily metro and flight transit.
+              <h4 className="text-xs font-bold text-[#211D1A]">Raw Material Inspection</h4>
+              <p className="text-[11px] text-[#69635C] leading-relaxed">
+                Comprehensive inspection of raw fabrics, zippers, buckles, and webbing prior to production.
               </p>
-              <div className="pt-2 text-[11px] font-semibold text-[#0E679C]">
-                Featured in: BOXER 28L &bull; VOLVO 2.0 &bull; AVIATOR
-              </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white border border-neutral-200/80 shadow-2xs space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-[#F5B800] flex items-center justify-center font-bold">
-                <Droplets className="w-5 h-5" />
+            <div className="p-5 rounded-2xl bg-white border border-[#EAE3D8] shadow-2xs space-y-2">
+              <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-700 font-bold text-xs flex items-center justify-center">
+                02
               </div>
-              <h3 className="text-base font-bold text-neutral-900">
-                Water-Resistant Dobby &amp; Integrated Rain Cover
-              </h3>
-              <p className="text-xs text-neutral-600 leading-relaxed">
-                Constructed from 1680D ballistic dobby with water-repellent coating. Models like the ADMA London Volvo feature a concealed all-weather rain cover deployed in seconds.
+              <h4 className="text-xs font-bold text-[#211D1A]">Cutting Inspection</h4>
+              <p className="text-[11px] text-[#69635C] leading-relaxed">
+                Verification of panel dimensions and client size requirements prior to sewing.
               </p>
-              <div className="pt-2 text-[11px] font-semibold text-[#F5B800]">
-                Zero-Leakage Seam Sealing SLA
-              </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white border border-neutral-200/80 shadow-2xs space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                <CheckCircle2 className="w-5 h-5" />
+            <div className="p-5 rounded-2xl bg-white border border-[#EAE3D8] shadow-2xs space-y-2">
+              <div className="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center">
+                03
               </div>
-              <h3 className="text-base font-bold text-neutral-900">
-                Custom Logo Printing &amp; Tajima Embroidery
-              </h3>
-              <p className="text-xs text-neutral-600 leading-relaxed">
-                In-house custom branding studio offering high-density rubber print, reflective 3M safety graphics, metal badge riveting, and 12-needle Tajima Japanese thread embroidery calibrated to exact corporate Pantone guidelines.
+              <h4 className="text-xs font-bold text-[#211D1A]">Stitching Quality Check</h4>
+              <p className="text-[11px] text-[#69635C] leading-relaxed">
+                Cross-checking stitch tension, seam alignment, and bar-tack reinforcement at load-bearing points.
               </p>
-              <div className="pt-2 text-[11px] font-semibold text-emerald-700">
-                Free 3D Digital Proof in 24 Hours
-              </div>
             </div>
 
+            <div className="p-5 rounded-2xl bg-white border border-[#EAE3D8] shadow-2xs space-y-2">
+              <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center">
+                04
+              </div>
+              <h4 className="text-xs font-bold text-[#211D1A]">QC Manager Inspection</h4>
+              <p className="text-[11px] text-[#69635C] leading-relaxed">
+                Dedicated QC Manager sign-off ensuring zero defect status before movement to packing.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white border border-[#EAE3D8] shadow-2xs space-y-2">
+              <div className="w-7 h-7 rounded-lg bg-purple-50 text-purple-700 font-bold text-xs flex items-center justify-center">
+                05
+              </div>
+              <h4 className="text-xs font-bold text-[#211D1A]">Factory Manager Final Clearance</h4>
+              <p className="text-[11px] text-[#69635C] leading-relaxed">
+                Oversight of safe packing and final audit ensuring 100% compliance before nationwide dispatch.
+              </p>
+            </div>
           </div>
 
-          {/* Quick FAQ Strip */}
-          <div className="p-6 rounded-2xl bg-neutral-100/70 border border-neutral-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          {/* Quick FAQ / RFQ Strip */}
+          <div className="p-6 rounded-3xl bg-gradient-to-r from-[#0B132B] to-[#211D1A] text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-md">
             <div className="space-y-1">
-              <div className="text-xs font-bold text-neutral-900">
-                Need customized laptop bags with your company logo for 50 to 5,000+ employees?
+              <div className="text-sm font-bold text-white flex items-center gap-2">
+                <Factory className="w-4 h-4 text-[#C5A16D]" />
+                <span>Need custom branded backpacks directly from our Bengaluru manufacturing unit?</span>
               </div>
-              <div className="text-[11px] text-neutral-500">
-                Minimum order: 50 units &bull; Ready stock dispatch: 2-4 days &bull; Pan-India delivery
+              <div className="text-xs text-slate-300">
+                Tiered volume slabs from 50 to 50,000+ units &bull; 1-Year Direct Factory Replacement Warranty &bull; Free 3D digital mockups
               </div>
             </div>
 
             <Link
               href="/quote"
-              className="px-5 py-2.5 rounded-full bg-[#0E679C] hover:bg-[#0A4E78] text-white text-xs font-bold transition-all shadow-xs shrink-0"
+              className="px-6 py-3 rounded-xl bg-[#C5A16D] hover:bg-[#D49B27] text-slate-950 text-xs font-bold transition-all shadow-sm shrink-0"
             >
-              Request Custom Bulk Quote
+              Request Factory Bulk Quote
             </Link>
           </div>
 

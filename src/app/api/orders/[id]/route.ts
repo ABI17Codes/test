@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getOrderById, updateOrderRecord, deleteOrderRecord } from '@/lib/db';
+import { IdParamSchema, UpdateOrderSchema, formatZodError } from '@/lib/validation/schemas';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -8,7 +9,11 @@ interface RouteContext {
 // GET /api/orders/[id] - Get Order by ID or Order Number
 export async function GET(req: NextRequest, context: RouteContext) {
   try {
-    const { id } = await context.params;
+    const paramsParsed = IdParamSchema.safeParse(await context.params);
+    if (!paramsParsed.success) {
+      return NextResponse.json(formatZodError(paramsParsed.error), { status: 400 });
+    }
+    const { id } = paramsParsed.data;
     const order = await getOrderById(id);
 
     if (!order) {
@@ -33,15 +38,22 @@ export async function GET(req: NextRequest, context: RouteContext) {
 // PATCH /api/orders/[id] - Update order status, shipping details, or notes
 export async function PATCH(req: NextRequest, context: RouteContext) {
   try {
-    const { id } = await context.params;
+    const paramsParsed = IdParamSchema.safeParse(await context.params);
+    if (!paramsParsed.success) {
+      return NextResponse.json(formatZodError(paramsParsed.error), { status: 400 });
+    }
+    const { id } = paramsParsed.data;
+
     const body = await req.json();
+    const parsed = UpdateOrderSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json(formatZodError(parsed.error), { status: 400 });
+    }
 
-    const allowedUpdates = ['status', 'payment_status', 'payment_id', 'notes', 'shipping_address'];
     const filteredUpdates: Record<string, any> = {};
-
-    for (const key of allowedUpdates) {
-      if (body[key] !== undefined) {
-        filteredUpdates[key] = body[key];
+    for (const [key, value] of Object.entries(parsed.data)) {
+      if (value !== undefined) {
+        filteredUpdates[key] = value;
       }
     }
 
@@ -70,7 +82,11 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
 // DELETE /api/orders/[id] - Cancel/delete an order
 export async function DELETE(req: NextRequest, context: RouteContext) {
   try {
-    const { id } = await context.params;
+    const paramsParsed = IdParamSchema.safeParse(await context.params);
+    if (!paramsParsed.success) {
+      return NextResponse.json(formatZodError(paramsParsed.error), { status: 400 });
+    }
+    const { id } = paramsParsed.data;
     const deleted = await deleteOrderRecord(id);
 
     if (!deleted) {

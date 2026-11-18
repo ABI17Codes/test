@@ -90,46 +90,46 @@ export default function BrandingStudioPage() {
   ];
 
   return (
-    <div className="py-10 bg-[#F5F7FA] space-y-16">
+    <div className="py-10 bg-[#F5F0E8] space-y-16">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 space-y-12">
         
         {/* Header Breadcrumb */}
         <div className="text-left space-y-3">
-          <div className="flex items-center gap-2 text-xs text-[#667085]">
-            <Link href="/" className="hover:text-[#101828]">Home</Link>
+          <div className="flex items-center gap-2 text-xs text-[#69635C]">
+            <Link href="/" className="hover:text-[#211D1A]">Home</Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-[#0876B4] font-semibold">Branding &amp; Customisation Studio</span>
+            <span className="text-[#A98554] font-semibold">Branding &amp; Customisation Studio</span>
           </div>
 
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 shadow-2xs">
-            <Printer className="w-3.5 h-3.5 text-[#0876B4]" />
-            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#0876B4]">
+            <Printer className="w-3.5 h-3.5 text-[#A98554]" />
+            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#A98554]">
               DIRECT IN-HOUSE BENGALURU ATELIER &bull; ZERO OUTSOURCING
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#101828] tracking-[-0.03em]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#211D1A] tracking-[-0.03em]">
             Put Your Corporate Brand on{' '}
             <span className="brand-gradient-text">
               Every Detail
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-[#667085] max-w-3xl font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-[#69635C] max-w-3xl font-normal leading-relaxed">
             From microscopic fiber laser ablation on food-grade stainless bottles to metallic hot-foil debossing on executive leather diaries, our in-house Bengaluru factory atelier guarantees zero distortion, Pantone fidelity, and 2-hour digital 3D proofing.
           </p>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E5E7EB] text-xs font-semibold text-[#101828] shadow-2xs">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#0876B4]" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#EAE3D8] text-xs font-semibold text-[#211D1A] shadow-2xs">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#A98554]" />
               Zero Distortion Guarantee
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E5E7EB] text-xs font-semibold text-[#101828] shadow-2xs">
-              <Clock className="w-3.5 h-3.5 text-[#0876B4]" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#EAE3D8] text-xs font-semibold text-[#211D1A] shadow-2xs">
+              <Clock className="w-3.5 h-3.5 text-[#A98554]" />
               Free 3D Mockup in 2 Hours
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E5E7EB] text-xs font-semibold text-[#101828] shadow-2xs">
-              <Palette className="w-3.5 h-3.5 text-[#E8B43A]" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#EAE3D8] text-xs font-semibold text-[#211D1A] shadow-2xs">
+              <Palette className="w-3.5 h-3.5 text-[#C5A16D]" />
               Delta E &lt; 1.0 Pantone Match
             </span>
           </div>
@@ -143,13 +143,13 @@ export default function BrandingStudioPage() {
       {/* 6 In-House Branding Techniques Breakdown */}
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 space-y-10">
         <div className="text-left space-y-2">
-          <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#0876B4]">
+          <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#A98554]">
             INDUSTRIAL MANUFACTURING TECHNIQUES
           </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#101828] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#211D1A] tracking-tight">
             Engineered Customisation Methods
           </h2>
-          <p className="text-xs sm:text-sm text-[#667085] max-w-2xl">
+          <p className="text-xs sm:text-sm text-[#69635C] max-w-2xl">
             Select the optimal finish based on product substrate, corporate branding guidelines, and longevity requirements.
           </p>
         </div>
@@ -160,25 +160,25 @@ export default function BrandingStudioPage() {
             return (
               <div 
                 key={idx}
-                className="p-6 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#0876B4]/50 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+                className="p-6 rounded-2xl bg-white border border-[#EAE3D8] hover:border-[#A98554]/50 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0876B4] flex items-center justify-center border border-blue-100">
+                  <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#A98554] flex items-center justify-center border border-blue-100">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-base font-bold text-[#101828]">
+                  <h3 className="text-base font-bold text-[#211D1A]">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-[#667085] leading-relaxed">
+                  <p className="text-xs text-[#69635C] leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-[#E5E7EB] space-y-1.5 text-[11px]">
-                  <div className="text-[#667085]">
-                    <b className="text-[#101828]">Best for:</b> {item.bestFor}
+                <div className="pt-3 border-t border-[#EAE3D8] space-y-1.5 text-[11px]">
+                  <div className="text-[#69635C]">
+                    <b className="text-[#211D1A]">Best for:</b> {item.bestFor}
                   </div>
-                  <div className="inline-flex items-center gap-1 font-bold text-[#0876B4]">
+                  <div className="inline-flex items-center gap-1 font-bold text-[#A98554]">
                     <span>Turnaround:</span> {item.turnaround}
                   </div>
                 </div>
@@ -190,10 +190,10 @@ export default function BrandingStudioPage() {
         {/* 4-Step Branding Workflow */}
         <div className="pt-10 space-y-8">
           <div className="text-left space-y-2">
-            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#0876B4]">
+            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#A98554]">
               PRECISION WORKFLOW
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#101828] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#211D1A] tracking-tight">
               From Vector Logo to Factory Delivery in 4 Steps
             </h2>
           </div>
@@ -202,15 +202,15 @@ export default function BrandingStudioPage() {
             {workflowSteps.map((ws) => (
               <div 
                 key={ws.step}
-                className="p-6 rounded-2xl bg-white border border-[#E5E7EB] shadow-2xs space-y-3 relative overflow-hidden"
+                className="p-6 rounded-2xl bg-white border border-[#EAE3D8] shadow-2xs space-y-3 relative overflow-hidden"
               >
-                <div className="text-3xl font-black text-[#0876B4]/20">
+                <div className="text-3xl font-black text-[#A98554]/20">
                   {ws.step}
                 </div>
-                <h4 className="text-sm font-bold text-[#101828]">
+                <h4 className="text-sm font-bold text-[#211D1A]">
                   {ws.title}
                 </h4>
-                <p className="text-xs text-[#667085] leading-relaxed">
+                <p className="text-xs text-[#69635C] leading-relaxed">
                   {ws.desc}
                 </p>
               </div>
@@ -219,9 +219,9 @@ export default function BrandingStudioPage() {
         </div>
 
         {/* Artwork Guideline Banner */}
-        <div className="mt-12 p-8 sm:p-10 rounded-3xl bg-[#101828] text-white shadow-xl text-left flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="mt-12 p-8 sm:p-10 rounded-3xl bg-[#211D1A] text-white shadow-xl text-left flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-3 max-w-2xl">
-            <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#E8B43A]">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#C5A16D]">
               FREE 3D DIGITAL PROOF IN 2 HOURS
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
@@ -229,15 +229,15 @@ export default function BrandingStudioPage() {
             </h2>
             <div className="space-y-1.5 text-xs text-neutral-300">
               <p className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#E8B43A] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#C5A16D] shrink-0" />
                 Upload your vector logo (.AI, .EPS, .SVG) or send via WhatsApp.
               </p>
               <p className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#E8B43A] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#C5A16D] shrink-0" />
                 Receive photorealistic 3D scale mockups with exact PMS coordinates.
               </p>
               <p className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#E8B43A] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#C5A16D] shrink-0" />
                 Physical strike-off samples courier-dispatched across India on request.
               </p>
             </div>
@@ -246,7 +246,7 @@ export default function BrandingStudioPage() {
           <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
             <Link
               href="/quote"
-              className="px-6 py-3 rounded-full bg-[#E8B43A] hover:bg-[#d4a02c] text-[#101828] text-xs font-bold transition-all shadow-md text-center"
+              className="px-6 py-3 rounded-full bg-[#C5A16D] hover:bg-[#A98554] text-[#211D1A] text-xs font-bold transition-all shadow-md text-center"
             >
               Request Free 3D Proof in RFQ
             </Link>

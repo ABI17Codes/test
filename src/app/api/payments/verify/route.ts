@@ -1,13 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import { verifyPaymentSignature } from '@/lib/payments';
-
-const VerifyPaymentSchema = z.object({
-  orderId: z.string().min(1, 'Order ID is required'),
-  gatewayOrderId: z.string().min(1, 'Gateway order ID is required'),
-  gatewayPaymentId: z.string().min(1, 'Gateway payment ID is required'),
-  signature: z.string().min(1, 'Cryptographic payment signature is required')
-});
+import { VerifyPaymentSchema, formatZodError } from '@/lib/validation/schemas';
 
 // POST /api/payments/verify
 // Cryptographically verifies payment authenticity via HMAC SHA256 before marking order as paid
@@ -17,10 +10,7 @@ export async function POST(req: NextRequest) {
     const parsed = VerifyPaymentSchema.safeParse(body);
 
     if (!parsed.success) {
-      return NextResponse.json(
-        { success: false, error: 'Validation error', details: parsed.error.issues },
-        { status: 400 }
-      );
+      return NextResponse.json(formatZodError(parsed.error), { status: 400 });
     }
 
     const { orderId, gatewayOrderId, gatewayPaymentId, signature } = parsed.data;

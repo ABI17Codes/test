@@ -1,39 +1,35 @@
 import React from 'react';
 import { Hero } from '../components/Hero';
+import { BackpackCategoriesSection } from '../components/BackpackCategoriesSection';
+import { ManufacturingStorySection } from '../components/ManufacturingStorySection';
+import { InHouseBrandsSpotlight } from '../components/InHouseBrandsSpotlight';
+import { CorporateGiftingSection } from '../components/CorporateGiftingSection';
 import { EnterpriseTrustBar } from '../components/EnterpriseTrustBar';
-import { SignatureCollections } from '../components/SignatureCollections';
-import { CorporatePromotionsSection } from '../components/CorporatePromotionsSection';
-import { HomepageSolutionsSection } from '../components/HomepageSolutionsSection';
-import { FeaturedProductsSection } from '../components/FeaturedProductsSection';
-import { CustomerTestimonials } from '../components/CustomerTestimonials';
-import { BespokeConciergeCTA } from '../components/BespokeConciergeCTA';
+import { ContactSection } from '../components/ContactSection';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white text-[#101828] flex flex-col">
-      {/* 2. Split Hero */}
+    <div className="min-h-screen bg-[#F5F0E8] text-[#292725] flex flex-col">
+      {/* 1. Immersive Full-Screen Editorial Hero: "BUILT TO MOVE. MADE TO LAST." */}
       <Hero />
 
-      {/* 3. Enterprise Statistics */}
+      {/* 2. Asymmetrical Editorial Product Collection Grid: "DESIGNED FOR EVERY JOURNEY." */}
+      <BackpackCategoriesSection />
+
+      {/* 3. Immersive Manufacturing Storytelling: "PRECISION IN EVERY STITCH." */}
+      <ManufacturingStorySection />
+
+      {/* 4. Independent Brand Campaigns: ADMA LONDON & NINJA GEAR */}
+      <InHouseBrandsSpotlight />
+
+      {/* 5. Corporate Gifting (Secondary Segment): "THOUGHTFUL GIFTS. LASTING IMPRESSIONS." */}
+      <CorporateGiftingSection />
+
+      {/* 6. Minimalist Trust & Capabilities: "WHY GLOBRANDS." */}
       <EnterpriseTrustBar />
 
-      {/* 4. Signature Collections (Asymmetric 7/5 Bento Grid) */}
-      <SignatureCollections />
-
-      {/* 5. Why Choose Globrands */}
-      <CorporatePromotionsSection />
-
-      {/* 6. Corporate Gifting Solutions */}
-      <HomepageSolutionsSection />
-
-      {/* 7. Featured Products */}
-      <FeaturedProductsSection />
-
-      {/* 8. Client Testimonials */}
-      <CustomerTestimonials />
-
-      {/* 9. Premium CTA Section */}
-      <BespokeConciergeCTA />
+      {/* 7. Final Business Enquiry Concierge: "LET'S BUILD SOMETHING TOGETHER." */}
+      <ContactSection />
     </div>
   );
 }

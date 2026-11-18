@@ -1,16 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { listProductsFromDb, createProductInDb, getProductByIdFromDb } from '@/lib/db';
 import { parseCreateProduct } from '@/lib/validation/product';
+import { ProductQuerySchema, formatZodError } from '@/lib/validation/schemas';
 
 // GET /api/products - List products with category, brand, and search filters
 // Pass ?includeInactive=1 (admin) to also return hidden products.
 export async function GET(req: NextRequest) {
   try {
     const url = req.nextUrl;
-    const category = url.searchParams.get('category') || undefined;
-    const brand = url.searchParams.get('brand') || undefined;
-    const search = url.searchParams.get('search') || undefined;
-    const includeInactive = url.searchParams.get('includeInactive') === '1';
+    const queryParsed = ProductQuerySchema.safeParse({
+      category: url.searchParams.get('category') || undefined,
+      brand: url.searchParams.get('brand') || undefined,
+      search: url.searchParams.get('search') || undefined,
+      includeInactive: url.searchParams.get('includeInactive') || undefined,
+    });
+
+    if (!queryParsed.success) {
+      return NextResponse.json(formatZodError(queryParsed.error), { status: 400 });
+    }
+
+    const { category, brand, search, includeInactive: rawIncludeInactive } = queryParsed.data;
+    const includeInactive = rawIncludeInactive === '1' || rawIncludeInactive === 'true';
 
     const products = await listProductsFromDb({ category, brand, search, includeInactive });
 

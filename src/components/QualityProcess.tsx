@@ -75,7 +75,7 @@ export const QualityProcess: React.FC = () => {
               PROVEN ENTERPRISE RECORD
             </span>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-[#101828] tracking-tight">
-              Why Corporate Procurement Heads Choose Globrands Lifestyle
+              Why Corporate Procurement Heads Choose Globrands Lifestyle Pvt. Ltd.
             </h3>
             <p className="text-xs sm:text-sm text-[#667085]">
               Verified corporate credentials and manufacturing capabilities from our corporate profile.

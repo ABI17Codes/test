@@ -32,7 +32,7 @@ export const PRODUCT_CATEGORIES = [
   'desktop'
 ] as const;
 
-export const PRODUCT_BRANDS = ['Globrands Lifestyle', 'Ninja Gear', 'ADMA London'] as const;
+export const PRODUCT_BRANDS = ['Globrands Lifestyle Pvt. Ltd.', 'Globrands Lifestyle', 'Ninja Gear', 'ADMA London'] as const;
 
 // Field definitions without defaults (safe for partial updates)
 const baseShape = {

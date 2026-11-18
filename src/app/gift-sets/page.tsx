@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Gift, 
@@ -13,13 +13,25 @@ import {
   ArrowRight,
   Truck
 } from 'lucide-react';
-import { PRODUCTS } from '../../data/products';
+import { PRODUCTS, Product } from '../../data/products';
 import { ProductCard } from '../../components/ProductCard';
 
 export default function GiftSetsPage() {
   const [filterType, setFilterType] = useState<'all' | '5-in-1' | '4-in-1' | 'bamboo' | '3-in-1'>('all');
+  const [allGiftSets, setAllGiftSets] = useState<Product[]>(() =>
+    PRODUCTS.filter((p) => p.category === 'gift-sets')
+  );
 
-  const allGiftSets = PRODUCTS.filter((p) => p.category === 'gift-sets');
+  useEffect(() => {
+    fetch('/api/products?category=gift-sets')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.success && Array.isArray(data.products) && data.products.length > 0) {
+          setAllGiftSets(data.products);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const filteredSets = allGiftSets.filter((item) => {
     if (filterType === 'all') return true;
@@ -31,71 +43,71 @@ export default function GiftSetsPage() {
   });
 
   return (
-    <div className="py-10 bg-[#F5F7FA] min-h-screen">
+    <div className="py-10 bg-[#F5F0E8] min-h-screen">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 space-y-10">
         
         {/* Header Breadcrumb */}
         <div className="text-left space-y-3">
-          <div className="flex items-center gap-2 text-xs text-[#667085]">
-            <Link href="/" className="hover:text-[#101828]">Home</Link>
+          <div className="flex items-center gap-2 text-xs text-[#69635C]">
+            <Link href="/" className="hover:text-[#211D1A]">Home</Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-[#0876B4] font-semibold">Corporate Gift Sets</span>
+            <span className="text-[#A98554] font-semibold">Corporate Gift Sets</span>
           </div>
 
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 shadow-2xs">
-            <Gift className="w-3.5 h-3.5 text-[#0876B4]" />
-            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#0876B4]">
+            <Gift className="w-3.5 h-3.5 text-[#A98554]" />
+            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#A98554]">
               ALL IN ONE CATALOGUE COLLECTION &bull; B2B DIRECT FACTORY
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#101828] tracking-[-0.03em]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#211D1A] tracking-[-0.03em]">
             Curated Executive Hampers &amp;{' '}
             <span className="brand-gradient-text">
               VIP Welcome Kits
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-[#667085] max-w-3xl font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-[#69635C] max-w-3xl font-normal leading-relaxed">
             Thoughtfully curated corporate gift hampers featuring high-grade vacuum flasks, laser color-changer diaries, precision metal pens, and executive tech suites presented in rigid magnetic presentation boxes with custom EVA foam trays.
           </p>
         </div>
 
         {/* Feature Cards Banner */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-          <div className="p-6 rounded-3xl bg-white border border-[#E5E7EB] shadow-2xs space-y-3">
-            <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#0876B4] flex items-center justify-center border border-blue-100">
+          <div className="p-6 rounded-3xl bg-white border border-[#EAE3D8] shadow-2xs space-y-3">
+            <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#A98554] flex items-center justify-center border border-blue-100">
               <Package className="w-5 h-5" />
             </div>
-            <h3 className="text-base font-bold text-[#101828]">Rigid Magnetic Keepsake Boxes</h3>
-            <p className="text-xs text-[#667085] leading-relaxed">
+            <h3 className="text-base font-bold text-[#211D1A]">Rigid Magnetic Keepsake Boxes</h3>
+            <p className="text-xs text-[#69635C] leading-relaxed">
               Every HGS flagship set is packaged inside a heavy-duty, soft-touch magnetic closure box designed to elevate your brand unboxing experience.
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl bg-white border border-[#E5E7EB] shadow-2xs space-y-3">
-            <div className="w-11 h-11 rounded-2xl bg-amber-50 text-[#E8B43A] flex items-center justify-center border border-amber-100">
+          <div className="p-6 rounded-3xl bg-white border border-[#EAE3D8] shadow-2xs space-y-3">
+            <div className="w-11 h-11 rounded-2xl bg-amber-50 text-[#C5A16D] flex items-center justify-center border border-amber-100">
               <Sparkles className="w-5 h-5" />
             </div>
-            <h3 className="text-base font-bold text-[#101828]">Custom Color-Matched Sets</h3>
-            <p className="text-xs text-[#667085] leading-relaxed">
+            <h3 className="text-base font-bold text-[#211D1A]">Custom Color-Matched Sets</h3>
+            <p className="text-xs text-[#69635C] leading-relaxed">
               Harmonized metallic and matte finishes across bottle, pen, keychain, and notebook binding for complete corporate visual unity.
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl bg-white border border-[#E5E7EB] shadow-2xs space-y-3">
+          <div className="p-6 rounded-3xl bg-white border border-[#EAE3D8] shadow-2xs space-y-3">
             <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h3 className="text-base font-bold text-[#101828]">In-House Laser Customization</h3>
-            <p className="text-xs text-[#667085] leading-relaxed">
+            <h3 className="text-base font-bold text-[#211D1A]">In-House Laser Customization</h3>
+            <p className="text-xs text-[#69635C] leading-relaxed">
               Permanent microscopic laser engraving of your corporate logo on the bottle, pen, and notebook cover with free 3D digital proofing.
             </p>
           </div>
         </div>
 
         {/* Filter Tabs Toolbar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-[#E5E7EB] shadow-2xs text-left">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-[#EAE3D8] shadow-2xs text-left">
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none w-full sm:w-auto">
             {[
               { id: 'all', label: 'All Sets (18+ Models)' },
@@ -109,8 +121,8 @@ export default function GiftSetsPage() {
                 onClick={() => setFilterType(tab.id as any)}
                 className={`text-xs px-4 py-2 rounded-xl font-bold transition-all whitespace-nowrap cursor-pointer ${
                   filterType === tab.id
-                    ? 'bg-[#101828] text-white shadow-xs'
-                    : 'bg-[#F5F7FA] hover:bg-neutral-200/70 text-[#667085] border border-[#E5E7EB]'
+                    ? 'bg-[#211D1A] text-white shadow-xs'
+                    : 'bg-[#F5F0E8] hover:bg-neutral-200/70 text-[#69635C] border border-[#EAE3D8]'
                 }`}
               >
                 {tab.label}

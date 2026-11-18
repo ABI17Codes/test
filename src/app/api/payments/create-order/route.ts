@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import { withIdempotency } from '@/lib/idempotency';
 import { createPaymentOrder } from '@/lib/payments';
 import { getOrderById } from '@/lib/db';
-
-const CreatePaymentSchema = z.object({
-  orderId: z.string().min(1, 'Order ID is required')
-});
+import { CreatePaymentSchema, formatZodError } from '@/lib/validation/schemas';
 
 // POST /api/payments/create-order
 // Initializes a payment transaction with Razorpay/Stripe with Idempotency Key protection
@@ -14,10 +10,7 @@ export async function POST(req: NextRequest) {
   return withIdempotency(req, async (idempotencyKey, body) => {
     const parsed = CreatePaymentSchema.safeParse(body);
     if (!parsed.success) {
-      return NextResponse.json(
-        { success: false, error: 'Validation error', details: parsed.error.issues },
-        { status: 400 }
-      );
+      return NextResponse.json(formatZodError(parsed.error), { status: 400 });
     }
 
     const { orderId } = parsed.data;
@@ -47,7 +40,7 @@ export async function POST(req: NextRequest) {
       amount: Number(order.total_amount),
       currency: order.currency || 'INR',
       notes: {
-        orderNumber: order.order_number,
+        orderNumber: order.order_number,  
         company: order.company_name,
         customer: order.customer_name
       },
