@@ -140,8 +140,8 @@ export const HERO_CONTENT = {
   subheading: 'Premium Backpack Manufacturing Partner. Designed with Purpose. Crafted with Precision.',
   description: 'Direct from our Bengaluru production atelier. Engineering technical carrywear, custom OEM solutions, and our proprietary in-house labels: Ninja Gear Original & ADMA London.',
   image: '/images/hero/hero-backpack.jpg',
-  imageAlt: 'Engineered Backpack by Globrands Lifestyle Pvt. Ltd.',
-  imageBadge: 'Flagship Executive Carrywear • 1000D Ballistic Nylon • 1-Yr Warranty',
+  imageAlt: 'Ninja Gear Boxer Anti-Theft Flagship Backpack by Globrands Lifestyle Pvt. Ltd.',
+  imageBadge: 'FLAGSHIP • NINJA GEAR BOXER ANTI-THEFT • 1000D BALLISTIC • 1-YR WARRANTY',
   primaryCta: {
     label: 'EXPLORE COLLECTION',
     href: '/bags'
@@ -193,9 +193,9 @@ export const BACKPACK_CATEGORIES_DATA = {
   },
   featuredCategory: {
     id: 'laptop-backpacks',
-    tag: 'Daily Commute • Tech Protection',
+    tag: 'DAILY COMMUTE • NINJA GEAR INSPIRE',
     title: 'Laptop Backpacks',
-    description: 'Engineered with suspended shockproof 17" laptop cradles, waterproof cable pass-throughs, and multi-tier organizational pockets.',
+    description: 'Engineered with suspended shockproof 17" laptop cradles, multilevel organizers, and concealed internal water bottle pouches.',
     image: '/images/backpacks/laptop/laptop-backpack.jpg',
     href: '/bags?type=laptop',
     actionLabel: 'Explore Collection'
@@ -203,7 +203,7 @@ export const BACKPACK_CATEGORIES_DATA = {
   stackedCategories: [
     {
       id: 'business-backpacks',
-      tag: 'Executive Carrywear',
+      tag: 'EXECUTIVE COMMUTER • NINJA GEAR AVIATOR',
       title: 'Business Backpacks',
       image: '/images/backpacks/business/business-backpack.jpg',
       href: '/bags?type=laptop',
@@ -211,7 +211,7 @@ export const BACKPACK_CATEGORIES_DATA = {
     },
     {
       id: 'travel-backpacks',
-      tag: '38L–40L • Integrated Rain Cover',
+      tag: '38L–40L • ADMA LONDON VOLVO 2.0 RAIN COVER',
       title: 'Travel Backpacks',
       image: '/images/backpacks/travel/travel-backpack.jpg',
       href: '/bags?type=waterproof',
@@ -221,27 +221,27 @@ export const BACKPACK_CATEGORIES_DATA = {
   standardCategories: [
     {
       id: 'school-college',
-      tag: 'High-Tensile Academic Durability',
+      tag: 'ACADEMIC DURABILITY • ADMA LONDON JIO 2.0',
       title: 'School & College',
-      description: 'Ergonomic load distribution for everyday campus carry.',
+      description: 'High-tensile dual-compartment academic backpack with ergonomic load distribution for campus life.',
       image: '/images/backpacks/school/school-backpack.jpg',
       href: '/bags?type=all',
       actionLabel: 'Explore Collection'
     },
     {
       id: 'casual-backpacks',
-      tag: 'Minimalist Everyday Carry',
+      tag: 'MINIMALIST URBAN CARRY • NINJA GEAR SOFT EDGE',
       title: 'Casual Backpacks',
-      description: 'Lightweight, modern carrywear built for urban lifestyles.',
+      description: 'Lightweight, modern soft-edge contours built for everyday tech commuters and urban lifestyles.',
       image: '/images/backpacks/casual/casual-backpack.jpg',
       href: '/bags?type=all',
       actionLabel: 'Explore Collection'
     },
     {
       id: 'customized-backpacks',
-      tag: 'Tajima Embroidery • Molded Badges',
+      tag: 'CORPORATE OEM • NINJA GEAR BOXER BRANDED',
       title: 'Customized Backpacks',
-      description: 'Factory-direct logo branding, custom pullers, and fabric dyes.',
+      description: 'Factory-direct logo branding, custom pullers, and fabric dyes backed by our 1-year warranty.',
       image: '/images/backpacks/customized/customized-backpack.jpg',
       href: '/branding',
       actionLabel: 'Explore Customization'

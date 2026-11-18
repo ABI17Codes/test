@@ -90,7 +90,7 @@ export const Hero: React.FC = () => {
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                 fetchPriority="high"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/75 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/50 via-transparent to-transparent pointer-events-none" />
               
               <div className="absolute bottom-5 left-5 pointer-events-none">
                 <span className="px-3.5 py-1.5 rounded-full bg-[#211D1A]/85 backdrop-blur-md border border-white/15 text-[#F5F0E8] font-mono text-[11px] tracking-wider">

@@ -52,7 +52,7 @@ export const BackpackCategoriesSection: React.FC = () => {
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/90 via-[#211D1A]/35 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/75 via-[#211D1A]/20 to-transparent pointer-events-none" />
               
               <div className="relative z-10 space-y-2.5">
                 <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#C5A16D] font-bold block">
@@ -89,7 +89,7 @@ export const BackpackCategoriesSection: React.FC = () => {
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/90 via-[#211D1A]/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/75 via-[#211D1A]/20 to-transparent pointer-events-none" />
                   
                   <div className="relative z-10 space-y-1">
                     <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-[#C5A16D] font-bold block">
@@ -126,7 +126,7 @@ export const BackpackCategoriesSection: React.FC = () => {
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/90 via-[#211D1A]/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/75 via-[#211D1A]/20 to-transparent pointer-events-none" />
                 
                 <div className="relative z-10 space-y-1.5">
                   <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-[#C5A16D] font-bold block">
