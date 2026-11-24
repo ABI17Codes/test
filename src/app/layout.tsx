@@ -145,7 +145,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth overflow-x-hidden">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -158,7 +158,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-[#F5F0E8] text-[#292725] font-sans antialiased selection:bg-[#211D1A] selection:text-white">
+      <body className="min-h-screen overflow-x-hidden bg-[#F8FAFC] text-[#0F172A] font-sans antialiased selection:bg-[#0B4F82] selection:text-white">
         <QuoteProvider>
           {/* Global Sticky Navbar */}
           <Suspense fallback={null}>

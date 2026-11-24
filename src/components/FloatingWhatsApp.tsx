@@ -27,24 +27,24 @@ export const FloatingWhatsApp: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
+    <div className="fixed right-5 bottom-5 z-40 max-w-[calc(100vw-40px)] flex flex-col items-end">
       {isOpen && (
-        <div className="mb-4 w-80 sm:w-88 rounded-3xl bg-white border-2 border-[#BFDBFE] shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200 text-left">
+        <div className="mb-3 w-80 max-w-[calc(100vw-40px)] rounded-3xl bg-white border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200 text-left">
           <div className="p-4 bg-[#EFF6FF] border-b border-[#DBEAFE] flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-10 h-10 rounded-full overflow-hidden border border-[#BFDBFE] bg-white p-0.5">
+                <div className="w-9 h-9 rounded-full overflow-hidden border border-[#BFDBFE] bg-white p-0.5">
                   <img
                     src="/globrands-emblem-clean.png"
                     alt={`${COMPANY_INFO.shortName} Desk`}
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white" />
+                <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white" />
               </div>
 
               <div>
-                <h4 className="text-sm font-extrabold text-[#0B4F82]">
+                <h4 className="text-xs font-extrabold text-[#0B4F82]">
                   {COMPANY_INFO.shortName} Corporate Desk
                 </h4>
                 <div className="flex items-center gap-1 text-[11px] text-[#0F172A] font-semibold">
@@ -86,7 +86,7 @@ export const FloatingWhatsApp: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-3.5 bg-[#EFF6FF] border-t border-[#DBEAFE]">
+          <div className="p-3 bg-[#EFF6FF] border-t border-[#DBEAFE]">
             <button
               onClick={() => handleSendPrompt(`Hi ${COMPANY_INFO.shortName}, I have a bulk requirement.`)}
               className="w-full py-2.5 px-4 rounded-full bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer"
@@ -100,10 +100,10 @@ export const FloatingWhatsApp: React.FC = () => {
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group px-4 py-3 rounded-full bg-[#0B4F82] hover:bg-[#083B63] text-white shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2.5 hover:scale-105 cursor-pointer border-2 border-[#FDE047]"
+        className="group px-4 py-2.5 rounded-full bg-[#0B4F82] hover:bg-[#083B63] text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 cursor-pointer border border-[#FDE047]/80 whitespace-nowrap max-w-full"
       >
-        <MessageSquare className="w-5 h-5 text-[#FDE047]" />
-        <span className="text-xs font-extrabold tracking-wide">
+        <MessageSquare className="w-4 h-4 text-[#FDE047] shrink-0" />
+        <span className="text-xs font-extrabold tracking-wide truncate">
           WhatsApp Corporate Desk
         </span>
       </button>
