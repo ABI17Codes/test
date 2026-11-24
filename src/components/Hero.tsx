@@ -107,23 +107,23 @@ export const Hero: React.FC = () => {
       <div className="absolute -top-28 right-1/4 w-[600px] h-[600px] bg-[#E0F2FE]/45 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute -bottom-28 left-8 w-[520px] h-[520px] bg-[#FEF3C7]/45 rounded-full blur-[130px] pointer-events-none" />
 
-      {/* Main Two-Column Hero Container (Precisely Aligned Top & Center across 1440px–1920px) */}
-      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-9 items-center">
+      {/* Main Two-Column Hero Container (Independent Column Boundaries & Balanced Bottom Transition) */}
+      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-10 pt-7 sm:pt-9 lg:pt-11 pb-14 sm:pb-16 lg:pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
 
           {/* ================================================================
               LEFT SECTION (5 cols / ~42%): Brand Authority, Typography & CTAs
           ================================================================ */}
-          <div className="lg:col-span-5 flex flex-col justify-center items-start space-y-4 sm:space-y-5 text-left order-1">
+          <div className="lg:col-span-5 min-w-0 w-full max-w-full overflow-hidden flex flex-col justify-center items-start space-y-4 sm:space-y-5 text-left order-1 lg:pr-2">
 
             {/* 1. Single-Line Horizontal Company Information Badge on Desktop */}
-            <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/90 shadow-2xs sm:whitespace-nowrap">
+            <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200/90 shadow-2xs max-w-full">
               <span className="w-2 h-2 rounded-full bg-[#D97706] shrink-0" />
-              <span className="text-[11px] font-extrabold uppercase tracking-[0.07em] text-[#0B4F82]">
+              <span className="text-[10.5px] xl:text-[11px] font-extrabold uppercase tracking-[0.05em] text-[#0B4F82] whitespace-nowrap">
                 {pretitle}
               </span>
               <span className="text-slate-300 hidden sm:inline">|</span>
-              <span className="text-[10.5px] font-bold uppercase tracking-[0.05em] text-[#475569]">
+              <span className="text-[10px] xl:text-[10.5px] font-bold uppercase tracking-[0.04em] text-[#475569] whitespace-nowrap">
                 {badge}
               </span>
             </div>
@@ -202,11 +202,11 @@ export const Hero: React.FC = () => {
               })}
             </div>
 
-            {/* 6. Three Horizontal Single-Line CTA Buttons on Desktop */}
-            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 pt-1 w-full">
+            {/* 6. Three Horizontal Single-Line CTA Buttons on Desktop (Sized Strictly Within Left Column Boundary) */}
+            <div className="flex flex-wrap xl:flex-nowrap items-center gap-2 pt-1.5 w-full max-w-full">
               <Link
                 href={primaryCta.href}
-                className="inline-flex items-center justify-center gap-1.5 h-11 px-4 xl:px-5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-[11px] xl:text-xs font-extrabold uppercase tracking-wider transition-all shadow-xs hover:shadow-md group whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-1.5 h-10 sm:h-11 px-3 2xl:px-3.5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-[10.5px] 2xl:text-[11px] font-extrabold uppercase tracking-[0.03em] transition-all shadow-xs hover:shadow-md group whitespace-nowrap shrink-0"
               >
                 <span>{primaryCta.label}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#FDE047] group-hover:translate-x-0.5 transition-transform shrink-0" />
@@ -214,7 +214,7 @@ export const Hero: React.FC = () => {
 
               <Link
                 href={secondaryCta.href}
-                className="inline-flex items-center justify-center gap-1.5 h-11 px-4 xl:px-5 rounded-xl bg-[#D97706] hover:bg-[#B45309] text-white text-[11px] xl:text-xs font-extrabold uppercase tracking-wider transition-all shadow-xs hover:shadow-md group whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-1.5 h-10 sm:h-11 px-3 2xl:px-3.5 rounded-xl bg-[#D97706] hover:bg-[#B45309] text-white text-[10.5px] 2xl:text-[11px] font-extrabold uppercase tracking-[0.03em] transition-all shadow-xs hover:shadow-md group whitespace-nowrap shrink-0"
               >
                 <span>{secondaryCta.label}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-white group-hover:translate-x-0.5 transition-transform shrink-0" />
@@ -222,7 +222,7 @@ export const Hero: React.FC = () => {
 
               <Link
                 href={tertiaryCta?.href || '/contact'}
-                className="inline-flex items-center justify-center h-11 px-4 xl:px-5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-[#0F172A] text-[11px] xl:text-xs font-bold uppercase tracking-wider transition-all shadow-2xs whitespace-nowrap"
+                className="inline-flex items-center justify-center h-10 sm:h-11 px-3 2xl:px-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-[#0F172A] text-[10.5px] 2xl:text-[11px] font-bold uppercase tracking-[0.03em] transition-all shadow-2xs whitespace-nowrap shrink-0"
               >
                 <span>{tertiaryCta?.label || 'Contact Us'}</span>
               </Link>
@@ -233,7 +233,7 @@ export const Hero: React.FC = () => {
           {/* ================================================================
               RIGHT SECTION (7 cols / ~58%): Interactive 4-Slide Product Carousel
           ================================================================ */}
-          <div className="lg:col-span-7 flex flex-col gap-3 w-full order-2">
+          <div className="lg:col-span-7 min-w-0 w-full max-w-full flex flex-col gap-3 order-2">
 
             {/* Main Carousel Stage */}
             <div

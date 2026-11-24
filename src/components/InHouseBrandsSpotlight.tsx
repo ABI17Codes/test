@@ -10,7 +10,7 @@ export const InHouseBrandsSpotlight: React.FC = () => {
   const { ninjaGear, admaLondon } = brands;
 
   return (
-    <section className="py-16 sm:py-20 bg-white text-[#1E293B] text-left border-b border-[#DBEAFE]">
+    <section className="pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 bg-white text-[#1E293B] text-left border-b border-[#DBEAFE]">
       <div className="max-w-[1320px] mx-auto px-6 sm:px-10 space-y-12">
 
         {/* Section Header */}
