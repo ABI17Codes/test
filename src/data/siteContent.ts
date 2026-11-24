@@ -44,7 +44,7 @@ export const COMPANY_INFO = {
   legalName: 'GLOBRANDS LIFESTYLE PVT. LTD.',
   shortName: 'Globrands Lifestyle',
   tagline: 'DIRECT BACKPACK MANUFACTURING & CORPORATE GIFTING.',
-  subtitle: 'Backpack Manufacturers & Corporate Gifting • Bengaluru',
+  subtitle: 'Manufacturers • Bengaluru',
   establishedYear: 2014,
   locationLabel: 'Bengaluru Factory & Corporate Desk',
   primaryFocus: 'Direct Backpack Manufacturing',
@@ -86,46 +86,40 @@ export const COMPANY_INFO = {
 export const NAVIGATION_CONFIG = {
   topUtilityStrip: {
     atelierText: 'Bengaluru Factory',
-    headline: 'Primary: Direct Backpack Manufacturing (Ninja Gear & ADMA London) • Secondary: A-to-Z Corporate Gifting'
+    headline: 'Backpack Manufacturing & Corporate Gifting'
   },
   primaryLinks: [
     { label: 'In-House Brands', href: '/brands' },
-    { label: 'Backpacks & Bags', href: '/bags' },
+    { label: 'Backpacks', href: '/bags' },
     { label: 'Corporate Gifting', href: '/gift-sets' },
   ],
   secondaryLinks: [
-    { label: 'DTF & Embroidery', href: '/branding' },
+    { label: 'Branding', href: '/branding' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
   ],
   catalogDropdownItems: [
     {
       title: 'In-House Brands (Ninja Gear & ADMA London)',
-      description: '32 factory-manufactured models with 1-Yr Warranty',
+      description: 'Top factory backpack models with 1-Yr Warranty',
       href: '/brands',
       icon: Sparkles
     },
     {
-      title: 'All Backpacks & Partner Brands',
+      title: 'Backpacks & Partner Brands',
       description: 'Our Models + Skybags, Arctic Hunter & Swiss Military',
       href: '/bags',
       icon: Briefcase
     },
     {
-      title: 'Corporate Gifting (A to Z)',
-      description: 'Welcome Kits, Drinkware, Apparels, Trophies, Trolleys & More',
+      title: 'Corporate Gifting Categories',
+      description: 'Welcome Kits, Bamboo, Drinkware, Trophies, Apparels & Trolleys',
       href: '/gift-sets',
       icon: Gift
     },
     {
-      title: 'Logo Branding (DTF, Embroidery & Screen Print)',
-      description: 'In-house logo customization for bags & corporate gifts',
-      href: '/branding',
-      icon: Printer
-    },
-    {
-      title: 'Digital PDF Catalogues',
-      description: 'Browse full Bag & Corporate Gifting PDF books',
+      title: 'PDF Catalogues',
+      description: 'View Digital PDF Catalogues',
       href: '/catalog-viewer',
       icon: FileText
     }
@@ -434,22 +428,22 @@ export const CORPORATE_GIFTING_DATA = {
   },
   categories: [
     {
-      title: 'Employee Welcome Kits & Gift Boxes',
-      subtitle: '2-in-1 to 6-in-1 Executive Combos',
-      description: 'Rigid magnetic gift boxes with custom diary, steel flask, metal pen, keychain, and mug.',
+      title: 'Welcome Kits & Sustainable Bamboo',
+      subtitle: 'Executive Gift Boxes & Eco Sets',
+      description: '2-in-1 to 6-in-1 onboarding gift boxes, natural bamboo vacuum flasks, wooden diaries, and cork mugs.',
       image: '/catalog/crops/hgs_h74.jpg',
       images: [
         '/catalog/crops/hgs_h74.jpg',
         '/catalog/crops/hgs_h71.jpg',
-        '/catalog/crops/hgs_h72.jpg',
-        '/catalog/crops/hgs_h65.jpg'
+        '/catalog/crops/hgs_h117_bamboo.jpg',
+        '/catalog/crops/hgs_h135_bamboo_temp.jpg'
       ],
       link: '/gift-sets',
-      tag: '4+ Varieties',
+      tag: 'Welcome & Bamboo',
       icon: Gift
     },
     {
-      title: 'Customized Drinkware & Water Bottles',
+      title: 'Customized Drinkware & Bottles',
       subtitle: 'Vacuum Flasks, LED Bottles & Mugs',
       description: 'Smart temperature display flasks, stainless steel bottles, insulated coffee mugs, and tumblers.',
       image: '/catalog/crops/hgs_h118_vacuum.jpg',
@@ -462,36 +456,6 @@ export const CORPORATE_GIFTING_DATA = {
       link: '/products?category=drinkware',
       tag: 'Laser & Print',
       icon: Coffee
-    },
-    {
-      title: 'Sustainable Bamboo Products',
-      subtitle: 'Eco-Friendly Corporate Gifts',
-      description: 'Natural bamboo vacuum flasks, bamboo tumblers, wooden diaries, cork mugs, and eco desk sets.',
-      image: '/catalog/crops/hgs_h117_bamboo.jpg',
-      images: [
-        '/catalog/crops/hgs_h117_bamboo.jpg',
-        '/catalog/crops/hgs_h135_bamboo_temp.jpg',
-        '/catalog/crops/hgs_h204_bamboo_mug.jpg',
-        '/catalog/crops/hgs_h206_bamboo_tumbler.jpg'
-      ],
-      link: '/gift-sets',
-      tag: 'Eco Series',
-      icon: Sparkles
-    },
-    {
-      title: 'Corporate Apparels & Wearables',
-      subtitle: 'T-Shirts, Hoodies, Jackets & Caps',
-      description: 'Custom polo T-shirts, corporate hoodies, windcheaters, and caps with DTF, embroidery & screen printing.',
-      image: '/images/gifting-categories/apparel-1.jpg',
-      images: [
-        '/images/gifting-categories/apparel-1.jpg',
-        '/images/gifting-categories/apparel-2.jpg',
-        '/images/gifting-categories/apparel-3.jpg',
-        '/images/gifting-categories/apparel-4.jpg'
-      ],
-      link: '#contact',
-      tag: 'DTF & Embroidery',
-      icon: Shirt
     },
     {
       title: 'Trophies, Medals & Awards',
@@ -509,8 +473,23 @@ export const CORPORATE_GIFTING_DATA = {
       icon: Trophy
     },
     {
-      title: 'Trolleys & Travel Luggage',
-      subtitle: 'Hard-Shell Cabin & Check-In Trolleys',
+      title: 'Corporate Apparels & Wearables',
+      subtitle: 'T-Shirts, Hoodies, Jackets & Caps',
+      description: 'Custom polo T-shirts, corporate hoodies, jackets, and caps with DTF, embroidery & screen printing.',
+      image: '/images/gifting-categories/apparel-1.jpg',
+      images: [
+        '/images/gifting-categories/apparel-1.jpg',
+        '/images/gifting-categories/apparel-2.jpg',
+        '/images/gifting-categories/apparel-3.jpg',
+        '/images/gifting-categories/apparel-4.jpg'
+      ],
+      link: '#contact',
+      tag: 'DTF & Embroidery',
+      icon: Shirt
+    },
+    {
+      title: 'Brand Trolleys & Travel Luggage',
+      subtitle: 'Cabin & Check-In Spinner Trolleys',
       description: 'Branded hard-shell spinner trolleys, executive overnighter luggage, and travel bags from top brands.',
       image: '/images/gifting-categories/trolley-1.jpg',
       images: [
@@ -524,49 +503,19 @@ export const CORPORATE_GIFTING_DATA = {
       icon: Luggage
     },
     {
-      title: 'Kitchen Essentials & Appliances',
-      subtitle: 'Festive & Diwali Home Gifting',
-      description: 'Electric kettles, stainless steel lunch boxes, cookware gift sets, mixers, and premium home utilities.',
+      title: 'Kitchen Essentials & Multi-Brand Gifts',
+      subtitle: 'Home Appliances & A-to-Z Brands',
+      description: 'Electric kettles, lunch boxes, cookware sets, electronics, and any brand item your company requires.',
       image: '/images/gifting-categories/kitchen-1.jpg',
       images: [
         '/images/gifting-categories/kitchen-1.jpg',
         '/images/gifting-categories/kitchen-2.jpg',
         '/images/gifting-categories/kitchen-3.jpg',
-        '/images/gifting-categories/kitchen-4.jpg'
+        '/catalog/crops/hgs_h83.jpg'
       ],
       link: '#contact',
-      tag: 'Festive Gifting',
+      tag: 'Kitchen & Brands',
       icon: Utensils
-    },
-    {
-      title: 'Executive Diaries & Desk Organizers',
-      subtitle: 'PU Leather Notebooks & Metal Pens',
-      description: 'Magnetic clasp diaries, wooden finish notebooks, powerbank folders, and executive desk clocks.',
-      image: '/catalog/crops/diary_no_03_leather.jpg',
-      images: [
-        '/catalog/crops/diary_no_03_leather.jpg',
-        '/catalog/crops/diary_no_12_mobile_pocket.jpg',
-        '/catalog/crops/diary_no_51_wooden.jpg',
-        '/catalog/crops/diary_no_64_gold_fitting.jpg'
-      ],
-      link: '/products?category=diaries',
-      tag: 'Custom Embossed',
-      icon: BookOpen
-    },
-    {
-      title: 'Multi-Brand & A-to-Z Custom Sourcing',
-      subtitle: 'Any Brand • Any Product • Bulk Supply',
-      description: 'From premium electronics and office utilities to any specific brand item your company needs — we source and brand it all.',
-      image: '/catalog/crops/hgs_h83.jpg',
-      images: [
-        '/catalog/crops/hgs_h83.jpg',
-        '/catalog/crops/hgs_h93.jpg',
-        '/catalog/crops/hgs_h01.jpg',
-        '/catalog/crops/hgs_h101.jpg'
-      ],
-      link: '#contact',
-      tag: 'A-to-Z Supply',
-      icon: Award
     }
   ]
 };

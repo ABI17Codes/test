@@ -123,7 +123,7 @@ export const CorporateGiftingSection: React.FC = () => {
           <div className="flex items-center justify-between">
             <h3 className="text-lg sm:text-xl font-extrabold text-[#0B4F82] uppercase tracking-tight flex items-center gap-2">
               <Layers className="w-5 h-5 text-[#E5A93C]" />
-              <span>All 9 Corporate Gifting Categories We Supply (Multi-Product Preview)</span>
+              <span>6 Core Corporate Gifting Categories (Multi-Product Preview)</span>
             </h3>
             <span className="text-xs font-semibold text-[#475569] hidden sm:inline">
               Looking for any specific item? Call us for instant bulk quotes

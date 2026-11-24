@@ -1,179 +1,140 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { 
-  Gift, 
-  Sparkles, 
-  ChevronRight, 
-  Package, 
-  ShieldCheck, 
-  Award,
-  Layers,
-  ArrowRight,
-  Truck
+import {
+  Gift,
+  ChevronRight,
+  Phone,
+  MessageSquare
 } from 'lucide-react';
-import { PRODUCTS, Product } from '../../data/products';
+import { PRODUCTS } from '../../data/products';
 import { ProductCard } from '../../components/ProductCard';
+import { CORPORATE_GIFTING_DATA, COMPANY_INFO } from '../../data/siteContent';
 
 export default function GiftSetsPage() {
-  const [filterType, setFilterType] = useState<'all' | '5-in-1' | '4-in-1' | 'bamboo' | '3-in-1'>('all');
-  const [allGiftSets, setAllGiftSets] = useState<Product[]>(() =>
-    PRODUCTS.filter((p) => p.category === 'gift-sets')
-  );
+  // Per Shravya ma'am: "1, 2, 3 images is fine! Sustainable bamboo is fine. Add trophies, apparels, trolleys, kitchen essentials, and brand category. Don't upload dozens of repetitive sets."
+  const topGiftBoxes = ['hgs-h74', 'hgs-h71', 'hgs-h65']
+    .map(id => PRODUCTS.find(p => p.id === id))
+    .filter(Boolean) as typeof PRODUCTS;
 
-  useEffect(() => {
-    fetch('/api/products?category=gift-sets')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.success && Array.isArray(data.products) && data.products.length > 0) {
-          setAllGiftSets(data.products);
-        }
-      })
-      .catch(() => {});
-  }, []);
-
-  const filteredSets = allGiftSets.filter((item) => {
-    if (filterType === 'all') return true;
-    if (filterType === '5-in-1') return item.name.toLowerCase().includes('5-in-1');
-    if (filterType === '4-in-1') return item.name.toLowerCase().includes('4-in-1');
-    if (filterType === 'bamboo') return item.name.toLowerCase().includes('bamboo') || item.tags.includes('Sustainable');
-    if (filterType === '3-in-1') return item.name.toLowerCase().includes('3-in-1') || item.name.toLowerCase().includes('duo');
-    return true;
-  });
+  const bambooAndBottles = ['hgs-h35', 'hgs-h117', 'hgs-h118']
+    .map(id => PRODUCTS.find(p => p.id === id))
+    .filter(Boolean) as typeof PRODUCTS;
 
   return (
-    <div className="py-10 bg-[#F5F0E8] min-h-screen">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 space-y-10">
-        
-        {/* Header Breadcrumb */}
+    <div className="py-10 bg-[#F8FAFC] min-h-screen">
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-8 space-y-12">
+
+        {/* Header */}
         <div className="text-left space-y-3">
-          <div className="flex items-center gap-2 text-xs text-[#69635C]">
-            <Link href="/" className="hover:text-[#211D1A]">Home</Link>
+          <div className="flex items-center gap-2 text-xs text-[#475569]">
+            <Link href="/" className="hover:text-[#0B4F82]">Home</Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-[#A98554] font-semibold">Corporate Gift Sets</span>
+            <span className="text-[#0B4F82] font-bold">Corporate Gifting (A to Z)</span>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 shadow-2xs">
-            <Gift className="w-3.5 h-3.5 text-[#A98554]" />
-            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#A98554]">
-              ALL IN ONE CATALOGUE COLLECTION &bull; B2B DIRECT FACTORY
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FEF3C7] border border-[#FCD34D]">
+            <Gift className="w-3.5 h-3.5 text-[#B45309]" />
+            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#92400E]">
+              SECONDARY BUSINESS &bull; A-TO-Z CORPORATE GIFTING SOLUTIONS
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#211D1A] tracking-[-0.03em]">
-            Curated Executive Hampers &amp;{' '}
-            <span className="brand-gradient-text">
-              VIP Welcome Kits
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A] tracking-tight">
+            A-to-Z Corporate Gifting &amp;{' '}
+            <span className="text-[#0B4F82]">
+              Employee Welcome Kits
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-[#69635C] max-w-3xl font-normal leading-relaxed">
-            Thoughtfully curated corporate gift hampers featuring high-grade vacuum flasks, laser color-changer diaries, precision metal pens, and executive tech suites presented in rigid magnetic presentation boxes with custom EVA foam trays.
+          <p className="text-sm text-[#475569] max-w-3xl font-normal leading-relaxed">
+            We supply complete corporate gifting categories across India — from <strong>Welcome Kits, Sustainable Bamboo, and Drinkware</strong> to <strong>Trophies &amp; Medals, Apparels, Brand Trolleys, Kitchen Essentials, and Multi-Brand Gifts</strong>. Call our Corporate Desk directly for custom combinations and bulk pricing.
           </p>
         </div>
 
-        {/* Feature Cards Banner */}
+        {/* All Corporate Gifting Categories with 4-Image Grids */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-          <div className="p-6 rounded-3xl bg-white border border-[#EAE3D8] shadow-2xs space-y-3">
-            <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#A98554] flex items-center justify-center border border-blue-100">
-              <Package className="w-5 h-5" />
-            </div>
-            <h3 className="text-base font-bold text-[#211D1A]">Rigid Magnetic Keepsake Boxes</h3>
-            <p className="text-xs text-[#69635C] leading-relaxed">
-              Every HGS flagship set is packaged inside a heavy-duty, soft-touch magnetic closure box designed to elevate your brand unboxing experience.
-            </p>
-          </div>
+          {CORPORATE_GIFTING_DATA.categories.map((cat, idx) => {
+            const IconComp = cat.icon;
+            const multiImages = (cat as any).images || [cat.image];
+            return (
+              <div
+                key={idx}
+                className="rounded-2xl bg-white border-2 border-[#DBEAFE] overflow-hidden shadow-2xs flex flex-col justify-between"
+              >
+                <div className="p-3 bg-[#F0F7FF] border-b border-[#DBEAFE] relative">
+                  <div className="grid grid-cols-2 gap-2">
+                    {multiImages.slice(0, 4).map((imgSrc: string, i: number) => (
+                      <div key={i} className="aspect-[4/3] rounded-lg bg-white border border-[#E2E8F0] p-1 flex items-center justify-center">
+                        <img src={imgSrc} alt={`${cat.title} ${i + 1}`} className="w-full h-full object-contain" loading="lazy" />
+                      </div>
+                    ))}
+                  </div>
+                  <span className="absolute top-4 left-4 text-[9px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-[#0B4F82] text-white">
+                    {cat.tag}
+                  </span>
+                </div>
 
-          <div className="p-6 rounded-3xl bg-white border border-[#EAE3D8] shadow-2xs space-y-3">
-            <div className="w-11 h-11 rounded-2xl bg-amber-50 text-[#C5A16D] flex items-center justify-center border border-amber-100">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <h3 className="text-base font-bold text-[#211D1A]">Custom Color-Matched Sets</h3>
-            <p className="text-xs text-[#69635C] leading-relaxed">
-              Harmonized metallic and matte finishes across bottle, pen, keychain, and notebook binding for complete corporate visual unity.
-            </p>
-          </div>
+                <div className="p-5 space-y-2 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-1.5 text-[#0B4F82] mb-1">
+                      <IconComp className="w-4 h-4 text-[#D97706]" />
+                      <span className="text-[10px] font-mono uppercase font-bold">{cat.subtitle}</span>
+                    </div>
+                    <h3 className="text-base font-extrabold text-[#0F172A]">{cat.title}</h3>
+                    <p className="text-xs text-[#475569] mt-1 leading-relaxed">{cat.description}</p>
+                  </div>
 
-          <div className="p-6 rounded-3xl bg-white border border-[#EAE3D8] shadow-2xs space-y-3">
-            <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <h3 className="text-base font-bold text-[#211D1A]">In-House Laser Customization</h3>
-            <p className="text-xs text-[#69635C] leading-relaxed">
-              Permanent microscopic laser engraving of your corporate logo on the bottle, pen, and notebook cover with free 3D digital proofing.
-            </p>
-          </div>
+                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <a
+                      href={`tel:${COMPANY_INFO.contact.phoneRaw}`}
+                      className="text-xs font-extrabold text-[#0B4F82] hover:text-[#D97706] flex items-center gap-1"
+                    >
+                      <Phone className="w-3 h-3" />
+                      <span>Call for Options</span>
+                    </a>
+                    <a
+                      href={`https://wa.me/${COMPANY_INFO.contact.phoneRaw}?text=${encodeURIComponent(`Hello Globrands, please share options and bulk pricing for ${cat.title}.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1"
+                    >
+                      <MessageSquare className="w-3 h-3" />
+                      <span>WhatsApp</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Filter Tabs Toolbar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-[#EAE3D8] shadow-2xs text-left">
-          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none w-full sm:w-auto">
-            {[
-              { id: 'all', label: 'All Sets (18+ Models)' },
-              { id: '5-in-1', label: '5-in-1 VIP Hampers' },
-              { id: '4-in-1', label: '4-in-1 Executive' },
-              { id: 'bamboo', label: 'Sustainable Bamboo' },
-              { id: '3-in-1', label: '3-in-1 Starter Duos' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setFilterType(tab.id as any)}
-                className={`text-xs px-4 py-2 rounded-xl font-bold transition-all whitespace-nowrap cursor-pointer ${
-                  filterType === tab.id
-                    ? 'bg-[#211D1A] text-white shadow-xs'
-                    : 'bg-[#F5F0E8] hover:bg-neutral-200/70 text-[#69635C] border border-[#EAE3D8]'
-                }`}
-              >
-                {tab.label}
-              </button>
+        {/* Concise 3 Sample Welcome Kits (Instead of 18 repetitive boxes) */}
+        <div className="space-y-4 text-left">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-[#0F172A]">
+            Sample Executive Gift Boxes (3 Featured Sets)
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {topGiftBoxes.map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
-
-          <Link
-            href="/catalog-viewer?type=gifts"
-            className="text-xs text-[#0E679C] hover:underline font-bold whitespace-nowrap"
-          >
-            Open 146-Page Gifts PDF →
-          </Link>
         </div>
 
-        {/* Product Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredSets.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-
-        {/* Custom Corporate Hamper Assembly Banner (Light Pastel Blue & Gold Theme) */}
-        <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-[#EFF6FF] via-white to-[#FEF3C7] border-2 border-[#BFDBFE] text-[#0F172A] shadow-sm text-left flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="space-y-2 max-w-2xl">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-[#B45309]">
-              COMPLETE A-TO-Z CORPORATE GIFTING
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B4F82] tracking-tight">
-              Need Trophies, Apparels, Trolleys, Kitchen Essentials, or Custom Combos?
+        {/* Concise 3 Sample Bamboo & Drinkware Items */}
+        {bambooAndBottles.length > 0 && (
+          <div className="space-y-4 text-left">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#0F172A]">
+              Sample Sustainable Bamboo &amp; Vacuum Drinkware (3 Featured Items)
             </h2>
-            <p className="text-xs sm:text-sm text-[#475569] leading-relaxed font-normal">
-              We serve A-to-Z corporate gifting requirements across India — including Welcome Kits, Drinkware, Sustainable Bamboo, Apparels, Trophies &amp; Medals, Trolleys, Kitchen Appliances, and Multi-Brand products with in-house DTF Printing, Embroidery, Screen Printing &amp; Laser Engraving.
-            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {bambooAndBottles.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
           </div>
-
-          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-            <a
-              href="tel:919972028250"
-              className="px-6 py-3.5 rounded-xl bg-[#E5A93C] hover:bg-[#D4952A] text-[#0F172A] text-xs font-extrabold text-center transition-colors shadow-xs"
-            >
-              Call Corporate Desk (+91 99720 28250)
-            </a>
-            <Link
-              href="/quote"
-              className="px-6 py-3.5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-bold text-center transition-all shadow-xs"
-            >
-              Request Bulk Quote
-            </Link>
-          </div>
-        </div>
+        )}
 
       </div>
     </div>

@@ -68,7 +68,7 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 15);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -107,27 +107,28 @@ export const Navbar: React.FC = () => {
           : 'bg-white border-b border-[#DBEAFE]'
       }`}
     >
-      {/* Top Utility Strip (Light Pastel Sky Blue & Warm Gold — No Dark Colors!) */}
+      {/* Ultra-Slim Top Utility Strip (Auto-collapses on scroll) */}
       <div
         className={`bg-[#EFF6FF] text-[#0B4F82] transition-all duration-300 overflow-hidden ${
-          isScrolled ? 'max-h-0 py-0 opacity-0' : 'max-h-8 py-1.5 opacity-100 border-b border-[#DBEAFE]'
+          isScrolled ? 'max-h-0 py-0 opacity-0' : 'max-h-6 py-0.5 opacity-100 border-b border-[#DBEAFE]'
         }`}
       >
-        <div className="max-w-[1320px] mx-auto px-6 sm:px-10 flex items-center justify-between gap-4 text-[10.5px]">
-          <div className="flex items-center gap-2 truncate font-bold uppercase tracking-wider text-[#0B4F82]">
-            <span className="inline-flex items-center gap-1 text-[#B45309] bg-[#FEF3C7] px-2 py-0.5 rounded-full border border-[#FCD34D]">
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-4 text-[10px]">
+          <div className="flex items-center gap-2 truncate font-semibold text-[#0B4F82]">
+            <span className="inline-flex items-center gap-1 text-[#B45309] font-bold">
               <MapPin className="w-2.5 h-2.5" />
               <span>{topUtilityStrip.atelierText}</span>
             </span>
-            <span className="hidden sm:inline text-[#1E293B]">{topUtilityStrip.headline}</span>
+            <span className="text-slate-300 hidden sm:inline">•</span>
+            <span className="hidden sm:inline text-[#334155]">{topUtilityStrip.headline}</span>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0 font-bold text-[10.5px] text-[#0B4F82]">
+          <div className="flex items-center gap-3 shrink-0 font-bold text-[10px] text-[#0B4F82]">
             <a href={`tel:${COMPANY_INFO.contact.phoneRaw}`} className="flex items-center gap-1 hover:text-[#D97706] transition-colors">
               <Phone className="w-2.5 h-2.5 text-[#D97706]" />
               <span>{COMPANY_INFO.contact.corporatePhone}</span>
             </a>
-            <span className="text-slate-300 hidden md:inline">|</span>
+            <span className="text-slate-300 hidden md:inline">•</span>
             <a href={`mailto:${COMPANY_INFO.contact.enquiryEmail}`} className="hidden md:flex items-center gap-1 hover:text-[#D97706] transition-colors">
               <Mail className="w-2.5 h-2.5 text-[#0B4F82]" />
               <span>{COMPANY_INFO.contact.enquiryEmail}</span>
@@ -136,13 +137,13 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Navigation Bar */}
-      <div className="max-w-[1320px] mx-auto px-6 sm:px-10">
-        <div className="flex items-center justify-between h-14">
+      {/* Minimized Main Navigation Bar (Compact 48px height, Single-Line Links, Zero Wrapping) */}
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-8">
+        <div className="flex items-center justify-between h-12 gap-4">
 
-          {/* Brand Logo & Legal Identity (Original Blue & Yellow Logo Colours Preserved) */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full overflow-hidden bg-white border border-[#BFDBFE] shadow-2xs flex items-center justify-center p-0.5 group-hover:scale-105 transition-transform">
+          {/* Compact Brand Logo */}
+          <Link href="/" className="flex items-center gap-2 group shrink-0">
+            <div className="w-7 h-7 rounded-full overflow-hidden bg-white border border-[#BFDBFE] shadow-2xs flex items-center justify-center p-0.5 group-hover:scale-105 transition-transform">
               <img
                 src="/globrands-emblem-clean.png"
                 alt={`${COMPANY_INFO.legalName} Logo`}
@@ -151,66 +152,63 @@ export const Navbar: React.FC = () => {
             </div>
 
             <div className="flex flex-col text-left">
-              <span className="font-extrabold tracking-tight text-xs sm:text-[13.5px] leading-tight font-sans text-[#0B4F82]">
-                GLOBRANDS <span className="text-[#D97706]">LIFESTYLE</span> <span className="text-[9.5px] font-bold text-[#475569]">PVT. LTD.</span>
+              <span className="font-extrabold tracking-tight text-xs leading-none font-sans text-[#0B4F82] whitespace-nowrap">
+                GLOBRANDS <span className="text-[#D97706]">LIFESTYLE</span>{' '}
+                <span className="text-[8.5px] font-bold text-[#64748B]">PVT. LTD.</span>
               </span>
-              <span className="text-[8px] uppercase tracking-[0.1em] text-[#475569] font-bold font-mono">
+              <span className="text-[7px] uppercase tracking-widest text-[#64748B] font-bold font-mono mt-0.5 whitespace-nowrap">
                 {COMPANY_INFO.subtitle}
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links ("In-House Brands" FIRST, then "Backpacks & Bags", then "Corporate Gifting") */}
+          {/* Minimized Single-Line Desktop Navigation Links (whitespace-nowrap prevents any 2-line wrapping) */}
           <nav className="hidden lg:flex items-center gap-5 xl:gap-6">
-            {primaryLinks.map((link, idx) => {
+            {primaryLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-[12.5px] font-bold tracking-normal transition-colors relative py-1 ${
-                    isActive
-                      ? 'text-[#0B4F82]'
-                      : idx === 0
-                      ? 'text-[#0B4F82] hover:text-[#D97706]'
-                      : 'text-[#1E293B] hover:text-[#0B4F82]'
+                  className={`text-xs font-bold whitespace-nowrap transition-colors relative py-1 ${
+                    isActive ? 'text-[#0B4F82]' : 'text-[#1E293B] hover:text-[#0B4F82]'
                   }`}
                 >
                   <span>{link.label}</span>
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#E5A93C] rounded-full" />
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#E5A93C] rounded-full" />
                   )}
                 </Link>
               );
             })}
 
-            {/* Catalogues Dropdown */}
+            {/* Compact Catalogues Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setCatalogDropdownOpen(!catalogDropdownOpen)}
-                className={`inline-flex items-center gap-1 text-[12.5px] font-bold tracking-normal transition-colors py-1 cursor-pointer ${
+                className={`inline-flex items-center gap-1 text-xs font-bold whitespace-nowrap transition-colors py-1 cursor-pointer ${
                   catalogDropdownOpen ? 'text-[#0B4F82]' : 'text-[#1E293B] hover:text-[#0B4F82]'
                 }`}
               >
                 <span>Catalogues</span>
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${catalogDropdownOpen ? 'rotate-180 text-[#E5A93C]' : ''}`} />
+                <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${catalogDropdownOpen ? 'rotate-180 text-[#E5A93C]' : ''}`} />
               </button>
 
               {catalogDropdownOpen && (
-                <div className="absolute left-0 mt-2 w-80 bg-white border border-[#BFDBFE] rounded-2xl shadow-xl p-2 space-y-1 z-50 text-left">
+                <div className="absolute left-0 mt-2 w-72 bg-white border border-[#BFDBFE] rounded-xl shadow-xl p-1.5 space-y-0.5 z-50 text-left">
                   {catalogDropdownItems.map((item, idx) => {
                     const ItemIcon = item.icon;
                     return (
                       <Link
                         key={idx}
                         href={item.href}
-                        className="flex items-start gap-2.5 p-2.5 rounded-xl hover:bg-[#EFF6FF] transition-colors"
+                        className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-[#EFF6FF] transition-colors"
                         onClick={() => setCatalogDropdownOpen(false)}
                       >
-                        <ItemIcon className="w-4 h-4 text-[#0B4F82] mt-0.5 shrink-0" />
+                        <ItemIcon className="w-3.5 h-3.5 text-[#0B4F82] mt-0.5 shrink-0" />
                         <div>
-                          <div className="text-xs font-extrabold text-[#0F172A]">{item.title}</div>
-                          <div className="text-[10.5px] text-[#475569]">{item.description}</div>
+                          <div className="text-[11.5px] font-bold text-[#0F172A]">{item.title}</div>
+                          <div className="text-[10px] text-[#475569]">{item.description}</div>
                         </div>
                       </Link>
                     );
@@ -225,27 +223,27 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-[12.5px] font-bold tracking-normal transition-colors relative py-1 ${
+                  className={`text-xs font-bold whitespace-nowrap transition-colors relative py-1 ${
                     isActive ? 'text-[#0B4F82]' : 'text-[#1E293B] hover:text-[#0B4F82]'
                   }`}
                 >
                   <span>{link.label}</span>
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#E5A93C] rounded-full" />
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#E5A93C] rounded-full" />
                   )}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Right Action Icons */}
-          <div className="flex items-center gap-2">
+          {/* Compact Right Action Pills */}
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => setIsDrawerOpen(true)}
-              className="relative inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#EFF6FF] border border-[#BFDBFE] hover:border-[#0B4F82] text-[#0B4F82] text-xs font-bold transition-all shadow-2xs cursor-pointer"
+              className="relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EFF6FF] border border-[#BFDBFE] hover:border-[#0B4F82] text-[#0B4F82] text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap"
               title="View Quote Basket"
             >
-              <ShoppingBag className="w-3.5 h-3.5 text-[#D97706]" />
+              <ShoppingBag className="w-3 h-3 text-[#D97706]" />
               <span className="hidden sm:inline">Quote</span>
               {mounted && totalItems > 0 && (
                 <span className="min-w-4 h-4 px-1 rounded-full bg-[#0B4F82] text-white text-[9px] font-bold flex items-center justify-center">
@@ -257,22 +255,22 @@ export const Navbar: React.FC = () => {
             <div className="relative" ref={accountRef}>
               <button
                 onClick={() => setAccountDropdownOpen(!accountDropdownOpen)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#CBD5E1] hover:border-[#0B4F82] text-[#1E293B] text-xs font-bold transition-all shadow-2xs cursor-pointer"
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[#CBD5E1] hover:border-[#0B4F82] text-[#1E293B] text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap"
               >
-                <User className="w-3.5 h-3.5 text-[#0B4F82]" />
+                <User className="w-3 h-3 text-[#0B4F82]" />
                 <span className="hidden md:inline">
                   {mounted && user?.name ? user.name.split(' ')[0] : 'Account'}
                 </span>
-                <ChevronDown className="w-3 h-3 text-[#64748B]" />
+                <ChevronDown className="w-2.5 h-2.5 text-[#64748B]" />
               </button>
 
               {accountDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-60 bg-white border border-[#BFDBFE] rounded-xl shadow-xl p-2 space-y-1 z-50 text-left">
+                <div className="absolute right-0 mt-2 w-56 bg-white border border-[#BFDBFE] rounded-xl shadow-xl p-1.5 space-y-1 z-50 text-left">
                   {user ? (
                     <>
-                      <div className="px-3 py-2 border-b border-[#E2E8F0]">
+                      <div className="px-3 py-1.5 border-b border-[#E2E8F0]">
                         <div className="text-xs font-bold text-[#0F172A] truncate">{user.name}</div>
-                        <div className="text-[11px] text-[#475569] truncate">{user.email}</div>
+                        <div className="text-[10px] text-[#475569] truncate">{user.email}</div>
                       </div>
                       <Link
                         href="/profile"
@@ -289,7 +287,7 @@ export const Navbar: React.FC = () => {
                           onClick={() => setAccountDropdownOpen(false)}
                         >
                           <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
-                          <span>Admin Console (Upload Models)</span>
+                          <span>Admin Console</span>
                         </Link>
                       )}
                       <button
@@ -302,13 +300,9 @@ export const Navbar: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <div className="px-3 py-2 border-b border-[#E2E8F0]">
-                        <div className="text-xs font-bold text-[#0B4F82]">Corporate Portal</div>
-                        <div className="text-[10px] text-[#475569]">Sign in to manage bulk RFQs &amp; orders</div>
-                      </div>
                       <Link
                         href="/login"
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-[#0F172A] hover:bg-[#EFF6FF]"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-[#0F172A] hover:bg-[#EFF6FF]"
                         onClick={() => setAccountDropdownOpen(false)}
                       >
                         <LogIn className="w-3.5 h-3.5 text-[#0B4F82]" />
@@ -316,11 +310,11 @@ export const Navbar: React.FC = () => {
                       </Link>
                       <Link
                         href="/register"
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-[#0F172A] hover:bg-[#EFF6FF]"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-[#0F172A] hover:bg-[#EFF6FF]"
                         onClick={() => setAccountDropdownOpen(false)}
                       >
                         <UserPlus className="w-3.5 h-3.5 text-[#D97706]" />
-                        <span>Create Corporate Account</span>
+                        <span>Create Account</span>
                       </Link>
                     </>
                   )}
@@ -330,7 +324,7 @@ export const Navbar: React.FC = () => {
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-1.5 rounded-lg bg-white border border-[#BFDBFE] text-[#0B4F82] cursor-pointer"
+              className="lg:hidden p-1 rounded-lg bg-white border border-[#BFDBFE] text-[#0B4F82] cursor-pointer"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -342,56 +336,27 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-[#BFDBFE] px-6 py-4 space-y-3 shadow-xl text-left max-w-[1320px] mx-auto">
-          <div className="space-y-1">
-            {primaryLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block py-2 text-xs font-bold text-[#0F172A] hover:text-[#0B4F82]"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-            {catalogDropdownItems.map((item, idx) => (
-              <Link
-                key={idx}
-                href={item.href}
-                className="block py-2 text-xs font-bold text-[#0B4F82] hover:text-[#D97706]"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.title}
-              </Link>
-            ))}
-            {secondaryLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block py-2 text-xs font-bold text-[#0F172A] hover:text-[#0B4F82]"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          <div className="pt-3 border-t border-[#E2E8F0] flex items-center justify-between">
-            <a
-              href={`tel:${COMPANY_INFO.contact.phoneRaw}`}
-              className="text-xs font-bold text-[#0B4F82] flex items-center gap-1.5"
-            >
-              <Phone className="w-3.5 h-3.5 text-[#D97706]" />
-              <span>{COMPANY_INFO.contact.corporatePhone}</span>
-            </a>
+        <div className="lg:hidden bg-white border-b border-[#BFDBFE] px-6 py-3 space-y-2 shadow-xl text-left">
+          {primaryLinks.map((link) => (
             <Link
-              href="/login"
-              className="text-xs font-bold text-[#0B4F82]"
+              key={link.href}
+              href={link.href}
+              className="block py-1.5 text-xs font-bold text-[#0F172A] hover:text-[#0B4F82]"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Sign In &rarr;
+              {link.label}
             </Link>
-          </div>
+          ))}
+          {secondaryLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="block py-1.5 text-xs font-bold text-[#0F172A] hover:text-[#0B4F82]"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
       )}
     </header>
