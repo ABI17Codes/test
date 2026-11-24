@@ -1,236 +1,494 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Briefcase, Gift, CheckCircle2, Printer, Phone } from 'lucide-react';
-import { HERO_CONTENT, COMPANY_INFO } from '../data/siteContent';
+import {
+  ArrowRight,
+  Briefcase,
+  Gift,
+  CheckCircle2,
+  Printer,
+  ChevronLeft,
+  ChevronRight,
+  ShieldCheck,
+  Sparkles
+} from 'lucide-react';
+import { HERO_CONTENT } from '../data/siteContent';
+
+const AUTOPLAY_INTERVAL_MS = 4500;
 
 export const Hero: React.FC = () => {
   const {
     badge,
     pretitle,
-    image,
-    imageAlt,
-    imageBadge,
     primaryCta,
     secondaryCta,
-    stats
+    tertiaryCta,
+    slides,
+    giftingStrip
   } = HERO_CONTENT;
 
-  return (
-    <section className="relative bg-gradient-to-br from-[#F0F7FF] via-[#FFFFFF] to-[#FEF9E7] text-[#1E293B] overflow-hidden border-b border-[#DBEAFE]">
-      {/* Soft Pastel Blue & Warm Gold Ambient Accents (Matches Globrands Blue & Yellow Logo) */}
-      <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-[#DBEAFE]/60 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#FEF3C7]/70 rounded-full blur-[120px] pointer-events-none" />
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
 
-      {/* Main Two-Column Brand Store Hero Container */}
-      <div className="relative z-10 max-w-[1320px] mx-auto px-6 sm:px-10 py-10 sm:py-14 lg:py-16 flex flex-col justify-center">
+  const totalSlides = slides.length;
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    setProgress(0);
+  }, [totalSlides]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+    setProgress(0);
+  }, [totalSlides]);
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+    setProgress(0);
+  };
+
+  // Autoplay with smooth progress bar
+  useEffect(() => {
+    if (isPaused) return;
+    const stepMs = 50;
+    const increment = (stepMs / AUTOPLAY_INTERVAL_MS) * 100;
+
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev + increment >= 100) {
+          setCurrentSlide((s) => (s + 1) % totalSlides);
+          return 0;
+        }
+        return prev + increment;
+      });
+    }, stepMs);
+
+    return () => clearInterval(timer);
+  }, [isPaused, totalSlides, currentSlide]);
+
+  // Keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+  };
+
+  // Mobile Touch / Swipe Handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    const deltaX = touchStartX.current - touchEndX.current;
+    if (Math.abs(deltaX) > 45) {
+      if (deltaX > 0) nextSlide();
+      else prevSlide();
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
+  const activeSlideData = slides[currentSlide];
+
+  return (
+    <section
+      className="relative bg-gradient-to-b from-[#FFFFFF] via-[#FBFBFD] to-[#F4F8FB] text-[#0F172A] overflow-hidden border-b border-slate-200/80"
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      aria-label="Globrands Lifestyle Featured Manufacturing & Corporate Gifting Showcase"
+    >
+      {/* Subtle Ambient Luxury Studio Glows */}
+      <div className="absolute -top-24 right-1/4 w-[600px] h-[600px] bg-[#E0F2FE]/55 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute -bottom-24 left-10 w-[520px] h-[520px] bg-[#FEF3C7]/55 rounded-full blur-[130px] pointer-events-none" />
+
+      {/* Main Two-Column Hero Container */}
+      <div className="relative z-10 max-w-[1340px] mx-auto px-4 sm:px-8 py-10 sm:py-14 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
 
-          {/* Left Column (6 cols): Explicitly Highlights BOTH Primary & Secondary Business */}
-          <div className="lg:col-span-6 flex flex-col justify-center items-start space-y-5 text-left order-2 lg:order-1">
+          {/* ================================================================
+              LEFT SECTION (5 cols): Brand Authority, Typography & CTAs
+          ================================================================ */}
+          <div className="lg:col-span-5 flex flex-col justify-center items-start space-y-6 text-left">
 
-            {/* Company Identity Pill */}
-            <div className="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#BFDBFE] shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#E5A93C]" />
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B4F82]">
+            {/* 1. Small Premium Brand Label */}
+            <div className="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/90 shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-[#D97706]" />
+              <span className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#0B4F82]">
                 {pretitle}
               </span>
               <span className="text-slate-300">|</span>
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-[#475569]">
+              <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#64748B]">
                 {badge}
               </span>
             </div>
 
-            {/* Dual Business Focus Badges (Primary & Secondary Clearly Visible at First Glance) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full">
+            {/* 2. Business Category Indicators (Primary & Secondary Business) */}
+            <div className="flex flex-wrap items-center gap-2.5 w-full">
               <Link
                 href="/brands"
-                className="flex items-center gap-2.5 p-3 rounded-xl bg-[#0B4F82] text-white shadow-sm hover:bg-[#093E68] transition-all group"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#0B4F82] text-white shadow-xs hover:bg-[#083B63] transition-all"
               >
-                <div className="w-8 h-8 rounded-lg bg-[#E5A93C] text-[#0B4F82] flex items-center justify-center shrink-0 font-bold">
-                  <Briefcase className="w-4 h-4" />
-                </div>
-                <div className="text-left">
-                  <span className="text-[9px] font-mono uppercase tracking-widest text-[#FDE68A] font-bold block">
-                    1. Primary Business
-                  </span>
-                  <span className="text-xs font-extrabold uppercase tracking-tight block">
-                    Backpack Manufacturing
-                  </span>
-                </div>
+                <Briefcase className="w-3.5 h-3.5 text-[#FDE047] shrink-0" />
+                <span className="text-[11px] font-bold tracking-wide">
+                  <span className="text-[#FDE047] font-semibold">Primary:</span> Backpack Manufacturing
+                </span>
               </Link>
 
-              <a
-                href="#corporate-gifting"
-                className="flex items-center gap-2.5 p-3 rounded-xl bg-[#FFFBEB] border-2 border-[#E5A93C] text-[#1E293B] shadow-sm hover:bg-[#FEF3C7] transition-all group"
+              <Link
+                href="/gift-sets"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#FFFBEB] border border-[#FCD34D] text-[#0F172A] shadow-2xs hover:bg-[#FEF3C7] transition-all"
               >
-                <div className="w-8 h-8 rounded-lg bg-[#0B4F82] text-white flex items-center justify-center shrink-0">
-                  <Gift className="w-4 h-4" />
-                </div>
-                <div className="text-left">
-                  <span className="text-[9px] font-mono uppercase tracking-widest text-[#B45309] font-bold block">
-                    2. Secondary Business
-                  </span>
-                  <span className="text-xs font-extrabold uppercase tracking-tight text-[#0B4F82] block">
-                    A-to-Z Corporate Gifting
-                  </span>
-                </div>
-              </a>
+                <Gift className="w-3.5 h-3.5 text-[#D97706] shrink-0" />
+                <span className="text-[11px] font-bold tracking-wide">
+                  <span className="text-[#B45309] font-semibold">Secondary:</span> A-to-Z Corporate Gifting
+                </span>
+              </Link>
             </div>
 
-            {/* Main Headline with "Manufacturing" & "Corporate Gifting" Highlighted */}
-            <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-black uppercase tracking-tight leading-[1.12] text-[#0F172A] font-sans">
-              Direct{' '}
-              <span className="px-2.5 py-0.5 rounded-lg bg-[#DBEAFE] text-[#0B4F82] border border-[#93C5FD] inline-block">
-                Backpack Manufacturing
-              </span>{' '}
-              &amp; Complete{' '}
-              <span className="px-2.5 py-0.5 rounded-lg bg-[#FEF3C7] text-[#B45309] border border-[#FCD34D] inline-block mt-1">
-                Corporate Gifting
+            {/* 3. Main Headline with Distinct Typography Treatments */}
+            <h1 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-black uppercase tracking-tight leading-[1.08] font-sans">
+              <span className="text-[#0F172A] block">DIRECT</span>
+              <span className="text-[#0B4F82] block mt-0.5">
+                BACKPACK MANUFACTURING
+              </span>
+              <span className="text-[#0F172A] block mt-0.5">
+                &amp; COMPLETE{' '}
+              </span>
+              <span className="relative inline-block text-[#D97706] mt-0.5">
+                CORPORATE GIFTING
+                <span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-[#D97706] via-[#F59E0B] to-transparent rounded-full" />
               </span>
             </h1>
 
-            {/* Clear, Plain-English Description (DTF, Embroidery, Screen Printing) */}
-            <p className="text-sm sm:text-base text-[#334155] font-normal leading-relaxed">
-              We manufacture our own registered backpack brands (<strong className="text-[#0B4F82]">Ninja Gear Original</strong> &amp; <strong className="text-[#0B4F82]">ADMA London</strong>) in Bengaluru, supply leading partner brands (<strong className="text-[#0F172A]">Skybags, Arctic Hunter, Swiss Military</strong>), and deliver A-to-Z corporate gifts customized with in-house{' '}
-              <strong className="text-[#0B4F82] underline decoration-[#E5A93C] decoration-2">DTF Printing, Embroidery &amp; Screen Printing</strong>.
+            {/* 4. Description */}
+            <p className="text-sm sm:text-[15px] text-[#475569] font-normal leading-relaxed">
+              We manufacture our own registered backpack brands (
+              <strong className="font-bold text-[#0F172A]">Ninja Gear Original</strong> &amp;{' '}
+              <strong className="font-bold text-[#0F172A]">ADMA London</strong>) in Bengaluru, supply leading partner brands (
+              <strong className="font-semibold text-[#0F172A]">Skybags, Arctic Hunter, Swiss Military</strong>), and deliver A-to-Z corporate gifts customized with in-house{' '}
+              <strong className="font-bold text-[#0B4F82]">DTF Printing, Embroidery &amp; Screen Printing</strong>.
             </p>
 
-            {/* Simple Branding Method Pills */}
-            <div className="flex flex-wrap items-center gap-2 pt-0.5">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EFF6FF] border border-[#BFDBFE] text-[#0B4F82] text-xs font-bold">
-                <Printer className="w-3.5 h-3.5 text-[#E5A93C]" />
-                DTF Printing
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EFF6FF] border border-[#BFDBFE] text-[#0B4F82] text-xs font-bold">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#0B4F82]" />
-                Computerized Embroidery
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EFF6FF] border border-[#BFDBFE] text-[#0B4F82] text-xs font-bold">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#0B4F82]" />
-                Screen Printing
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FEF9C3] border border-[#FDE047] text-[#854D0E] text-xs font-bold">
-                1-Year Backpack Warranty
-              </span>
+            {/* 5. Service Highlights */}
+            <div className="flex flex-wrap items-center gap-2">
+              {[
+                { label: 'DTF Printing', icon: Printer },
+                { label: 'Computerized Embroidery', icon: Sparkles },
+                { label: 'Screen Printing', icon: CheckCircle2 },
+                { label: '1-Year Backpack Warranty', icon: ShieldCheck, gold: true }
+              ].map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <span
+                    key={idx}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold border ${
+                      item.gold
+                        ? 'bg-[#FFFBEB] border-[#FDE68A] text-[#92400E]'
+                        : 'bg-white border-slate-200/90 text-[#1E293B] shadow-2xs'
+                    }`}
+                  >
+                    <Icon className={`w-3 h-3 ${item.gold ? 'text-[#D97706]' : 'text-[#0B4F82]'}`} />
+                    <span>{item.label}</span>
+                  </span>
+                );
+              })}
             </div>
 
-            {/* Primary & Secondary CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2 w-full sm:w-auto">
+            {/* 6. CTA Buttons */}
+            <div className="flex flex-wrap items-center gap-3 pt-1 w-full">
               <Link
                 href={primaryCta.href}
-                className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md group whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-extrabold uppercase tracking-wider transition-all shadow-md hover:shadow-lg group"
               >
                 <span>{primaryCta.label}</span>
                 <ArrowRight className="w-4 h-4 text-[#FDE047] group-hover:translate-x-1 transition-transform" />
               </Link>
 
-              <a
+              <Link
                 href={secondaryCta.href}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#E5A93C] hover:bg-[#D4952A] text-[#0F172A] text-xs font-extrabold uppercase tracking-wider transition-all shadow-md whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#D97706] hover:bg-[#B45309] text-white text-xs font-extrabold uppercase tracking-wider transition-all shadow-md hover:shadow-lg group"
               >
                 <span>{secondaryCta.label}</span>
-                <ArrowRight className="w-4 h-4 text-[#0F172A]" />
-              </a>
+                <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
+              </Link>
 
-              <a
-                href={`tel:${COMPANY_INFO.contact.phoneRaw}`}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white hover:bg-[#F8FAFC] border border-[#CBD5E1] text-[#0B4F82] text-xs font-bold transition-all whitespace-nowrap"
+              <Link
+                href={tertiaryCta?.href || '/contact'}
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-[#0F172A] text-xs font-bold uppercase tracking-wider transition-all shadow-2xs"
               >
-                <Phone className="w-3.5 h-3.5 text-[#E5A93C]" />
-                <span>{COMPANY_INFO.contact.corporatePhone}</span>
-              </a>
+                <span>{tertiaryCta?.label || 'Contact Us'}</span>
+              </Link>
             </div>
 
           </div>
 
-          {/* Right Column (6 cols): Bright High-Contrast Brand Store Showcase (Zero Dark Background!) */}
-          <div className="lg:col-span-6 flex flex-col gap-3 order-1 lg:order-2 w-full">
-            <div className="relative w-full h-[340px] sm:h-[400px] lg:h-[430px] rounded-2xl overflow-hidden shadow-lg border-2 border-[#DBEAFE] bg-gradient-to-b from-[#F4F9FF] via-white to-[#E0EEFE] group flex items-center justify-center">
-              <img
-                src={image}
-                alt={imageAlt}
-                className="w-full h-full object-contain object-center p-2 group-hover:scale-103 transition-transform duration-500 ease-out"
-                fetchPriority="high"
-              />
+          {/* ================================================================
+              RIGHT SECTION (7 cols): Interactive 4-Slide Premium Product Carousel
+          ================================================================ */}
+          <div className="lg:col-span-7 flex flex-col gap-3.5 w-full">
 
-              {/* Top Brand Store Pills */}
-              <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2 pointer-events-none">
-                <span className="px-3 py-1 rounded-full bg-[#0B4F82] text-white font-bold text-[10px] uppercase tracking-wider shadow-xs">
-                  In-House Manufactured Models
-                </span>
-                <span className="px-3 py-1 rounded-full bg-[#FEF3C7] border border-[#FCD34D] text-[#92400E] font-bold text-[10px] uppercase tracking-wider shadow-xs">
-                  Ninja Gear &bull; ADMA London
-                </span>
+            {/* Main Carousel Stage */}
+            <div
+              className="relative rounded-3xl bg-white border border-slate-200/90 shadow-[0_20px_50px_-15px_rgba(11,79,130,0.12)] overflow-hidden select-none"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              {/* Top Animated Progress Bar */}
+              <div className="h-1 w-full bg-slate-100 overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-[#0B4F82] via-[#0284C7] to-[#D97706] transition-all duration-75 ease-linear"
+                  style={{ width: `${progress}%` }}
+                />
               </div>
 
-              {/* Bottom High-Contrast Light Badge */}
-              <div className="absolute bottom-3.5 left-3.5 right-3.5 flex items-center justify-between bg-white/95 backdrop-blur-md border border-[#DBEAFE] px-4 py-2 rounded-xl shadow-sm">
-                <span className="text-[#0B4F82] font-bold text-[11px] tracking-wide">
-                  {imageBadge}
-                </span>
-                <Link
-                  href="/bags"
-                  className="text-[11px] font-extrabold text-[#D97706] hover:underline pointer-events-auto"
+              {/* Top Slide Selector Tabs */}
+              <div className="px-4 sm:px-6 pt-3.5 pb-2.5 bg-white/90 border-b border-slate-100 flex items-center justify-between gap-2 overflow-x-auto scrollbar-none">
+                <div className="flex items-center gap-1.5">
+                  {slides.map((s, idx) => {
+                    const active = idx === currentSlide;
+                    return (
+                      <button
+                        key={s.id}
+                        type="button"
+                        onClick={() => goToSlide(idx)}
+                        className={`px-3 py-1.5 rounded-full text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+                          active
+                            ? 'bg-[#0B4F82] text-white shadow-xs'
+                            : 'bg-slate-100/80 hover:bg-slate-200/70 text-[#475569]'
+                        }`}
+                      >
+                        <span className={`font-mono text-[10px] ${active ? 'text-[#FDE047]' : 'text-slate-400'}`}>
+                          {s.slideNumber}
+                        </span>
+                        <span>{s.tabLabel}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Prev / Next Arrow Buttons */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    type="button"
+                    onClick={prevSlide}
+                    aria-label="Previous Slide"
+                    className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#0B4F82] text-[#0F172A] hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={nextSlide}
+                    aria-label="Next Slide"
+                    className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#0B4F82] text-[#0F172A] hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Horizontal Sliding Track */}
+              <div className="overflow-hidden">
+                <div
+                  className="flex transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
-                  View All 32 Models &rarr;
-                </Link>
+                  {slides.map((slide) => (
+                    <div
+                      key={slide.id}
+                      className={`w-full shrink-0 bg-gradient-to-br ${slide.themeBg} p-5 sm:p-7 flex flex-col justify-between min-h-[410px] sm:min-h-[440px]`}
+                    >
+                      {/* Slide Top Metadata Header */}
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2.5">
+                          {slide.brandLogo && (
+                            <div className="h-9 px-2.5 rounded-lg bg-white border border-slate-200/80 shadow-2xs flex items-center justify-center">
+                              <img
+                                src={slide.brandLogo}
+                                alt={slide.brandBadge}
+                                className="max-h-6 w-auto object-contain"
+                              />
+                            </div>
+                          )}
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            <span className="px-2.5 py-0.5 rounded-full bg-[#0B4F82] text-white text-[10px] font-extrabold uppercase tracking-wider">
+                              {slide.label}
+                            </span>
+                            <span className="px-2.5 py-0.5 rounded-full bg-[#FFFBEB] border border-[#FCD34D] text-[#92400E] text-[10px] font-extrabold uppercase tracking-wider">
+                              {slide.brandBadge}
+                            </span>
+                          </div>
+                        </div>
+
+                        <span className="text-[11px] font-mono font-bold text-slate-400">
+                          {slide.slideNumber} / 0{totalSlides}
+                        </span>
+                      </div>
+
+                      {/* Slide Center Visual Product Showcase */}
+                      {slide.layout === 'grid-Showcase' ? (
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4">
+                          {slide.items.map((item, i) => (
+                            <Link
+                              key={i}
+                              href={slide.ctaHref}
+                              className="group/card rounded-2xl bg-white border border-slate-200/80 p-3 flex flex-col items-center justify-between shadow-2xs hover:shadow-md hover:border-[#0B4F82] transition-all"
+                            >
+                              <div className="h-32 sm:h-36 w-full flex items-center justify-center overflow-hidden p-1">
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="max-h-full max-w-full object-contain group-hover/card:scale-108 transition-transform duration-500"
+                                />
+                              </div>
+                              <div className="w-full text-center pt-2 border-t border-slate-100">
+                                <span className="text-[9px] font-mono font-bold text-[#D97706] uppercase block">
+                                  {item.tag}
+                                </span>
+                                <span className="text-xs font-extrabold text-[#0F172A] line-clamp-1">
+                                  {item.name}
+                                </span>
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-3 gap-3 sm:gap-5 items-end my-4 px-1">
+                          {slide.items.map((item, i) => {
+                            const isFeatured = (item as any).featured;
+                            return (
+                              <Link
+                                key={i}
+                                href={slide.ctaHref}
+                                className={`group/item relative rounded-2xl bg-white/90 hover:bg-white border transition-all flex flex-col items-center justify-between p-3 sm:p-4 ${
+                                  isFeatured
+                                    ? 'border-[#93C5FD] shadow-md sm:-translate-y-1.5'
+                                    : 'border-slate-200/80 shadow-2xs'
+                                }`}
+                              >
+                                <span className="self-start px-2 py-0.5 rounded bg-slate-100 text-[#0B4F82] font-mono text-[9px] font-bold">
+                                  {item.code}
+                                </span>
+
+                                <div
+                                  className={`w-full flex items-center justify-center my-1 ${
+                                    isFeatured ? 'h-40 sm:h-48' : 'h-32 sm:h-40'
+                                  }`}
+                                >
+                                  <img
+                                    src={item.image}
+                                    alt={item.name}
+                                    className="max-h-full max-w-full object-contain drop-shadow-[0_10px_18px_rgba(15,23,42,0.14)] group-hover/item:scale-106 transition-transform duration-500"
+                                  />
+                                </div>
+
+                                <div className="w-full text-center pt-1.5 border-t border-slate-100">
+                                  <span className="text-[9.5px] font-bold text-[#D97706] uppercase tracking-wider block">
+                                    {item.tag}
+                                  </span>
+                                  <span className="text-xs font-extrabold text-[#0F172A] line-clamp-1">
+                                    {item.name}
+                                  </span>
+                                </div>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {/* Slide Bottom Caption & CTA Footer */}
+                      <div className="pt-3 border-t border-slate-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div className="space-y-0.5 text-left max-w-md">
+                          <h2 className="text-base sm:text-lg font-extrabold text-[#0F172A] tracking-tight">
+                            {slide.title}
+                          </h2>
+                          <p className="text-xs text-[#475569] line-clamp-1">
+                            {slide.description}
+                          </p>
+                        </div>
+
+                        <Link
+                          href={slide.ctaHref}
+                          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-extrabold uppercase tracking-wider transition-all shadow-xs shrink-0 group/btn"
+                        >
+                          <span>{slide.ctaLabel}</span>
+                          <ArrowRight className="w-3.5 h-3.5 text-[#FDE047] group-hover/btn:translate-x-1 transition-transform" />
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bottom Pagination Dots & Collection Indicator */}
+              <div className="px-5 py-2.5 bg-white border-t border-slate-100 flex items-center justify-between text-[11px]">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-[#0B4F82]">{activeSlideData.brandBadge}</span>
+                  <span className="text-slate-300">•</span>
+                  <span className="text-[#64748B] hidden sm:inline">
+                    Hover to pause • Swipe or use arrows to browse collections
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-1.5">
+                  {slides.map((s, idx) => (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => goToSlide(idx)}
+                      aria-label={`Go to slide ${idx + 1}: ${s.tabLabel}`}
+                      className={`h-2 rounded-full transition-all cursor-pointer ${
+                        idx === currentSlide
+                          ? 'w-6 bg-[#0B4F82]'
+                          : 'w-2 bg-slate-300 hover:bg-slate-400'
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Quick Secondary Business Preview Strip right below Hero Image */}
-            <div className="grid grid-cols-4 gap-2.5 bg-white p-2.5 rounded-xl border border-[#DBEAFE] shadow-2xs">
-              {[
-                { label: 'Welcome Kits', img: '/catalog/crops/hgs_h74.jpg', href: '#corporate-gifting' },
-                { label: 'Drinkware', img: '/catalog/crops/hgs_h118_vacuum.jpg', href: '#corporate-gifting' },
-                { label: 'Trophies & Awards', img: '/images/gifting-categories/trophy-1.jpg', href: '#corporate-gifting' },
-                { label: 'Apparels & Trolleys', img: '/images/gifting-categories/trolley-1.jpg', href: '#corporate-gifting' }
-              ].map((item, i) => (
-                <a
+            {/* 7. Corporate Gifting Category Strip Below Slider */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {giftingStrip.map((item, i) => (
+                <Link
                   key={i}
                   href={item.href}
-                  className="flex items-center gap-2 p-1.5 rounded-lg bg-[#F8FAFC] hover:bg-[#EFF6FF] border border-[#E2E8F0] transition-colors group"
+                  className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-white hover:bg-[#F8FAFC] border border-slate-200/90 hover:border-[#0B4F82] shadow-2xs hover:shadow-md transition-all group"
                 >
-                  <img
-                    src={item.img}
-                    alt={item.label}
-                    className="w-9 h-9 rounded-md object-cover shrink-0 bg-white border border-slate-200"
-                  />
-                  <span className="text-[10px] font-bold text-[#1E293B] group-hover:text-[#0B4F82] leading-tight line-clamp-2">
-                    {item.label}
-                  </span>
-                </a>
+                  <div className="w-11 h-11 rounded-xl bg-[#F8FAFC] border border-slate-200/80 p-1 flex items-center justify-center shrink-0 overflow-hidden">
+                    <img
+                      src={item.img}
+                      alt={item.label}
+                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="text-left min-w-0">
+                    <span className="text-xs font-extrabold text-[#0F172A] group-hover:text-[#0B4F82] block truncate">
+                      {item.label}
+                    </span>
+                    <span className="text-[10px] text-[#64748B] block truncate">
+                      {item.sub}
+                    </span>
+                  </div>
+                </Link>
               ))}
             </div>
+
           </div>
 
         </div>
-
-        {/* Bottom Summary Bar (High-Contrast Light Cards) */}
-        <div className="mt-10 pt-6 border-t border-[#DBEAFE] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
-          {stats.map((stat, idx) => (
-            <div
-              key={idx}
-              className={`p-4 rounded-xl border transition-all ${
-                stat.highlight
-                  ? 'bg-white border-[#93C5FD] shadow-2xs'
-                  : 'bg-[#F8FAFC] border-[#E2E8F0]'
-              }`}
-            >
-              <div className="text-[10px] font-mono uppercase tracking-widest font-bold text-[#0B4F82]">
-                {stat.category}
-              </div>
-              <div className="text-sm font-extrabold text-[#0F172A] mt-0.5">
-                {stat.title}
-              </div>
-              <div className="text-xs text-[#475569] mt-0.5">
-                {stat.subtitle}
-              </div>
-            </div>
-          ))}
-        </div>
-
       </div>
     </section>
   );

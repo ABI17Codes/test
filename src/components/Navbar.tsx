@@ -68,7 +68,7 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 15);
+      setIsScrolled(window.scrollY > 16);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -103,47 +103,55 @@ export const Navbar: React.FC = () => {
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-[#BFDBFE]'
-          : 'bg-white border-b border-[#DBEAFE]'
+          ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_20px_-4px_rgba(11,79,130,0.08)] border-b border-slate-200/80'
+          : 'bg-white border-b border-slate-200/70'
       }`}
     >
-      {/* Ultra-Slim Top Utility Strip (Auto-collapses on scroll) */}
+      {/* Level 1: Premium Top Information Strip */}
       <div
-        className={`bg-[#EFF6FF] text-[#0B4F82] transition-all duration-300 overflow-hidden ${
-          isScrolled ? 'max-h-0 py-0 opacity-0' : 'max-h-6 py-0.5 opacity-100 border-b border-[#DBEAFE]'
+        className={`bg-[#0B4F82] text-white transition-all duration-300 overflow-hidden ${
+          isScrolled ? 'max-h-0 py-0 opacity-0' : 'max-h-8 py-1.5 opacity-100'
         }`}
       >
-        <div className="max-w-[1320px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-4 text-[10px]">
-          <div className="flex items-center gap-2 truncate font-semibold text-[#0B4F82]">
-            <span className="inline-flex items-center gap-1 text-[#B45309] font-bold">
-              <MapPin className="w-2.5 h-2.5" />
+        <div className="max-w-[1340px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-4 text-[11px]">
+          <div className="flex items-center gap-2.5 truncate font-medium tracking-wide">
+            <span className="inline-flex items-center gap-1 text-[#FDE047] font-bold">
+              <MapPin className="w-3 h-3 text-[#E5A93C]" />
               <span>{topUtilityStrip.atelierText}</span>
             </span>
-            <span className="text-slate-300 hidden sm:inline">•</span>
-            <span className="hidden sm:inline text-[#334155]">{topUtilityStrip.headline}</span>
+            <span className="text-white/30 hidden sm:inline">|</span>
+            <span className="hidden sm:inline text-white/90 font-medium">
+              {topUtilityStrip.headline}
+            </span>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0 font-bold text-[10px] text-[#0B4F82]">
-            <a href={`tel:${COMPANY_INFO.contact.phoneRaw}`} className="flex items-center gap-1 hover:text-[#D97706] transition-colors">
-              <Phone className="w-2.5 h-2.5 text-[#D97706]" />
+          <div className="flex items-center gap-4 shrink-0 font-semibold text-[11px]">
+            <a
+              href={`tel:${COMPANY_INFO.contact.phoneRaw}`}
+              className="flex items-center gap-1.5 text-white hover:text-[#FDE047] transition-colors"
+            >
+              <Phone className="w-3 h-3 text-[#E5A93C]" />
               <span>{COMPANY_INFO.contact.corporatePhone}</span>
             </a>
-            <span className="text-slate-300 hidden md:inline">•</span>
-            <a href={`mailto:${COMPANY_INFO.contact.enquiryEmail}`} className="hidden md:flex items-center gap-1 hover:text-[#D97706] transition-colors">
-              <Mail className="w-2.5 h-2.5 text-[#0B4F82]" />
+            <span className="text-white/30 hidden md:inline">|</span>
+            <a
+              href={`mailto:${COMPANY_INFO.contact.enquiryEmail}`}
+              className="hidden md:flex items-center gap-1.5 text-white/95 hover:text-[#FDE047] transition-colors"
+            >
+              <Mail className="w-3 h-3 text-[#E5A93C]" />
               <span>{COMPANY_INFO.contact.enquiryEmail}</span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* Minimized Main Navigation Bar (Compact 48px height, Single-Line Links, Zero Wrapping) */}
-      <div className="max-w-[1320px] mx-auto px-4 sm:px-8">
-        <div className="flex items-center justify-between h-12 gap-4">
+      {/* Level 2: Main Navigation Bar */}
+      <div className="max-w-[1340px] mx-auto px-4 sm:px-8">
+        <div className="flex items-center justify-between h-14 gap-4">
 
-          {/* Compact Brand Logo */}
-          <Link href="/" className="flex items-center gap-2 group shrink-0">
-            <div className="w-7 h-7 rounded-full overflow-hidden bg-white border border-[#BFDBFE] shadow-2xs flex items-center justify-center p-0.5 group-hover:scale-105 transition-transform">
+          {/* Brand Logo */}
+          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-white border border-slate-200 shadow-2xs flex items-center justify-center p-0.5 group-hover:scale-105 transition-transform">
               <img
                 src="/globrands-emblem-clean.png"
                 alt={`${COMPANY_INFO.legalName} Logo`}
@@ -152,63 +160,63 @@ export const Navbar: React.FC = () => {
             </div>
 
             <div className="flex flex-col text-left">
-              <span className="font-extrabold tracking-tight text-xs leading-none font-sans text-[#0B4F82] whitespace-nowrap">
+              <span className="font-extrabold tracking-tight text-xs sm:text-[13.5px] leading-none font-sans text-[#0F172A] whitespace-nowrap">
                 GLOBRANDS <span className="text-[#D97706]">LIFESTYLE</span>{' '}
-                <span className="text-[8.5px] font-bold text-[#64748B]">PVT. LTD.</span>
+                <span className="text-[9px] font-bold text-[#64748B]">PVT. LTD.</span>
               </span>
-              <span className="text-[7px] uppercase tracking-widest text-[#64748B] font-bold font-mono mt-0.5 whitespace-nowrap">
+              <span className="text-[7.5px] uppercase tracking-[0.14em] text-[#64748B] font-bold font-mono mt-0.5 whitespace-nowrap">
                 {COMPANY_INFO.subtitle}
               </span>
             </div>
           </Link>
 
-          {/* Minimized Single-Line Desktop Navigation Links (whitespace-nowrap prevents any 2-line wrapping) */}
-          <nav className="hidden lg:flex items-center gap-5 xl:gap-6">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-6">
             {primaryLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-xs font-bold whitespace-nowrap transition-colors relative py-1 ${
+                  className={`text-[12.5px] font-bold whitespace-nowrap transition-colors relative py-1 ${
                     isActive ? 'text-[#0B4F82]' : 'text-[#1E293B] hover:text-[#0B4F82]'
                   }`}
                 >
                   <span>{link.label}</span>
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#E5A93C] rounded-full" />
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D97706] rounded-full" />
                   )}
                 </Link>
               );
             })}
 
-            {/* Compact Catalogues Dropdown */}
+            {/* Catalogues Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setCatalogDropdownOpen(!catalogDropdownOpen)}
-                className={`inline-flex items-center gap-1 text-xs font-bold whitespace-nowrap transition-colors py-1 cursor-pointer ${
+                className={`inline-flex items-center gap-1 text-[12.5px] font-bold whitespace-nowrap transition-colors py-1 cursor-pointer ${
                   catalogDropdownOpen ? 'text-[#0B4F82]' : 'text-[#1E293B] hover:text-[#0B4F82]'
                 }`}
               >
                 <span>Catalogues</span>
-                <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${catalogDropdownOpen ? 'rotate-180 text-[#E5A93C]' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${catalogDropdownOpen ? 'rotate-180 text-[#D97706]' : ''}`} />
               </button>
 
               {catalogDropdownOpen && (
-                <div className="absolute left-0 mt-2 w-72 bg-white border border-[#BFDBFE] rounded-xl shadow-xl p-1.5 space-y-0.5 z-50 text-left">
+                <div className="absolute left-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 space-y-1 z-50 text-left">
                   {catalogDropdownItems.map((item, idx) => {
                     const ItemIcon = item.icon;
                     return (
                       <Link
                         key={idx}
                         href={item.href}
-                        className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-[#EFF6FF] transition-colors"
+                        className="flex items-start gap-2.5 p-2.5 rounded-xl hover:bg-[#F8FAFC] transition-colors"
                         onClick={() => setCatalogDropdownOpen(false)}
                       >
-                        <ItemIcon className="w-3.5 h-3.5 text-[#0B4F82] mt-0.5 shrink-0" />
+                        <ItemIcon className="w-4 h-4 text-[#0B4F82] mt-0.5 shrink-0" />
                         <div>
-                          <div className="text-[11.5px] font-bold text-[#0F172A]">{item.title}</div>
-                          <div className="text-[10px] text-[#475569]">{item.description}</div>
+                          <div className="text-xs font-bold text-[#0F172A]">{item.title}</div>
+                          <div className="text-[10.5px] text-[#64748B]">{item.description}</div>
                         </div>
                       </Link>
                     );
@@ -223,30 +231,30 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-xs font-bold whitespace-nowrap transition-colors relative py-1 ${
+                  className={`text-[12.5px] font-bold whitespace-nowrap transition-colors relative py-1 ${
                     isActive ? 'text-[#0B4F82]' : 'text-[#1E293B] hover:text-[#0B4F82]'
                   }`}
                 >
                   <span>{link.label}</span>
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#E5A93C] rounded-full" />
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D97706] rounded-full" />
                   )}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Compact Right Action Pills */}
-          <div className="flex items-center gap-2 shrink-0">
+          {/* Right Action Controls: Quote Button & Account Dropdown */}
+          <div className="flex items-center gap-2.5 shrink-0">
             <button
               onClick={() => setIsDrawerOpen(true)}
-              className="relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EFF6FF] border border-[#BFDBFE] hover:border-[#0B4F82] text-[#0B4F82] text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap"
+              className="relative inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F8FAFC] hover:bg-[#EFF6FF] border border-slate-200 hover:border-[#93C5FD] text-[#0F172A] text-xs font-bold transition-all cursor-pointer whitespace-nowrap shadow-2xs"
               title="View Quote Basket"
             >
-              <ShoppingBag className="w-3 h-3 text-[#D97706]" />
+              <ShoppingBag className="w-3.5 h-3.5 text-[#D97706]" />
               <span className="hidden sm:inline">Quote</span>
               {mounted && totalItems > 0 && (
-                <span className="min-w-4 h-4 px-1 rounded-full bg-[#0B4F82] text-white text-[9px] font-bold flex items-center justify-center">
+                <span className="min-w-4.5 h-4.5 px-1 rounded-full bg-[#0B4F82] text-white text-[9.5px] font-extrabold flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
@@ -255,26 +263,26 @@ export const Navbar: React.FC = () => {
             <div className="relative" ref={accountRef}>
               <button
                 onClick={() => setAccountDropdownOpen(!accountDropdownOpen)}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[#CBD5E1] hover:border-[#0B4F82] text-[#1E293B] text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white hover:bg-[#F8FAFC] border border-slate-200 hover:border-[#0B4F82] text-[#1E293B] text-xs font-bold transition-all cursor-pointer whitespace-nowrap shadow-2xs"
               >
-                <User className="w-3 h-3 text-[#0B4F82]" />
+                <User className="w-3.5 h-3.5 text-[#0B4F82]" />
                 <span className="hidden md:inline">
                   {mounted && user?.name ? user.name.split(' ')[0] : 'Account'}
                 </span>
-                <ChevronDown className="w-2.5 h-2.5 text-[#64748B]" />
+                <ChevronDown className="w-3 h-3 text-[#64748B]" />
               </button>
 
               {accountDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white border border-[#BFDBFE] rounded-xl shadow-xl p-1.5 space-y-1 z-50 text-left">
+                <div className="absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-2xl shadow-xl p-1.5 space-y-1 z-50 text-left">
                   {user ? (
                     <>
-                      <div className="px-3 py-1.5 border-b border-[#E2E8F0]">
+                      <div className="px-3 py-2 border-b border-slate-100">
                         <div className="text-xs font-bold text-[#0F172A] truncate">{user.name}</div>
-                        <div className="text-[10px] text-[#475569] truncate">{user.email}</div>
+                        <div className="text-[10.5px] text-[#64748B] truncate">{user.email}</div>
                       </div>
                       <Link
                         href="/profile"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-[#0F172A] hover:bg-[#EFF6FF]"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-[#0F172A] hover:bg-[#F8FAFC]"
                         onClick={() => setAccountDropdownOpen(false)}
                       >
                         <User className="w-3.5 h-3.5 text-[#0B4F82]" />
@@ -283,7 +291,7 @@ export const Navbar: React.FC = () => {
                       {user.role === 'admin' && (
                         <Link
                           href="/admin"
-                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold text-[#0B4F82] hover:bg-[#EFF6FF]"
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold text-[#0B4F82] hover:bg-[#F8FAFC]"
                           onClick={() => setAccountDropdownOpen(false)}
                         >
                           <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
@@ -302,7 +310,7 @@ export const Navbar: React.FC = () => {
                     <>
                       <Link
                         href="/login"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-[#0F172A] hover:bg-[#EFF6FF]"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-[#0F172A] hover:bg-[#F8FAFC]"
                         onClick={() => setAccountDropdownOpen(false)}
                       >
                         <LogIn className="w-3.5 h-3.5 text-[#0B4F82]" />
@@ -310,7 +318,7 @@ export const Navbar: React.FC = () => {
                       </Link>
                       <Link
                         href="/register"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-[#0F172A] hover:bg-[#EFF6FF]"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-[#0F172A] hover:bg-[#F8FAFC]"
                         onClick={() => setAccountDropdownOpen(false)}
                       >
                         <UserPlus className="w-3.5 h-3.5 text-[#D97706]" />
@@ -324,7 +332,7 @@ export const Navbar: React.FC = () => {
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-1 rounded-lg bg-white border border-[#BFDBFE] text-[#0B4F82] cursor-pointer"
+              className="lg:hidden p-1.5 rounded-lg bg-white border border-slate-200 text-[#0B4F82] cursor-pointer"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -336,7 +344,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-[#BFDBFE] px-6 py-3 space-y-2 shadow-xl text-left">
+        <div className="lg:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-2 shadow-xl text-left">
           {primaryLinks.map((link) => (
             <Link
               key={link.href}

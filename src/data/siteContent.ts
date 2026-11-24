@@ -127,15 +127,15 @@ export const NAVIGATION_CONFIG = {
 };
 
 // ============================================================================
-// 3. HERO SECTION CONTENT (Highlights BOTH Backpack Manufacturing & Corporate Gifting)
+// 3. HERO SECTION CONTENT (Highlights BOTH Backpack Manufacturing & Corporate Gifting + 4-Slide Interactive Carousel)
 // ============================================================================
 export const HERO_CONTENT = {
-  badge: 'BENGALURU DIRECT FACTORY • 1-YEAR WARRANTY',
+  badge: 'BENGALURU DIRECT FACTORY | 1-YEAR WARRANTY',
   pretitle: 'GLOBRANDS LIFESTYLE PVT. LTD.',
   title: 'BACKPACK MANUFACTURING',
   titleHighlight: '& CORPORATE GIFTING.',
   subheading: 'Primary Business: Direct Backpack Manufacturing • Secondary Business: Complete A-to-Z Corporate Gifting Solutions.',
-  description: 'We manufacture 32+ proprietary backpack models in Bengaluru under our registered brands Ninja Gear Original & ADMA London, supply top partner brands (Skybags, Arctic Hunter, Swiss Military), and deliver A-to-Z corporate gifts with in-house DTF Printing, Embroidery & Screen Printing.',
+  description: 'We manufacture our own registered backpack brands (Ninja Gear Original & ADMA London) in Bengaluru, supply leading partner brands (Skybags, Arctic Hunter, Swiss Military), and deliver A-to-Z corporate gifts customized with in-house DTF Printing, Embroidery & Screen Printing.',
   image: '/images/hero/hero-backpack.jpg',
   imageAlt: 'Ninja Gear Boxer & ADMA London Volvo 2.0 Manufactured by Globrands Lifestyle Pvt. Ltd.',
   imageBadge: 'IN-HOUSE FLAGSHIPS • NINJA GEAR BOXER & ADMA LONDON VOLVO 2.0',
@@ -145,8 +145,187 @@ export const HERO_CONTENT = {
   },
   secondaryCta: {
     label: 'EXPLORE CORPORATE GIFTING',
-    href: '#corporate-gifting'
+    href: '/gift-sets'
   },
+  tertiaryCta: {
+    label: 'Contact Us',
+    href: '/contact'
+  },
+  slides: [
+    {
+      id: 'ninja-gear',
+      slideNumber: '01',
+      tabLabel: 'Ninja Gear',
+      label: 'IN-HOUSE BRAND',
+      brandBadge: 'NINJA GEAR ORIGINAL',
+      brandLogo: '/catalog/brands/ninja_gear_logo.jpg',
+      title: 'Ninja Gear — Tactical & Tech Backpacks',
+      description: 'Engineered with concealed anti-theft rear zippers, external USB fast-charging ports, and 17" suspended laptop protection.',
+      ctaLabel: 'EXPLORE COLLECTION',
+      ctaHref: '/brands',
+      themeBg: 'from-[#F8FAFC] via-[#FFFFFF] to-[#FEF9E7]',
+      accentColor: '#D97706',
+      layout: 'trio-bags' as const,
+      items: [
+        {
+          name: 'Ninja Gear INSPIRE',
+          code: 'BG-INSPIRE',
+          tag: '17" Tech Commuter',
+          image: '/catalog/backpacks-studio/bg-inspire.png'
+        },
+        {
+          name: 'Ninja Gear BOXER',
+          code: 'BG-BOXER',
+          tag: 'Flagship Anti-Theft',
+          image: '/catalog/backpacks-studio/bg-boxer.png',
+          featured: true
+        },
+        {
+          name: 'Ninja Gear AVIATOR',
+          code: 'BG-AVIATOR',
+          tag: 'Heavy-Duty Executive',
+          image: '/catalog/backpacks-studio/bg-aviator.png'
+        }
+      ]
+    },
+    {
+      id: 'adma-london',
+      slideNumber: '02',
+      tabLabel: 'ADMA London',
+      label: 'IN-HOUSE BRAND',
+      brandBadge: 'ADMA LONDON',
+      brandLogo: '/catalog/brands/adma_london_logo.jpg',
+      title: 'ADMA London — Executive & Travel Backpacks',
+      description: 'Spacious 38L–40L business travel carrywear with integrated waterproof rain covers, RFID pockets, and isolated shoe compartments.',
+      ctaLabel: 'VIEW COLLECTION',
+      ctaHref: '/brands',
+      themeBg: 'from-[#F0F7FF] via-[#FFFFFF] to-[#E0F2FE]',
+      accentColor: '#0B4F82',
+      layout: 'trio-bags' as const,
+      items: [
+        {
+          name: 'ADMA London VIP 2.0',
+          code: 'BG-VIP-2',
+          tag: 'Executive Laptop',
+          image: '/catalog/backpacks-studio/bg-vip-2.png'
+        },
+        {
+          name: 'ADMA London VOLVO 2.0',
+          code: 'BG-VOLVO-2',
+          tag: '38L + Rain Cover',
+          image: '/catalog/backpacks-studio/bg-volvo-2.png',
+          featured: true
+        },
+        {
+          name: 'ADMA London NEXA',
+          code: 'BG-NEXA',
+          tag: 'Urban Office Pack',
+          image: '/catalog/backpacks-studio/bg-nexa.png'
+        }
+      ]
+    },
+    {
+      id: 'corporate-gifting',
+      slideNumber: '03',
+      tabLabel: 'Corporate Gifting',
+      label: 'COMPLETE CORPORATE GIFTING',
+      brandBadge: 'A-TO-Z GIFTING SOLUTIONS',
+      title: 'Welcome Kits, Drinkware, Trophies & Accessories',
+      description: 'Curated employee onboarding hampers, laser-engraved vacuum flasks, sustainable bamboo sets, crystal trophies, apparels, and trolleys.',
+      ctaLabel: 'EXPLORE GIFTING',
+      ctaHref: '/gift-sets',
+      themeBg: 'from-[#FEFDFB] via-[#FFFFFF] to-[#FEF3C7]/60',
+      accentColor: '#D97706',
+      layout: 'grid-Showcase' as const,
+      items: [
+        {
+          name: '5-in-1 VIP Welcome Kit',
+          code: 'HGS-H74',
+          tag: 'Employee Onboarding',
+          image: '/catalog/crops/hgs_h74.jpg'
+        },
+        {
+          name: 'Smart Vacuum Drinkware',
+          code: 'HGS-H118',
+          tag: 'Insulated Flasks',
+          image: '/catalog/crops/hgs_h118_vacuum.jpg'
+        },
+        {
+          name: 'Trophies & Recognition Awards',
+          code: 'AWARDS',
+          tag: 'Custom Engraved',
+          image: '/images/gifting-categories/trophy-1.jpg'
+        },
+        {
+          name: 'Sustainable Bamboo Sets',
+          code: 'HGS-H117',
+          tag: 'Eco-Friendly Series',
+          image: '/catalog/crops/hgs_h117_bamboo.jpg'
+        }
+      ]
+    },
+    {
+      id: 'custom-branding',
+      slideNumber: '04',
+      tabLabel: 'Custom Branding',
+      label: 'IN-HOUSE CUSTOMIZATION',
+      brandBadge: 'DTF • EMBROIDERY • SCREEN PRINT',
+      title: 'In-House Logo Customization Studio',
+      description: 'Precision company logo branding across backpacks, corporate T-shirts, hoodies, caps, and gift sets with fast bulk turnaround.',
+      ctaLabel: 'DISCOVER BRANDING',
+      ctaHref: '/branding',
+      themeBg: 'from-[#F4F8FB] via-[#FFFFFF] to-[#EFF6FF]',
+      accentColor: '#0B4F82',
+      layout: 'branding-trio' as const,
+      items: [
+        {
+          name: 'Computerized Embroidery',
+          code: 'EMBROIDERY',
+          tag: 'Multi-Thread Stitched Logo',
+          image: '/catalog/backpacks-studio/bg-boxer.png',
+          featured: true
+        },
+        {
+          name: 'Full-Color DTF Printing',
+          code: 'DTF PRINT',
+          tag: 'Bags, T-Shirts & Hoodies',
+          image: '/images/gifting-categories/apparel-1.jpg'
+        },
+        {
+          name: 'Screen Print & Laser Engraving',
+          code: 'SCREEN & LASER',
+          tag: 'Bulk Bags & Metal Flasks',
+          image: '/catalog/crops/hgs_h125_temp_display.jpg'
+        }
+      ]
+    }
+  ],
+  giftingStrip: [
+    {
+      label: 'Welcome Kits',
+      sub: '2-in-1 to 6-in-1 Sets',
+      img: '/catalog/crops/hgs_h74.jpg',
+      href: '/gift-sets'
+    },
+    {
+      label: 'Drinkware',
+      sub: 'Flasks & LED Bottles',
+      img: '/catalog/crops/hgs_h118_vacuum.jpg',
+      href: '/products?category=drinkware'
+    },
+    {
+      label: 'Trophies & Awards',
+      sub: 'Plaques & Medals',
+      img: '/images/gifting-categories/trophy-1.jpg',
+      href: '#corporate-gifting'
+    },
+    {
+      label: 'Apparels & Trolleys',
+      sub: 'T-Shirts & Luggage',
+      img: '/images/gifting-categories/trolley-1.jpg',
+      href: '#corporate-gifting'
+    }
+  ],
   stats: [
     {
       category: 'Primary Business',
