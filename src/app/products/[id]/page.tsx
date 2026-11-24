@@ -24,7 +24,8 @@ import {
   MessageSquare,
   ArrowRight
 } from 'lucide-react';
-import { ProductCard } from '../../../components/ProductCard';
+import { ProductCard, getProductAngles } from '../../../components/ProductCard';
+import { COMPANY_INFO } from '../../../data/siteContent';
 
 interface ProductDetailPageProps {
   params: Promise<{ id: string }>;
@@ -43,6 +44,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const [product, setProduct] = useState<Product | null>(staticMatch || null);
   const [allProducts, setAllProducts] = useState<Product[]>(PRODUCTS);
   const [loading, setLoading] = useState(!staticMatch);
+  const [activeAngleIdx, setActiveAngleIdx] = useState(0);
 
   useEffect(() => {
     fetch(`/api/products/${encodeURIComponent(productId)}`)
@@ -110,50 +112,52 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     (p) => p.category === product.category && p.id !== product.id
   ).slice(0, 4);
 
+  const angles = getProductAngles(product);
+
   const getWhatsAppEnquiryUrl = () => {
     const text = encodeURIComponent(
-      `Hello Globrands Lifestyle Pvt. Ltd.,\n\nI am requesting a corporate quotation for:\n• Product: ${product.name}\n• Product Code: ${product.code}\n• Brand: ${product.brand}\n• Quantity Required: ${selectedQuantity} units\n• Color Preference: ${selectedColor}\n• Branding Method: ${selectedCustomization}\n\nPlease share availability, tiered factory B2B pricing, and digital mockups.`
+      `Hello ${COMPANY_INFO.legalName},\n\nI am requesting a corporate quotation for:\n• Product: ${product.name}\n• Product Code: ${product.code}\n• Brand: ${product.brand}\n• Quantity Required: ${selectedQuantity} units\n• Color Preference: ${selectedColor}\n• Branding Method: ${selectedCustomization}\n\nPlease share availability, bulk pricing, and mockups.`
     );
-    return `https://wa.me/919900020456?text=${text}`;
+    return `https://wa.me/${COMPANY_INFO.contact.phoneRaw}?text=${text}`;
   };
 
   const getBrandBadge = () => {
-    if (product.brand === 'Ninja Gear') return 'bg-[#211D1A] text-white border-[#211D1A]';
-    if (product.brand === 'ADMA London') return 'bg-[#A98554] text-white border-[#A98554]';
-    return 'bg-blue-50 text-[#A98554] border-blue-200/80';
+    if (product.brand === 'Ninja Gear') return 'bg-[#FEF3C7] text-[#92400E] border-[#FCD34D]';
+    if (product.brand === 'ADMA London') return 'bg-[#0B4F82] text-white border-[#0B4F82]';
+    return 'bg-[#EFF6FF] text-[#0B4F82] border-[#BFDBFE]';
   };
 
   return (
-    <div className="py-10 bg-[#F5F0E8] min-h-screen">
+    <div className="py-10 bg-[#F8FAFC] min-h-screen">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 space-y-10">
         
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs text-[#69635C] text-left">
-          <Link href="/" className="hover:text-[#211D1A]">Home</Link>
+        <div className="flex items-center gap-2 text-xs text-[#475569] text-left">
+          <Link href="/" className="hover:text-[#0B4F82]">Home</Link>
           <ChevronRight className="w-3.5 h-3.5" />
-          <Link href="/products" className="hover:text-[#211D1A]">Products</Link>
+          <Link href="/products" className="hover:text-[#0B4F82]">Products</Link>
           <ChevronRight className="w-3.5 h-3.5" />
-          <Link href={`/products?category=${product.category}`} className="capitalize hover:text-[#211D1A]">
+          <Link href={`/products?category=${product.category}`} className="capitalize hover:text-[#0B4F82]">
             {product.category.replace('-', ' ')}
           </Link>
           <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-[#A98554] font-semibold">{product.code}</span>
+          <span className="text-[#0B4F82] font-bold">{product.code}</span>
         </div>
 
         {/* Product Hero Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start text-left">
           
-          {/* Left Column: Visual Showcase & Catalog Source */}
-          <div className="lg:col-span-6 space-y-6">
-            <div className="relative rounded-3xl bg-white border border-[#EAE3D8] p-8 shadow-xs flex items-center justify-center overflow-hidden aspect-square">
+          {/* Left Column: Visual Showcase & Multi-Angle Gallery */}
+          <div className="lg:col-span-6 space-y-4">
+            <div className="relative rounded-3xl bg-white border-2 border-[#DBEAFE] p-8 shadow-xs flex items-center justify-center overflow-hidden aspect-square">
               
               {/* Brand and Tag */}
               <div className="absolute top-5 left-5 z-10 flex flex-col gap-1.5 items-start">
-                <span className={`text-[11px] font-bold px-3 py-1 rounded-full border shadow-2xs uppercase tracking-wider ${getBrandBadge()}`}>
+                <span className={`text-[11px] font-extrabold px-3 py-1 rounded-full border shadow-2xs uppercase tracking-wider ${getBrandBadge()}`}>
                   {product.brand}
                 </span>
                 {product.tags?.[0] && (
-                  <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[#F5F0E8] text-[#69635C] border border-[#EAE3D8]">
+                  <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[#F8FAFC] text-[#475569] border border-[#E2E8F0]">
                     {product.tags[0]}
                   </span>
                 )}
@@ -161,18 +165,39 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
 
               {/* Product Code Badge */}
               <div className="absolute top-5 right-5 z-10">
-                <span className="font-mono text-xs font-bold text-[#211D1A] bg-[#F5F0E8] border border-[#EAE3D8] px-3 py-1 rounded-lg shadow-2xs">
+                <span className="font-mono text-xs font-bold text-[#0B4F82] bg-[#EFF6FF] border border-[#BFDBFE] px-3 py-1 rounded-lg shadow-2xs">
                   {product.code}
                 </span>
               </div>
 
               {/* High-Resolution Main Product Image */}
               <img
-                src={product.image}
-                alt={product.name}
-                className="max-h-[85%] max-w-[85%] object-contain drop-shadow-xl"
+                src={angles[activeAngleIdx]?.src || product.image}
+                alt={`${product.name} - ${angles[activeAngleIdx]?.label || 'Front'} View`}
+                className="max-h-[88%] max-w-[88%] object-contain drop-shadow-xl transition-all duration-300"
               />
             </div>
+
+            {/* Multi-Angle Thumbnail Selector (Front View, Back & Straps, Side & Pockets, Interior) */}
+            {angles.length > 1 && (
+              <div className="grid grid-cols-4 gap-3">
+                {angles.map((ang, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setActiveAngleIdx(idx)}
+                    className={`p-3 rounded-2xl bg-white border-2 transition-all cursor-pointer flex flex-col items-center gap-1.5 ${
+                      activeAngleIdx === idx
+                        ? 'border-[#0B4F82] bg-[#EFF6FF]/40 shadow-sm'
+                        : 'border-[#DBEAFE] hover:border-[#93C5FD]'
+                    }`}
+                  >
+                    <img src={ang.src} alt={ang.label} className="h-14 w-14 object-contain" />
+                    <span className="text-[11px] font-extrabold text-[#0B4F82]">{ang.label} View</span>
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Official Catalogue Jump Box */}
             <div className="p-5 rounded-2xl bg-white border border-[#EAE3D8] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">

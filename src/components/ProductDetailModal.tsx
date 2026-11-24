@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { Product } from '../data/products';
 import { useQuote } from '../context/QuoteContext';
+import { COMPANY_INFO } from '../data/siteContent';
+import { getProductAngles } from './ProductCard';
 
 interface ProductDetailModalProps {
   product: Product | null;
@@ -29,9 +31,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   if (!product) return null;
 
   const { addToQuote } = useQuote();
+  const angles = getProductAngles(product);
+  const [activeAngleIdx, setActiveAngleIdx] = useState(0);
   const [selectedQuantity, setSelectedQuantity] = useState(50);
   const [selectedCustomization, setSelectedCustomization] = useState(
-    product.brandingOptions?.[0] || 'Laser Engraving'
+    product.brandingOptions?.[0] || 'DTF Printing'
   );
   const [selectedColor, setSelectedColor] = useState<string>(
     product.colors?.[0]?.name || 'Standard'
@@ -39,9 +43,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
   const getWhatsAppEnquiryUrl = () => {
     const text = encodeURIComponent(
-      `Hello Globrands Lifestyle Pvt. Ltd.,\n\nI am requesting a corporate quote for:\n• Product: ${product.name}\n• Code: ${product.code}\n• Brand: ${product.brand}\n• Quantity: ${selectedQuantity} units\n• Color: ${selectedColor}\n• Branding: ${selectedCustomization}\n\nPlease share B2B tiered rates and mockups.`
+      `Hello ${COMPANY_INFO.legalName},\n\nI am requesting a corporate quote for:\n• Product: ${product.name}\n• Code: ${product.code}\n• Brand: ${product.brand}\n• Quantity: ${selectedQuantity} units\n• Color: ${selectedColor}\n• Branding: ${selectedCustomization}\n\nPlease share bulk rates and mockups.`
     );
-    return `https://wa.me/919900020456?text=${text}`;
+    return `https://wa.me/${COMPANY_INFO.contact.phoneRaw}?text=${text}`;
   };
 
   const getBrandBadge = () => {
@@ -78,13 +82,35 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </span>
           </div>
 
-          {/* Main Large Product Photo */}
-          <div className="relative my-6 aspect-square rounded-2xl bg-white border border-[#E5E7EB] p-6 flex items-center justify-center overflow-hidden group shadow-xs">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="max-h-full max-w-full object-contain drop-shadow-md transform group-hover:scale-105 transition-transform duration-500"
-            />
+          {/* Main Large Product Photo + Multi-Angle Thumbnail Strip */}
+          <div className="my-4 space-y-3">
+            <div className="relative aspect-square rounded-2xl bg-white border border-[#DBEAFE] p-6 flex items-center justify-center overflow-hidden group shadow-xs">
+              <img
+                src={angles[activeAngleIdx]?.src || product.image}
+                alt={`${product.name} - ${angles[activeAngleIdx]?.label || 'Front'} View`}
+                className="max-h-full max-w-full object-contain drop-shadow-md transform group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+
+            {angles.length > 1 && (
+              <div className="grid grid-cols-4 gap-2">
+                {angles.map((ang, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setActiveAngleIdx(idx)}
+                    className={`p-2 rounded-xl bg-white border text-center transition-all cursor-pointer flex flex-col items-center gap-1 ${
+                      activeAngleIdx === idx
+                        ? 'border-[#0B4F82] ring-2 ring-[#0B4F82]/20'
+                        : 'border-[#E2E8F0] hover:border-[#93C5FD]'
+                    }`}
+                  >
+                    <img src={ang.src} alt={ang.label} className="h-10 w-10 object-contain" />
+                    <span className="text-[10px] font-bold text-[#0F172A]">{ang.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Original Catalog Page Shortcut Button */}

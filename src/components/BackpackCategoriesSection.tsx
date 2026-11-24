@@ -2,110 +2,111 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Briefcase, CheckCircle2 } from 'lucide-react';
 import { BACKPACK_CATEGORIES_DATA } from '../data/siteContent';
 
 export const BackpackCategoriesSection: React.FC = () => {
-  const { header, featuredCategory, stackedCategories, standardCategories } = BACKPACK_CATEGORIES_DATA;
+  const { header, featuredCategory, stackedCategories, standardCategories, partnerBrands } = BACKPACK_CATEGORIES_DATA;
 
   return (
-    <section className="py-20 sm:py-24 bg-[#F5F0E8] text-[#211D1A] text-left border-b border-[#EAE3D8]">
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-10 space-y-12">
-        
+    <section className="py-16 sm:py-20 bg-[#F4F8FB] text-[#1E293B] text-left border-b border-[#DBEAFE]">
+      <div className="max-w-[1320px] mx-auto px-6 sm:px-10 space-y-12">
+
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-2 border-b border-[#EAE3D8]">
-          <div className="space-y-3 max-w-2xl">
-            <span className="text-[11px] uppercase tracking-[0.22em] font-extrabold text-[#A98554] block">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-4 border-b border-[#DBEAFE]">
+          <div className="space-y-2.5 max-w-2xl">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#BFDBFE] text-[11px] uppercase tracking-wider font-extrabold text-[#0B4F82]">
               {header.tag}
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#211D1A] font-sans uppercase">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#0F172A] font-sans uppercase">
               {header.title}
             </h2>
-            <p className="text-sm sm:text-base text-[#69635C] font-normal leading-relaxed">
+            <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed">
               {header.description}
             </p>
           </div>
 
           <Link
             href={header.cta.href}
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-[#211D1A] hover:text-[#A98554] transition-colors pb-1 border-b-2 border-[#211D1A] hover:border-[#A98554] self-start lg:self-end group"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-bold uppercase tracking-wider transition-all self-start lg:self-end group shadow-xs"
           >
             <span>{header.cta.label}</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 text-[#FDE047] group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        {/* Structured Editorial Grid: Row 1 (7/5 split) + Row 2 (3 equal columns) */}
-        <div className="space-y-8">
-          
+        {/* High-Contrast Light Pastel Editorial Grid (Zero Dark Overlays — Black Backpacks Stand Out Clearly!) */}
+        <div className="space-y-6">
+
           {/* Row 1: Featured 7-col Card + Stacked 5-col Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+
             {/* Featured Large Card (7 cols) */}
             <Link
               href={featuredCategory.href}
-              className="lg:col-span-7 group relative rounded-2xl overflow-hidden h-[460px] flex flex-col justify-end p-8 sm:p-10 shadow-sm hover:shadow-xl transition-all duration-300 bg-[#292725] border border-[#EAE3D8]"
+              className="lg:col-span-7 group relative rounded-2xl overflow-hidden bg-white border-2 border-[#DBEAFE] hover:border-[#0B4F82] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
-              <img
-                src={featuredCategory.image}
-                alt={featuredCategory.title}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/75 via-[#211D1A]/20 to-transparent pointer-events-none" />
-              
-              <div className="relative z-10 space-y-2.5">
-                <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#C5A16D] font-bold block">
-                  {featuredCategory.tag}
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white uppercase tracking-tight">
-                  {featuredCategory.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-[#EAE3D8] max-w-md leading-relaxed">
-                  {featuredCategory.description}
-                </p>
-                <div className="pt-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#C5A16D] group-hover:text-white transition-colors">
-                  <span>{featuredCategory.actionLabel}</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform" />
+              <div className="relative h-[320px] sm:h-[350px] w-full overflow-hidden bg-[#F0F7FF] flex items-center justify-center">
+                <img
+                  src={featuredCategory.image}
+                  alt={featuredCategory.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  loading="lazy"
+                />
+                <div className="absolute top-4 left-4">
+                  <span className="px-3 py-1 rounded-full bg-[#0B4F82] text-white text-[10px] font-mono uppercase tracking-wider font-bold shadow-xs">
+                    {featuredCategory.tag}
+                  </span>
+                </div>
+                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white border border-[#DBEAFE] flex items-center justify-center text-[#0B4F82] group-hover:bg-[#E5A93C] group-hover:text-[#0F172A] transition-colors shadow-xs">
+                  <ArrowUpRight className="w-4 h-4" />
                 </div>
               </div>
 
-              <div className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-[#C5A16D] group-hover:text-[#211D1A] transition-colors shadow-md">
-                <ArrowUpRight className="w-4 h-4" />
+              <div className="p-6 bg-white border-t border-[#DBEAFE] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] uppercase tracking-tight group-hover:text-[#0B4F82] transition-colors">
+                    {featuredCategory.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#475569] max-w-xl leading-relaxed">
+                    {featuredCategory.description}
+                  </p>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#EFF6FF] group-hover:bg-[#0B4F82] text-[#0B4F82] group-hover:text-white text-xs font-bold uppercase tracking-wider transition-colors shrink-0">
+                  <span>{featuredCategory.actionLabel}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
               </div>
             </Link>
 
             {/* Right Stack: 2 Balanced Landscape Cards (5 cols) */}
-            <div className="lg:col-span-5 flex flex-col gap-8 justify-between">
+            <div className="lg:col-span-5 flex flex-col gap-6 justify-between">
               {stackedCategories.map((cat) => (
                 <Link
                   key={cat.id}
                   href={cat.href}
-                  className="group relative rounded-2xl overflow-hidden h-[214px] flex flex-col justify-end p-6 sm:p-7 shadow-sm hover:shadow-xl transition-all duration-300 bg-[#292725] border border-[#EAE3D8]"
+                  className="group relative rounded-2xl overflow-hidden bg-white border-2 border-[#DBEAFE] hover:border-[#0B4F82] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between flex-1"
                 >
-                  <img
-                    src={cat.image}
-                    alt={cat.title}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/75 via-[#211D1A]/20 to-transparent pointer-events-none" />
-                  
-                  <div className="relative z-10 space-y-1">
-                    <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-[#C5A16D] font-bold block">
+                  <div className="relative h-[160px] w-full overflow-hidden bg-[#FEFCE8] flex items-center justify-center">
+                    <img
+                      src={cat.image}
+                      alt={cat.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      loading="lazy"
+                    />
+                    <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-[#0B4F82] text-white text-[9px] font-mono uppercase tracking-wider font-bold shadow-xs">
                       {cat.tag}
                     </span>
-                    <h3 className="text-xl font-bold text-white uppercase tracking-tight">
-                      {cat.title}
-                    </h3>
-                    <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#C5A16D] group-hover:text-white transition-colors pt-0.5">
-                      <span>{cat.actionLabel}</span>
-                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                    </div>
                   </div>
 
-                  <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-[#C5A16D] group-hover:text-[#211D1A] transition-colors shadow-sm">
-                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  <div className="p-4 px-5 bg-white border-t border-[#DBEAFE] flex items-center justify-between gap-3">
+                    <h3 className="text-base sm:text-lg font-extrabold text-[#0F172A] uppercase tracking-tight group-hover:text-[#0B4F82] transition-colors">
+                      {cat.title}
+                    </h3>
+                    <span className="inline-flex items-center gap-1 text-xs font-bold text-[#0B4F82] group-hover:text-[#D97706] whitespace-nowrap">
+                      <span>{cat.actionLabel}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
                   </div>
                 </Link>
               ))}
@@ -113,34 +114,37 @@ export const BackpackCategoriesSection: React.FC = () => {
           </div>
 
           {/* Row 2: Three Equal-Width Categories (4 cols each) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {standardCategories.map((cat) => (
               <Link
                 key={cat.id}
                 href={cat.href}
-                className="group relative rounded-2xl overflow-hidden h-[320px] flex flex-col justify-end p-7 shadow-sm hover:shadow-xl transition-all duration-300 bg-[#292725] border border-[#EAE3D8]"
+                className="group rounded-2xl overflow-hidden bg-white border-2 border-[#DBEAFE] hover:border-[#0B4F82] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
-                <img
-                  src={cat.image}
-                  alt={cat.title}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#211D1A]/75 via-[#211D1A]/20 to-transparent pointer-events-none" />
-                
-                <div className="relative z-10 space-y-1.5">
-                  <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-[#C5A16D] font-bold block">
+                <div className="relative h-[220px] w-full overflow-hidden bg-[#F8FAFC]">
+                  <img
+                    src={cat.image}
+                    alt={cat.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    loading="lazy"
+                  />
+                  <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-[#0B4F82] text-white text-[9px] font-mono uppercase tracking-wider font-bold shadow-xs">
                     {cat.tag}
                   </span>
-                  <h3 className="text-xl font-bold text-white uppercase tracking-tight">
-                    {cat.title}
-                  </h3>
-                  <p className="text-xs text-[#EAE3D8] line-clamp-1">
-                    {cat.description}
-                  </p>
-                  <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#C5A16D] group-hover:text-white transition-colors pt-1">
+                </div>
+
+                <div className="p-5 bg-white border-t border-[#DBEAFE] space-y-2 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-lg font-extrabold text-[#0F172A] uppercase tracking-tight group-hover:text-[#0B4F82] transition-colors">
+                      {cat.title}
+                    </h3>
+                    <p className="text-xs text-[#475569] mt-1 leading-relaxed">
+                      {cat.description}
+                    </p>
+                  </div>
+                  <div className="pt-2 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#0B4F82] group-hover:text-[#D97706] transition-colors">
                     <span>{cat.actionLabel}</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </Link>
@@ -148,6 +152,58 @@ export const BackpackCategoriesSection: React.FC = () => {
           </div>
 
         </div>
+
+        {/* Partner Brand Backpacks Strip (Skybags, Arctic Hunter, Swiss Military) — Clarifies "Backpacks & Bags" vs "In-House Brands" */}
+        {partnerBrands && (
+          <div className="rounded-3xl bg-white border-2 border-[#DBEAFE] p-6 sm:p-8 shadow-sm space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0]">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest font-extrabold text-[#D97706] block">
+                  MULTI-BRAND PARTNER BAGS ALSO SUPPLIED Under &ldquo;BACKPACKS &amp; BAGS&rdquo;
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-[#0F172A] tracking-tight mt-0.5">
+                  Looking for Skybags, Arctic Hunter, or Swiss Military Backpacks?
+                </h3>
+                <p className="text-xs sm:text-sm text-[#475569] mt-0.5">
+                  Along with our in-house manufactured <strong>Ninja Gear</strong> &amp; <strong>ADMA London</strong> ranges, we supply and custom-brand leading national &amp; international bag brands for corporate orders.
+                </p>
+              </div>
+              <Link
+                href="/bags"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#FEF3C7] hover:bg-[#FDE68A] border border-[#FCD34D] text-[#0F172A] text-xs font-extrabold uppercase tracking-wider shrink-0 transition-all"
+              >
+                <Briefcase className="w-4 h-4 text-[#0B4F82]" />
+                <span>Explore All Brands on Bags Page</span>
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {partnerBrands.map((pb, idx) => (
+                <Link
+                  key={idx}
+                  href={`/bags?partner=${encodeURIComponent(pb.name)}`}
+                  className="p-4 rounded-2xl bg-[#F8FAFC] hover:bg-[#EFF6FF] border border-[#DBEAFE] transition-all space-y-2 group"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-base font-black text-[#0B4F82] uppercase tracking-tight">
+                      {pb.name}
+                    </span>
+                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-white border border-[#BFDBFE] text-[#0B4F82]">
+                      {pb.tag}
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#475569] leading-relaxed">
+                    {pb.description}
+                  </p>
+                  <div className="pt-1 flex items-center gap-1.5 text-[11px] font-bold text-[#0F172A]">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#E5A93C]" />
+                    <span>{pb.models}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
       </div>
     </section>

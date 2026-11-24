@@ -14,10 +14,10 @@ export const FloatingWhatsApp: React.FC = () => {
   }
 
   const quickPrompts = [
-    'I want an in-house Backpacks (Ninja Gear / ADMA London) factory quotation.',
-    'I want a Corporate Gift Sets quotation for 100+ employees.',
-    'Please share full catalogue PDFs with bulk price slabs.',
-    'Can you share custom logo branding options and timeline?'
+    'I want a bulk quote for In-House Backpacks (Ninja Gear / ADMA London).',
+    'I want a quote for Partner Bags (Skybags / Arctic Hunter / Swiss Military).',
+    'I need A-to-Z Corporate Gifting (Welcome Kits, Bottles, Trophies, Apparels, Trolleys).',
+    'Please share DTF Printing, Embroidery & Screen Printing branding options.'
   ];
 
   const handleSendPrompt = (text: string) => {
@@ -28,52 +28,47 @@ export const FloatingWhatsApp: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
-      
-      {/* Expandable Chat Card */}
       {isOpen && (
-        <div className="mb-4 w-80 sm:w-88 rounded-3xl bg-white border border-[#EAE3D8] shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200 text-left">
-          
-          {/* Card Header */}
-          <div className="p-4 bg-[#F5F0E8] border-b border-[#EAE3D8] flex items-center justify-between">
+        <div className="mb-4 w-80 sm:w-88 rounded-3xl bg-white border-2 border-[#BFDBFE] shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200 text-left">
+          <div className="p-4 bg-[#EFF6FF] border-b border-[#DBEAFE] flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-10 h-10 rounded-full overflow-hidden border border-[#EAE3D8] bg-white">
+                <div className="w-10 h-10 rounded-full overflow-hidden border border-[#BFDBFE] bg-white p-0.5">
                   <img
-                    src="/globrands-logo.jpg"
+                    src="/globrands-emblem-clean.png"
                     alt={`${COMPANY_INFO.shortName} Desk`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </div>
-                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#C5A16D] border-2 border-white" />
+                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white" />
               </div>
 
               <div>
-                <h4 className="text-sm font-bold text-[#211D1A]">
-                  {COMPANY_INFO.shortName} B2B Desk
+                <h4 className="text-sm font-extrabold text-[#0B4F82]">
+                  {COMPANY_INFO.shortName} Corporate Desk
                 </h4>
-                <div className="flex items-center gap-1 text-[11px] text-[#A98554] font-semibold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#C5A16D] animate-pulse" />
-                  <span>Online &bull; Quick 5-min response</span>
+                <div className="flex items-center gap-1 text-[11px] text-[#0F172A] font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>{COMPANY_INFO.contact.corporatePhone}</span>
                 </div>
               </div>
             </div>
 
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 rounded-lg text-[#69635C] hover:text-[#211D1A] hover:bg-[#EAE3D8] transition-colors cursor-pointer"
+              className="p-1 rounded-lg text-[#475569] hover:text-[#0F172A] hover:bg-white transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Quick Greetings Body */}
           <div className="p-4 space-y-3 bg-white">
-            <div className="p-3 rounded-2xl bg-[#F5F0E8] border border-[#EAE3D8] text-xs text-[#292725] leading-relaxed font-normal">
-              Hello! 👋 Welcome to <b className="font-semibold text-[#211D1A]">{COMPANY_INFO.legalName}</b> How can our factory backpack manufacturing &amp; corporate gifting team assist you today?
+            <div className="p-3 rounded-2xl bg-[#F8FAFC] border border-[#DBEAFE] text-xs text-[#334155] leading-relaxed font-normal">
+              Hello! Welcome to <b className="font-bold text-[#0B4F82]">{COMPANY_INFO.legalName}</b>. How can we help you with <b>Backpack Manufacturing</b> or <b>A-to-Z Corporate Gifting</b> today?
             </div>
 
             <div className="space-y-1.5 pt-1">
-              <span className="text-[10px] text-[#69635C] font-bold uppercase tracking-wider block">
+              <span className="text-[10px] text-[#64748B] font-bold uppercase tracking-wider block">
                 Quick Inquiries:
               </span>
               <div className="space-y-1.5">
@@ -81,41 +76,37 @@ export const FloatingWhatsApp: React.FC = () => {
                   <button
                     key={idx}
                     onClick={() => handleSendPrompt(prompt)}
-                    className="w-full p-2.5 rounded-xl bg-white hover:bg-[#F5F0E8] border border-[#EAE3D8] hover:border-[#C5A16D] text-xs text-left text-[#292725] font-medium transition-all flex items-center justify-between group shadow-2xs cursor-pointer"
+                    className="w-full p-2.5 rounded-xl bg-white hover:bg-[#EFF6FF] border border-[#DBEAFE] hover:border-[#0B4F82] text-xs text-left text-[#0F172A] font-semibold transition-all flex items-center justify-between group shadow-2xs cursor-pointer"
                   >
                     <span className="truncate pr-2">{prompt}</span>
-                    <Send className="w-3.5 h-3.5 text-[#A98554] shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <Send className="w-3.5 h-3.5 text-[#0B4F82] shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </button>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Card Footer Button */}
-          <div className="p-3.5 bg-[#F5F0E8] border-t border-[#EAE3D8]">
+          <div className="p-3.5 bg-[#EFF6FF] border-t border-[#DBEAFE]">
             <button
-              onClick={() => handleSendPrompt(`Hi ${COMPANY_INFO.shortName}, I have a corporate bulk inquiry.`)}
-              className="w-full py-2.5 px-4 rounded-full bg-[#211D1A] hover:bg-[#40352D] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer"
+              onClick={() => handleSendPrompt(`Hi ${COMPANY_INFO.shortName}, I have a bulk requirement.`)}
+              className="w-full py-2.5 px-4 rounded-full bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer"
             >
-              <MessageSquare className="w-4 h-4 text-[#C5A16D]" />
-              <span>Start WhatsApp Chat Now</span>
+              <MessageSquare className="w-4 h-4 text-[#FDE047]" />
+              <span>Start WhatsApp Chat ({COMPANY_INFO.contact.corporatePhone})</span>
             </button>
           </div>
-
         </div>
       )}
 
-      {/* Floating Trigger Pill */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group px-4 py-3 rounded-full bg-[#211D1A] hover:bg-[#40352D] text-white shadow-xl shadow-[#211D1A]/35 hover:shadow-2xl transition-all duration-300 flex items-center gap-2.5 hover:scale-105 cursor-pointer border border-[#C5A16D]/40"
+        className="group px-4 py-3 rounded-full bg-[#0B4F82] hover:bg-[#083B63] text-white shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2.5 hover:scale-105 cursor-pointer border-2 border-[#FDE047]"
       >
-        <MessageSquare className="w-5 h-5 text-[#C5A16D]" />
-        <span className="text-xs font-bold tracking-wide">
-          WhatsApp B2B Desk
+        <MessageSquare className="w-5 h-5 text-[#FDE047]" />
+        <span className="text-xs font-extrabold tracking-wide">
+          WhatsApp Corporate Desk
         </span>
       </button>
-
     </div>
   );
 };

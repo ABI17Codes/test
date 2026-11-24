@@ -2,133 +2,193 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Phone, Printer, CheckCircle2, Layers } from 'lucide-react';
 import { CORPORATE_GIFTING_DATA, COMPANY_INFO } from '../data/siteContent';
 
 export const CorporateGiftingSection: React.FC = () => {
   const { header, featuredWelcomeKit, categories } = CORPORATE_GIFTING_DATA;
 
   return (
-    <section className="py-20 sm:py-24 bg-[#F5F0E8] text-[#211D1A] text-left border-b border-[#EAE3D8]">
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-10 space-y-12">
-        
+    <section
+      id="corporate-gifting"
+      className="py-16 sm:py-20 bg-gradient-to-b from-[#FEFDFB] via-[#F4F9FF] to-[#FFFFFF] text-[#1E293B] text-left border-b border-[#DBEAFE]"
+    >
+      <div className="max-w-[1320px] mx-auto px-6 sm:px-10 space-y-12">
+
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-2 border-b border-[#EAE3D8]">
-          <div className="space-y-3 max-w-2xl">
-            <span className="text-[11px] uppercase tracking-[0.22em] font-extrabold text-[#A98554] block">
-              {header.tag}
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#211D1A] font-sans uppercase">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-4 border-b border-[#DBEAFE]">
+          <div className="space-y-2.5 max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FEF3C7] border border-[#FCD34D] text-[#92400E] text-[11px] font-extrabold uppercase tracking-wider">
+              <span>{header.tag}</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#0B4F82] font-sans uppercase">
               {header.title}
             </h2>
-            <p className="text-sm sm:text-base text-[#69635C] font-normal leading-relaxed">
-              Curated corporate gifting solutions designed to strengthen relationships and celebrate company milestones. Fully customized and delivered nationwide by <strong className="text-[#211D1A]">{COMPANY_INFO.legalName}</strong>
+            <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed">
+              {header.description}
             </p>
           </div>
 
-          <Link
-            href={header.cta.href}
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-[#211D1A] hover:text-[#A98554] transition-colors pb-1 border-b-2 border-[#211D1A] hover:border-[#A98554] self-start lg:self-end group"
-          >
-            <span>{header.cta.label}</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+          <div className="flex flex-wrap items-center gap-3 self-start lg:self-end">
+            <a
+              href={`tel:${COMPANY_INFO.contact.phoneRaw}`}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#E5A93C] hover:bg-[#D4952A] text-[#0F172A] text-xs font-extrabold uppercase tracking-wider shadow-xs transition-all"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              <span>Call Corporate Desk: {COMPANY_INFO.contact.corporatePhone}</span>
+            </a>
+            <Link
+              href={header.cta.href}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-bold uppercase tracking-wider shadow-xs transition-all group"
+            >
+              <span>{header.cta.label}</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
         </div>
 
-        {/* Feature 1: Featured Welcome Kit */}
-        <div className="rounded-2xl overflow-hidden bg-white border border-[#EAE3D8] shadow-sm p-7 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-          <div className="lg:col-span-6 relative aspect-[16/10] rounded-xl overflow-hidden shadow-xs border border-[#EAE3D8] bg-[#F5F0E8] group">
-            <img
-              src={featuredWelcomeKit.image}
-              alt={featuredWelcomeKit.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-              loading="lazy"
-            />
-            <div className="absolute top-3.5 left-3.5">
-              <span className="px-3 py-1 rounded-full bg-[#211D1A] text-white text-[9px] font-mono uppercase tracking-widest font-bold shadow-xs">
-                {featuredWelcomeKit.badge}
-              </span>
-            </div>
+        {/* Featured Onboarding & Multi-Item Welcome Kit Banner (With 4-Image Collage Grid!) */}
+        <div className="rounded-3xl overflow-hidden bg-white border-2 border-[#DBEAFE] shadow-md p-6 sm:p-9 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* 4-Image Collage Grid on Left */}
+          <div className="lg:col-span-6 grid grid-cols-2 gap-3 bg-[#F0F7FF] p-3.5 rounded-2xl border border-[#BFDBFE]">
+            {(featuredWelcomeKit.collageImages || [
+              '/catalog/crops/hgs_h74.jpg',
+              '/catalog/crops/hgs_h71.jpg',
+              '/catalog/crops/hgs_h65.jpg',
+              '/catalog/crops/hgs_h55.jpg'
+            ]).map((imgUrl, i) => (
+              <div
+                key={i}
+                className="relative aspect-[4/3] rounded-xl overflow-hidden bg-white border border-[#DBEAFE] shadow-2xs group flex items-center justify-center p-1.5"
+              >
+                <img
+                  src={imgUrl}
+                  alt={`Corporate Welcome Kit Option ${i + 1}`}
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <span className="absolute bottom-1.5 right-1.5 px-2 py-0.5 rounded bg-[#0B4F82]/90 text-white text-[9px] font-bold">
+                  Combo #{i + 1}
+                </span>
+              </div>
+            ))}
           </div>
 
+          {/* Right Info */}
           <div className="lg:col-span-6 space-y-4 text-left">
-            <div className="space-y-1.5">
-              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#A98554] font-bold block">
-                {featuredWelcomeKit.tag}
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-[#211D1A] uppercase tracking-tight">
-                {featuredWelcomeKit.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-[#69635C] leading-relaxed">
-                {featuredWelcomeKit.description}
-              </p>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EFF6FF] border border-[#BFDBFE] text-[#0B4F82] text-[10px] font-bold uppercase tracking-wider">
+              <Printer className="w-3.5 h-3.5 text-[#E5A93C]" />
+              <span>{featuredWelcomeKit.badge}</span>
+            </div>
+
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">
+              {featuredWelcomeKit.title}
+            </h3>
+
+            <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+              {featuredWelcomeKit.description}
+            </p>
+
+            <div className="flex flex-wrap gap-2 pt-1">
+              {['Employee Welcome Kits', 'Festive Hampers', 'Client Appreciation', 'Conference Giveaways', 'Any Brand Sourcing'].map((pill, i) => (
+                <span key={i} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#F8FAFC] border border-[#E2E8F0] text-[11px] font-semibold text-[#334155]">
+                  <CheckCircle2 className="w-3 h-3 text-[#0B4F82]" />
+                  {pill}
+                </span>
+              ))}
             </div>
 
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              <Link
-                href={featuredWelcomeKit.primaryCta.href}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#211D1A] hover:bg-[#40352D] text-white text-xs font-bold uppercase tracking-[0.14em] transition-all shadow-sm group whitespace-nowrap"
-              >
-                <span>{featuredWelcomeKit.primaryCta.label}</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              
               <a
+                href={featuredWelcomeKit.primaryCta.href}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-sm group whitespace-nowrap"
+              >
+                <Phone className="w-3.5 h-3.5 text-[#FDE047]" />
+                <span>{featuredWelcomeKit.primaryCta.label}</span>
+              </a>
+
+              <Link
                 href={featuredWelcomeKit.secondaryCta.href}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#F5F0E8] hover:bg-[#EAE3D8] border border-[#EAE3D8] text-[#211D1A] text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#FEF3C7] hover:bg-[#FDE68A] border border-[#FCD34D] text-[#0F172A] text-xs font-extrabold uppercase tracking-wider transition-all whitespace-nowrap"
               >
                 <span>{featuredWelcomeKit.secondaryCta.label}</span>
-              </a>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
         </div>
 
-        {/* 4 Category Cards from Centralized Data */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {categories.map((cat, idx) => {
-            const IconComp = cat.icon;
-            return (
-              <Link
-                key={idx}
-                href={cat.link}
-                className="group rounded-xl bg-white border border-[#EAE3D8] hover:border-[#C5A16D] overflow-hidden shadow-2xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
-              >
-                <div className="aspect-[4/3] w-full overflow-hidden bg-[#F5F0E8] relative border-b border-[#EAE3D8]">
-                  <img
-                    src={cat.image}
-                    alt={cat.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <span className="absolute top-3 left-3 text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#211D1A] text-white">
-                    {cat.tag}
-                  </span>
-                </div>
+        {/* 9 Corporate Gifting Categories — Every Card Shows a 4-Image Collage Grid (Not 1 Single Photo!) */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg sm:text-xl font-extrabold text-[#0B4F82] uppercase tracking-tight flex items-center gap-2">
+              <Layers className="w-5 h-5 text-[#E5A93C]" />
+              <span>All 9 Corporate Gifting Categories We Supply (Multi-Product Preview)</span>
+            </h3>
+            <span className="text-xs font-semibold text-[#475569] hidden sm:inline">
+              Looking for any specific item? Call us for instant bulk quotes
+            </span>
+          </div>
 
-                <div className="p-5 space-y-1.5 text-left flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-1.5 text-[#A98554] mb-1">
-                      <IconComp className="w-3.5 h-3.5" />
-                      <span className="text-[10px] font-mono uppercase tracking-widest font-semibold block">
-                        {cat.subtitle}
-                      </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((cat, idx) => {
+              const IconComp = cat.icon;
+              const multiImages = (cat as any).images || [cat.image, cat.image, cat.image, cat.image];
+              return (
+                <Link
+                  key={idx}
+                  href={cat.link}
+                  className="group rounded-2xl bg-white border border-[#DBEAFE] hover:border-[#0B4F82] overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                >
+                  {/* 2x2 Multi-Image Grid Stage inside EVERY Card (4 distinct product photos per category!) */}
+                  <div className="p-3 bg-gradient-to-b from-[#F0F7FF] to-[#F8FAFC] border-b border-[#DBEAFE] relative">
+                    <div className="grid grid-cols-2 gap-2">
+                      {multiImages.slice(0, 4).map((imgSrc: string, imgIdx: number) => (
+                        <div
+                          key={imgIdx}
+                          className="aspect-[4/3] rounded-lg overflow-hidden bg-white border border-[#E2E8F0] flex items-center justify-center p-1 shadow-2xs"
+                        >
+                          <img
+                            src={imgSrc}
+                            alt={`${cat.title} sample ${imgIdx + 1}`}
+                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
                     </div>
-                    <h4 className="text-base font-bold text-[#211D1A] group-hover:text-[#40352D] transition-colors">
-                      {cat.title}
-                    </h4>
-                    <p className="text-xs text-[#69635C] leading-relaxed line-clamp-2 mt-1">
-                      {cat.description}
-                    </p>
+
+                    <span className="absolute top-4 left-4 text-[9px] font-mono font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#0B4F82] text-white shadow-xs">
+                      {cat.tag}
+                    </span>
                   </div>
 
-                  <div className="pt-3 flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#211D1A] group-hover:text-[#A98554] transition-colors">
-                    <span>Explore Products</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  {/* Card Info */}
+                  <div className="p-5 space-y-2 text-left flex-1 flex flex-col justify-between bg-white">
+                    <div>
+                      <div className="flex items-center gap-1.5 text-[#D97706] mb-1">
+                        <IconComp className="w-4 h-4 text-[#0B4F82]" />
+                        <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-[#0B4F82] block">
+                          {cat.subtitle}
+                        </span>
+                      </div>
+                      <h4 className="text-base sm:text-lg font-extrabold text-[#0F172A] group-hover:text-[#0B4F82] transition-colors">
+                        {cat.title}
+                      </h4>
+                      <p className="text-xs text-[#475569] leading-relaxed mt-1">
+                        {cat.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#0B4F82] group-hover:text-[#D97706] transition-colors">
+                      <span>Enquire / View Range</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
-                </div>
-              </Link>
-            );
-          })}
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
       </div>

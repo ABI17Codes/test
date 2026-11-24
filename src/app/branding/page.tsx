@@ -23,69 +23,69 @@ import { BrandingSimulator } from '../../components/BrandingSimulator';
 export default function BrandingStudioPage() {
   const techniques = [
     {
-      icon: Sparkles,
-      title: 'Precision Laser Engraving',
-      desc: 'Sub-millimeter fiber laser ablation directly onto 304 stainless steel flasks, metal pens, and tech accessories. Scratch-proof, permanent, and dishwasher-safe.',
-      bestFor: 'Vacuum Flasks, Metal Pens, Keychains, Wireless Tech',
+      icon: Printer,
+      title: 'DTF (Direct to Film) Printing',
+      desc: 'Vibrant, full-color logo printing for backpacks, laptop sleeves, T-shirts, hoodies, and caps. Captures multi-color company logos with sharp detail and high durability.',
+      bestFor: 'Backpacks, Corporate T-Shirts, Hoodies, Caps, Duffle Bags',
       turnaround: '24-48 Hours'
     },
     {
-      icon: Printer,
-      title: 'UV Flatbed & Screen Printing',
-      desc: 'High-adhesion UV-cured photographic printing with vivid saturation and Pantone fidelity across engineered backpacks, ceramic drinkware, and rigid gift boxes.',
-      bestFor: 'Backpacks, Ceramic Mugs, Box Sleeves, Bluetooth Audio',
+      icon: Sparkles,
+      title: 'Computerized Logo Embroidery',
+      desc: 'Premium multi-thread stitched embroidery directly onto backpack front panels, polo T-shirts, jackets, and caps for a long-lasting executive look.',
+      bestFor: 'Laptop Backpacks, Polo T-Shirts, Corporate Jackets, Caps',
       turnaround: '48-72 Hours'
     },
     {
       icon: Palette,
-      title: 'Pantone Color Matching',
-      desc: 'Precision color calibration guaranteeing Delta E < 1.0 brand compliance across textiles, coated metals, vegan leathers, and exterior hamper packaging.',
-      bestFor: 'Custom Dyed Fabrics, Corporate Pantone Enamel, Bag Linings',
-      turnaround: 'Immediate Calibration'
+      title: 'Screen Printing',
+      desc: 'Clean, cost-effective single-color and multi-color screen printing ideal for bulk event backpacks, conference bags, drawstring pouches, and promotional giveaways.',
+      bestFor: 'Bulk Backpacks, Event Bags, Drawstring Bags, Umbrellas',
+      turnaround: '24-48 Hours'
     },
     {
       icon: Flame,
-      title: 'Blind Deboss & Foil Stamping',
-      desc: 'Heated magnesium die stamps creating tactile recessed impressions on thermo-PU diaries and leather organisers. Available in blind deboss or metallic gold/silver foil.',
-      bestFor: 'Executive Leather Organizers, Hardbound Diaries, Folders',
-      turnaround: '2-3 Business Days'
+      title: 'Laser Engraving',
+      desc: 'Permanent laser engraving of your company logo and employee name onto stainless steel water bottles, vacuum flasks, metal pens, keychains, and trophies.',
+      bestFor: 'Vacuum Flasks, Water Bottles, Metal Pens, Trophies & Medals',
+      turnaround: '24-48 Hours'
     },
     {
       icon: Package,
-      title: 'Bespoke Custom Packaging',
-      desc: 'Custom-engineered rigid magnetic presentation boxes with precision laser-cut high-density EVA foam trays contoured to securely cradle each curated executive item.',
-      bestFor: 'VIP Onboarding Hampers, C-Suite Gift Sets, Event Keepsakes',
-      turnaround: 'Custom Die-Cut'
+      title: 'Diary Embossing & Foil Stamping',
+      desc: 'Clean logo embossing or gold/silver foil stamping on executive PU leather diaries, notebooks, and desktop organizers.',
+      bestFor: 'Executive Diaries, Notebooks, Folders, Wallet Sets',
+      turnaround: '2-3 Business Days'
     },
     {
       icon: UserCheck,
-      title: 'Personalised Individual Gifting',
-      desc: 'Laser engrave each employee’s or client’s individual name alongside your corporate emblem on pens, diaries, and bottles for deeply personal recognition.',
-      bestFor: 'Employee Milestone Awards, Leadership Retreats, Client Gifts',
-      turnaround: 'Bulk Variable Data'
+      title: 'Custom Gift Box Branding',
+      desc: 'Add your company logo directly on rigid welcome kit gift boxes and combo hampers for employee onboarding and festive gifting.',
+      bestFor: 'Employee Welcome Kits, Festive Gift Boxes, Combo Sets',
+      turnaround: '2-3 Business Days'
     }
   ];
 
   const workflowSteps = [
     {
       step: '01',
-      title: 'Vector Artwork Submission',
-      desc: 'Submit your corporate brand logo in vector format (.AI, .EPS, .SVG, or vector PDF) with your Pantone PMS codes and positioning preferences.'
+      title: 'Share Your Company Logo',
+      desc: 'Send us your company logo file (PNG, PDF, CDR, or AI) on WhatsApp or email along with your selected backpack or corporate gift item.'
     },
     {
       step: '02',
-      title: 'Photorealistic 3D Proof',
-      desc: 'Our Bangalore atelier design studio renders a detailed 3D digital proof showing exact scale, laser depth, and placement within 2 hours.'
+      title: 'Digital Mockup Approval',
+      desc: 'Our team shares a clear digital preview showing how your logo will look with DTF printing, embroidery, screen printing, or laser engraving.'
     },
     {
       step: '03',
-      title: 'Physical Pre-Production Sample',
-      desc: 'For enterprise bulk programs, we produce an actual physical sample photograph or express-courier a physical strike-off sample for leadership sign-off.'
+      title: 'Sample Check',
+      desc: 'For bulk corporate orders, we share a live photo or video of the printed/embroidered sample for your confirmation before full production.'
     },
     {
       step: '04',
-      title: 'Precision Factory Execution',
-      desc: 'In-house fiber laser machines, automated deboss presses, and multi-color UV printers manufacture your entire batch under strict ISO 9001 quality audits.'
+      title: 'Fast Bulk Production & Delivery',
+      desc: 'Our Bengaluru team completes the branding, checks quality on every piece, and dispatches your order safely.',
     }
   ];
 

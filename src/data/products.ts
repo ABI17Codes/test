@@ -3,9 +3,10 @@ export interface Product {
   code: string;
   name: string;
   category: 'gift-sets' | 'bags' | 'drinkware' | 'mugs' | 'diaries' | 'promotional' | 'desktop';
-  brand: 'Globrands Lifestyle Pvt. Ltd.' | 'Globrands Lifestyle' | 'Ninja Gear' | 'ADMA London';
+  brand: 'Globrands Lifestyle Pvt. Ltd.' | 'Globrands Lifestyle' | 'Ninja Gear' | 'ADMA London' | 'Skybags' | 'Arctic Hunter' | 'Swiss Military';
   description: string;
   image: string;
+  images?: string[];
   catalogPage: string;
   catalogType: 'bags' | 'gifts';
   pageNumber: number;
@@ -2088,6 +2089,173 @@ export const PRODUCTS: Product[] = [
     colors: [{ name: 'Dual Natural Beech & Walnut', hex: '#7f5539' }],
     tags: ['Sculptural', 'VIP Desk Gift'],
     brandingOptions: ['Laser Engraving', 'Screen Printing']
+  },
+  // ==========================================
+  // PARTNER BRAND BACKPACKS (Skybags, Arctic Hunter, Swiss Military)
+  // ==========================================
+  {
+    id: 'bg-skybags-corporate-pro',
+    code: 'SB-CORP-01',
+    name: 'Skybags Corporate Pro 17" Multi-Compartment Backpack',
+    category: 'bags',
+    brand: 'Skybags',
+    description: 'Corporate partner backpack supplied and custom-branded by Globrands. Features 3 spacious compartments, 17-inch padded laptop sleeve, front organizer, and rain cover.',
+    image: '/catalog/backpacks-studio/bg-vip-2.png',
+    images: [
+      '/catalog/backpacks-studio/bg-vip-2.png',
+      '/catalog/backpacks-angles/bg-vip-2-angle-1.png',
+      '/catalog/backpacks-angles/bg-vip-2-angle-2.png',
+      '/catalog/backpacks-angles/bg-vip-2-angle-3.png'
+    ],
+    catalogPage: '/catalog/bags/page_13.jpg',
+    catalogType: 'bags',
+    pageNumber: 13,
+    moq: '50 pcs',
+    specs: [
+      { label: 'Brand Partner', value: 'Skybags (Supplied & Branded by Globrands)' },
+      { label: 'Capacity', value: '32 Liters • 3 Compartments' },
+      { label: 'Laptop Sleeve', value: 'Padded up to 17-inch' },
+      { label: 'Custom Branding', value: 'DTF Printing, Embroidery & Screen Printing' }
+    ],
+    colors: [{ name: 'Charcoal Black', hex: '#1e293b' }, { name: 'Navy Blue', hex: '#0f172a' }],
+    tags: ['Partner Brand', 'Laptop Backpack'],
+    brandingOptions: ['DTF Printing', 'Embroidery', 'Screen Printing']
+  },
+  {
+    id: 'bg-skybags-campus-lite',
+    code: 'SB-CORP-02',
+    name: 'Skybags Urban Commuter Daypack',
+    category: 'bags',
+    brand: 'Skybags',
+    description: 'Lightweight everyday corporate commuter pack from Skybags, available with custom company logo DTF printing, embroidery, or screen printing.',
+    image: '/catalog/backpacks-studio/bg-nexa.png',
+    images: [
+      '/catalog/backpacks-studio/bg-nexa.png',
+      '/catalog/backpacks-angles/bg-nexa-angle-1.png',
+      '/catalog/backpacks-angles/bg-nexa-angle-2.png',
+      '/catalog/backpacks-angles/bg-nexa-angle-3.png'
+    ],
+    catalogPage: '/catalog/bags/page_08.jpg',
+    catalogType: 'bags',
+    pageNumber: 8,
+    moq: '50 pcs',
+    specs: [
+      { label: 'Brand Partner', value: 'Skybags (Supplied & Branded by Globrands)' },
+      { label: 'Capacity', value: '26 Liters • 2+1 Compartments' },
+      { label: 'Custom Branding', value: 'DTF Printing, Embroidery & Screen Printing' }
+    ],
+    colors: [{ name: 'Matte Black', hex: '#111827' }],
+    tags: ['Partner Brand', 'Daily Commute'],
+    brandingOptions: ['DTF Printing', 'Embroidery', 'Screen Printing']
+  },
+  {
+    id: 'bg-arctic-hunter-tech',
+    code: 'AH-EXEC-01',
+    name: 'Arctic Hunter Waterproof Anti-Theft Tech Backpack',
+    category: 'bags',
+    brand: 'Arctic Hunter',
+    description: 'Executive water-resistant technical laptop backpack with USB charging port, concealed rear anti-theft pocket, luggage trolley strap, and shockproof 17" laptop cradle.',
+    image: '/catalog/backpacks-studio/bg-boxer.png',
+    images: [
+      '/catalog/backpacks-studio/bg-boxer.png',
+      '/catalog/backpacks-angles/bg-boxer-angle-1.png',
+      '/catalog/backpacks-angles/bg-boxer-angle-2.png',
+      '/catalog/backpacks-angles/bg-boxer-angle-3.png'
+    ],
+    catalogPage: '/catalog/bags/page_05.jpg',
+    catalogType: 'bags',
+    pageNumber: 5,
+    moq: '30 pcs',
+    specs: [
+      { label: 'Brand Partner', value: 'Arctic Hunter (Plus Equivalent In-House Manufacturing Available)' },
+      { label: 'Features', value: 'Waterproof Shell, USB Port, Anti-Theft Zips' },
+      { label: 'Laptop Sleeve', value: '17-inch Suspended Cushion Cradle' },
+      { label: 'Custom Branding', value: 'DTF Printing, Embroidery & Screen Printing' }
+    ],
+    colors: [{ name: 'Stealth Black', hex: '#0f172a' }],
+    tags: ['Partner Brand', 'Antitheft'],
+    brandingOptions: ['DTF Printing', 'Embroidery', 'Screen Printing']
+  },
+  {
+    id: 'bg-arctic-hunter-briefcase',
+    code: 'AH-EXEC-02',
+    name: 'Arctic Hunter 2-in-1 Convertible Executive Briefcase Backpack',
+    category: 'bags',
+    brand: 'Arctic Hunter',
+    description: 'Convertible business backpack and executive messenger briefcase with hideaway shoulder straps, 180-degree flat opening, and dedicated tablet & laptop compartments.',
+    image: '/catalog/backpacks-studio/bg-businessman.png',
+    images: [
+      '/catalog/backpacks-studio/bg-businessman.png',
+      '/catalog/backpacks-angles/bg-businessman-angle-1.png',
+      '/catalog/backpacks-angles/bg-businessman-angle-2.png',
+      '/catalog/backpacks-angles/bg-businessman-angle-3.png'
+    ],
+    catalogPage: '/catalog/bags/page_17.jpg',
+    catalogType: 'bags',
+    pageNumber: 17,
+    moq: '30 pcs',
+    specs: [
+      { label: 'Brand Partner', value: 'Arctic Hunter (Plus Equivalent In-House Manufacturing Available)' },
+      { label: 'Carry Modes', value: 'Backpack + Briefcase + Trolley Sleeve' },
+      { label: 'Custom Branding', value: 'DTF Printing, Embroidery & Screen Printing' }
+    ],
+    colors: [{ name: 'Carbon Black', hex: '#18181b' }],
+    tags: ['Partner Brand', 'Executive'],
+    brandingOptions: ['DTF Printing', 'Embroidery', 'Screen Printing']
+  },
+  {
+    id: 'bg-swiss-military-voyager',
+    code: 'SM-TRVL-01',
+    name: 'Swiss Military 38L Executive Business Travel Backpack',
+    category: 'bags',
+    brand: 'Swiss Military',
+    description: 'Premium international business travel backpack with high-density ballistic weave, airflow back padding, overnight garment storage, and rain protection.',
+    image: '/catalog/backpacks-studio/bg-volvo-2.png',
+    images: [
+      '/catalog/backpacks-studio/bg-volvo-2.png',
+      '/catalog/backpacks-angles/bg-volvo-2-angle-1.png',
+      '/catalog/backpacks-angles/bg-volvo-2-angle-2.png',
+      '/catalog/backpacks-angles/bg-volvo-2-angle-3.png'
+    ],
+    catalogPage: '/catalog/bags/page_16.jpg',
+    catalogType: 'bags',
+    pageNumber: 16,
+    moq: '30 pcs',
+    specs: [
+      { label: 'Brand Partner', value: 'Swiss Military (Corporate Gifting Partner)' },
+      { label: 'Capacity', value: '38L–40L Jumbo Travel Volume' },
+      { label: 'Custom Branding', value: 'DTF Printing, Embroidery & Metal Badge' }
+    ],
+    colors: [{ name: 'Midnight Black', hex: '#090d16' }],
+    tags: ['Partner Brand', 'Travel Weatherproof'],
+    brandingOptions: ['DTF Printing', 'Embroidery', 'Screen Printing']
+  },
+  {
+    id: 'bg-swiss-military-commuter',
+    code: 'SM-TRVL-02',
+    name: 'Swiss Military Heavy-Duty Executive Laptop Pack',
+    category: 'bags',
+    brand: 'Swiss Military',
+    description: 'Structured corporate laptop backpack engineered for leadership summits and annual employee milestone awards.',
+    image: '/catalog/backpacks-studio/bg-aviator.png',
+    images: [
+      '/catalog/backpacks-studio/bg-aviator.png',
+      '/catalog/backpacks-angles/bg-aviator-angle-1.png',
+      '/catalog/backpacks-angles/bg-aviator-angle-2.png',
+      '/catalog/backpacks-angles/bg-aviator-angle-3.png'
+    ],
+    catalogPage: '/catalog/bags/page_06.jpg',
+    catalogType: 'bags',
+    pageNumber: 6,
+    moq: '30 pcs',
+    specs: [
+      { label: 'Brand Partner', value: 'Swiss Military (Corporate Gifting Partner)' },
+      { label: 'Capacity', value: '28 Liters • Multi-Tier Tech Organizer' },
+      { label: 'Custom Branding', value: 'DTF Printing, Embroidery & Screen Printing' }
+    ],
+    colors: [{ name: 'Jet Black', hex: '#111111' }],
+    tags: ['Partner Brand', 'Luxury Executive'],
+    brandingOptions: ['DTF Printing', 'Embroidery', 'Screen Printing']
   }
 ];
 

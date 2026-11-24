@@ -1,34 +1,34 @@
 import React from 'react';
 import { Hero } from '../components/Hero';
-import { BackpackCategoriesSection } from '../components/BackpackCategoriesSection';
-import { ManufacturingStorySection } from '../components/ManufacturingStorySection';
 import { InHouseBrandsSpotlight } from '../components/InHouseBrandsSpotlight';
 import { CorporateGiftingSection } from '../components/CorporateGiftingSection';
+import { BackpackCategoriesSection } from '../components/BackpackCategoriesSection';
+import { ManufacturingStorySection } from '../components/ManufacturingStorySection';
 import { EnterpriseTrustBar } from '../components/EnterpriseTrustBar';
 import { ContactSection } from '../components/ContactSection';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#F5F0E8] text-[#292725] flex flex-col">
-      {/* 1. Immersive Full-Screen Editorial Hero: "BUILT TO MOVE. MADE TO LAST." */}
+    <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B] flex flex-col">
+      {/* 1. Light Pastel Brand Store Hero: Highlights BOTH Backpack Manufacturing (Primary) & Corporate Gifting (Secondary) */}
       <Hero />
 
-      {/* 2. Asymmetrical Editorial Product Collection Grid: "DESIGNED FOR EVERY JOURNEY." */}
-      <BackpackCategoriesSection />
-
-      {/* 3. Immersive Manufacturing Storytelling: "PRECISION IN EVERY STITCH." */}
-      <ManufacturingStorySection />
-
-      {/* 4. Independent Brand Campaigns: ADMA LONDON & NINJA GEAR */}
+      {/* 2. Primary Business: In-House Backpack Brands (Ninja Gear & ADMA London) on High-Contrast Light Stage */}
       <InHouseBrandsSpotlight />
 
-      {/* 5. Corporate Gifting (Secondary Segment): "THOUGHTFUL GIFTS. LASTING IMPRESSIONS." */}
+      {/* 3. Secondary Business (Moved Higher Up per Client Request!): 9 A-to-Z Corporate Gifting Categories with 4-Image Grids */}
       <CorporateGiftingSection />
 
-      {/* 6. Minimalist Trust & Capabilities: "WHY GLOBRANDS." */}
+      {/* 4. Backpack Categories & Multi-Brand Partner Bags (Skybags, Arctic Hunter, Swiss Military) */}
+      <BackpackCategoriesSection />
+
+      {/* 5. Backpack Materials & Simple In-House Branding (DTF Printing, Embroidery & Screen Printing) */}
+      <ManufacturingStorySection />
+
+      {/* 6. Why Globrands & Client Trust */}
       <EnterpriseTrustBar />
 
-      {/* 7. Final Business Enquiry Concierge: "LET'S BUILD SOMETHING TOGETHER." */}
+      {/* 7. Direct Factory & Corporate Gifting Enquiry Desk */}
       <ContactSection />
     </div>
   );

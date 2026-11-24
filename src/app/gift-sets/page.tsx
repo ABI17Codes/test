@@ -145,32 +145,32 @@ export default function GiftSetsPage() {
           ))}
         </div>
 
-        {/* Custom Corporate Hamper Assembly Banner */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-neutral-900 to-slate-900 text-white shadow-xl text-left flex flex-col md:flex-row items-center justify-between gap-8">
+        {/* Custom Corporate Hamper Assembly Banner (Light Pastel Blue & Gold Theme) */}
+        <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-[#EFF6FF] via-white to-[#FEF3C7] border-2 border-[#BFDBFE] text-[#0F172A] shadow-sm text-left flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-2 max-w-2xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#F5B800]">
-              BESPOKE CORPORATE HAMPERS
+            <span className="text-xs font-extrabold uppercase tracking-wider text-[#B45309]">
+              COMPLETE A-TO-Z CORPORATE GIFTING
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Need a Custom Combination for Your Next Event?
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B4F82] tracking-tight">
+              Need Trophies, Apparels, Trolleys, Kitchen Essentials, or Custom Combos?
             </h2>
-            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
-              Mix and match any diary, bottle, pen, mug, and bag from our catalog. Our team will engineer a custom presentation box with your Pantone brand colors and logo foil stamping.
+            <p className="text-xs sm:text-sm text-[#475569] leading-relaxed font-normal">
+              We serve A-to-Z corporate gifting requirements across India — including Welcome Kits, Drinkware, Sustainable Bamboo, Apparels, Trophies &amp; Medals, Trolleys, Kitchen Appliances, and Multi-Brand products with in-house DTF Printing, Embroidery, Screen Printing &amp; Laser Engraving.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-            <Link
-              href="/branding"
-              className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/20 text-xs font-bold text-center transition-colors"
+            <a
+              href="tel:919972028250"
+              className="px-6 py-3.5 rounded-xl bg-[#E5A93C] hover:bg-[#D4952A] text-[#0F172A] text-xs font-extrabold text-center transition-colors shadow-xs"
             >
-              Logo Branding Studio
-            </Link>
+              Call Corporate Desk (+91 99720 28250)
+            </a>
             <Link
               href="/quote"
-              className="px-6 py-3.5 rounded-full bg-[#0E679C] hover:bg-[#0284C7] text-white text-xs font-bold text-center transition-all shadow-md"
+              className="px-6 py-3.5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-bold text-center transition-all shadow-xs"
             >
-              Request Custom Hamper Quote
+              Request Bulk Quote
             </Link>
           </div>
         </div>
