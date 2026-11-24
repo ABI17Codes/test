@@ -100,32 +100,33 @@ export const Hero: React.FC = () => {
 
   return (
     <section
-      className="relative bg-gradient-to-b from-[#FFFFFF] via-[#FBFBFD] to-[#F4F8FB] text-[#0F172A] overflow-hidden border-b border-slate-200/80"
+      className="relative bg-gradient-to-b from-[#FFFFFF] via-[#FAFBFD] to-[#F2F7FC] text-[#0F172A] overflow-hidden border-b border-slate-200/80"
       onKeyDown={handleKeyDown}
       tabIndex={0}
       aria-label="Globrands Lifestyle Featured Manufacturing & Corporate Gifting Showcase"
     >
-      {/* Subtle Ambient Luxury Studio Glows */}
-      <div className="absolute -top-24 right-1/4 w-[600px] h-[600px] bg-[#E0F2FE]/55 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute -bottom-24 left-10 w-[520px] h-[520px] bg-[#FEF3C7]/55 rounded-full blur-[130px] pointer-events-none" />
+      {/* Subtle Ambient Studio Glows */}
+      <div className="absolute -top-28 right-1/4 w-[620px] h-[620px] bg-[#E0F2FE]/50 rounded-full blur-[135px] pointer-events-none" />
+      <div className="absolute -bottom-28 left-8 w-[540px] h-[540px] bg-[#FEF3C7]/50 rounded-full blur-[135px] pointer-events-none" />
 
-      {/* Main Two-Column Hero Container */}
-      <div className="relative z-10 max-w-[1340px] mx-auto px-4 sm:px-8 py-10 sm:py-14 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      {/* Main Two-Column Hero Container (Balanced 42% / 58% Proportions across 1440px–1920px) */}
+      <div className="relative z-10 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-10 py-9 sm:py-12 lg:py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
 
           {/* ================================================================
-              LEFT SECTION (5 cols): Brand Authority, Typography & CTAs
+              LEFT SECTION (5 cols / ~42%): Brand Authority, Typography & CTAs
+              Placed first on mobile (order-1) and left on desktop
           ================================================================ */}
-          <div className="lg:col-span-5 flex flex-col justify-center items-start space-y-6 text-left">
+          <div className="lg:col-span-5 flex flex-col justify-center items-start space-y-5 text-left order-1">
 
-            {/* 1. Small Premium Brand Label */}
-            <div className="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/90 shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#D97706]" />
-              <span className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#0B4F82]">
+            {/* 1. Single-Line Horizontal Company Information Badge on Desktop */}
+            <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/90 shadow-2xs sm:whitespace-nowrap">
+              <span className="w-2 h-2 rounded-full bg-[#D97706] shrink-0" />
+              <span className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-[#0B4F82]">
                 {pretitle}
               </span>
-              <span className="text-slate-300">|</span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#64748B]">
+              <span className="text-slate-300 hidden sm:inline">|</span>
+              <span className="text-[10.5px] font-bold uppercase tracking-[0.06em] text-[#475569]">
                 {badge}
               </span>
             </div>
@@ -134,33 +135,33 @@ export const Hero: React.FC = () => {
             <div className="flex flex-wrap items-center gap-2.5 w-full">
               <Link
                 href="/brands"
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#0B4F82] text-white shadow-xs hover:bg-[#083B63] transition-all"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white shadow-xs transition-all"
               >
                 <Briefcase className="w-3.5 h-3.5 text-[#FDE047] shrink-0" />
-                <span className="text-[11px] font-bold tracking-wide">
+                <span className="text-xs font-bold tracking-wide">
                   <span className="text-[#FDE047] font-semibold">Primary:</span> Backpack Manufacturing
                 </span>
               </Link>
 
               <Link
                 href="/gift-sets"
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#FFFBEB] border border-[#FCD34D] text-[#0F172A] shadow-2xs hover:bg-[#FEF3C7] transition-all"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#FFFBEB] hover:bg-[#FEF3C7] border border-[#FCD34D] text-[#0F172A] shadow-2xs transition-all"
               >
                 <Gift className="w-3.5 h-3.5 text-[#D97706] shrink-0" />
-                <span className="text-[11px] font-bold tracking-wide">
+                <span className="text-xs font-bold tracking-wide">
                   <span className="text-[#B45309] font-semibold">Secondary:</span> A-to-Z Corporate Gifting
                 </span>
               </Link>
             </div>
 
             {/* 3. Main Headline with Distinct Typography Treatments */}
-            <h1 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-black uppercase tracking-tight leading-[1.08] font-sans">
+            <h1 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-black uppercase tracking-tight leading-[1.1] font-sans">
               <span className="text-[#0F172A] block">DIRECT</span>
               <span className="text-[#0B4F82] block mt-0.5">
                 BACKPACK MANUFACTURING
               </span>
               <span className="text-[#0F172A] block mt-0.5">
-                &amp; COMPLETE{' '}
+                &amp; COMPLETE
               </span>
               <span className="relative inline-block text-[#D97706] mt-0.5">
                 CORPORATE GIFTING
@@ -168,8 +169,8 @@ export const Hero: React.FC = () => {
               </span>
             </h1>
 
-            {/* 4. Description */}
-            <p className="text-sm sm:text-[15px] text-[#475569] font-normal leading-relaxed">
+            {/* 4. Description (Comfortable reading size & line height) */}
+            <p className="text-sm sm:text-[15.5px] text-[#334155] font-normal leading-[1.65]">
               We manufacture our own registered backpack brands (
               <strong className="font-bold text-[#0F172A]">Ninja Gear Original</strong> &amp;{' '}
               <strong className="font-bold text-[#0F172A]">ADMA London</strong>) in Bengaluru, supply leading partner brands (
@@ -189,13 +190,13 @@ export const Hero: React.FC = () => {
                 return (
                   <span
                     key={idx}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold border ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border ${
                       item.gold
                         ? 'bg-[#FFFBEB] border-[#FDE68A] text-[#92400E]'
                         : 'bg-white border-slate-200/90 text-[#1E293B] shadow-2xs'
                     }`}
                   >
-                    <Icon className={`w-3 h-3 ${item.gold ? 'text-[#D97706]' : 'text-[#0B4F82]'}`} />
+                    <Icon className={`w-3.5 h-3.5 ${item.gold ? 'text-[#D97706]' : 'text-[#0B4F82]'}`} />
                     <span>{item.label}</span>
                   </span>
                 );
@@ -206,7 +207,7 @@ export const Hero: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3 pt-1 w-full">
               <Link
                 href={primaryCta.href}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-extrabold uppercase tracking-wider transition-all shadow-md hover:shadow-lg group"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-extrabold uppercase tracking-wider transition-all shadow-sm hover:shadow-md group"
               >
                 <span>{primaryCta.label}</span>
                 <ArrowRight className="w-4 h-4 text-[#FDE047] group-hover:translate-x-1 transition-transform" />
@@ -214,7 +215,7 @@ export const Hero: React.FC = () => {
 
               <Link
                 href={secondaryCta.href}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#D97706] hover:bg-[#B45309] text-white text-xs font-extrabold uppercase tracking-wider transition-all shadow-md hover:shadow-lg group"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#D97706] hover:bg-[#B45309] text-white text-xs font-extrabold uppercase tracking-wider transition-all shadow-sm hover:shadow-md group"
               >
                 <span>{secondaryCta.label}</span>
                 <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
@@ -231,13 +232,14 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* ================================================================
-              RIGHT SECTION (7 cols): Interactive 4-Slide Premium Product Carousel
+              RIGHT SECTION (7 cols / ~58%): Interactive 4-Slide Product Carousel
+              Placed second on mobile (order-2) and right on desktop
           ================================================================ */}
-          <div className="lg:col-span-7 flex flex-col gap-3.5 w-full">
+          <div className="lg:col-span-7 flex flex-col gap-3.5 w-full order-2">
 
             {/* Main Carousel Stage */}
             <div
-              className="relative rounded-3xl bg-white border border-slate-200/90 shadow-[0_20px_50px_-15px_rgba(11,79,130,0.12)] overflow-hidden select-none"
+              className="relative rounded-3xl bg-white border border-slate-200/90 shadow-[0_16px_40px_-12px_rgba(11,79,130,0.10)] overflow-hidden select-none"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
               onTouchStart={handleTouchStart}
@@ -252,9 +254,10 @@ export const Hero: React.FC = () => {
                 />
               </div>
 
-              {/* Top Slide Selector Tabs */}
-              <div className="px-4 sm:px-6 pt-3.5 pb-2.5 bg-white/90 border-b border-slate-100 flex items-center justify-between gap-2 overflow-x-auto scrollbar-none">
-                <div className="flex items-center gap-1.5">
+              {/* Clean, Decluttered Top Navigation Bar: Collection Tabs + Active Brand Badge + Arrows */}
+              <div className="px-4 sm:px-6 py-3 bg-white border-b border-slate-100 flex items-center justify-between gap-3">
+                {/* 4 Collection Tabs */}
+                <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none">
                   {slides.map((s, idx) => {
                     const active = idx === currentSlide;
                     return (
@@ -262,7 +265,7 @@ export const Hero: React.FC = () => {
                         key={s.id}
                         type="button"
                         onClick={() => goToSlide(idx)}
-                        className={`px-3 py-1.5 rounded-full text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+                        className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                           active
                             ? 'bg-[#0B4F82] text-white shadow-xs'
                             : 'bg-slate-100/80 hover:bg-slate-200/70 text-[#475569]'
@@ -277,24 +280,30 @@ export const Hero: React.FC = () => {
                   })}
                 </div>
 
-                {/* Prev / Next Arrow Buttons */}
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <button
-                    type="button"
-                    onClick={prevSlide}
-                    aria-label="Previous Slide"
-                    className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#0B4F82] text-[#0F172A] hover:text-white flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={nextSlide}
-                    aria-label="Next Slide"
-                    className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#0B4F82] text-[#0F172A] hover:text-white flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
+                {/* Right Controls: Active Brand Label + Prev / Next Arrows */}
+                <div className="flex items-center gap-2.5 shrink-0">
+                  <span className="hidden xl:inline-block px-2.5 py-1 rounded-full bg-[#FFFBEB] border border-[#FCD34D] text-[#92400E] text-[10px] font-extrabold uppercase tracking-wider">
+                    {activeSlideData.label}
+                  </span>
+
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={prevSlide}
+                      aria-label="Previous Collection"
+                      className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#0B4F82] text-[#0F172A] hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={nextSlide}
+                      aria-label="Next Collection"
+                      className="w-8 h-8 rounded-full bg-slate-100 hover:bg-[#0B4F82] text-[#0F172A] hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -307,56 +316,29 @@ export const Hero: React.FC = () => {
                   {slides.map((slide) => (
                     <div
                       key={slide.id}
-                      className={`w-full shrink-0 bg-gradient-to-br ${slide.themeBg} p-5 sm:p-7 flex flex-col justify-between min-h-[410px] sm:min-h-[440px]`}
+                      className={`w-full shrink-0 bg-gradient-to-br ${slide.themeBg} px-4 sm:px-6 pt-5 pb-5 flex flex-col justify-between`}
                     >
-                      {/* Slide Top Metadata Header */}
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2.5">
-                          {slide.brandLogo && (
-                            <div className="h-9 px-2.5 rounded-lg bg-white border border-slate-200/80 shadow-2xs flex items-center justify-center">
-                              <img
-                                src={slide.brandLogo}
-                                alt={slide.brandBadge}
-                                className="max-h-6 w-auto object-contain"
-                              />
-                            </div>
-                          )}
-                          <div className="flex flex-wrap items-center gap-1.5">
-                            <span className="px-2.5 py-0.5 rounded-full bg-[#0B4F82] text-white text-[10px] font-extrabold uppercase tracking-wider">
-                              {slide.label}
-                            </span>
-                            <span className="px-2.5 py-0.5 rounded-full bg-[#FFFBEB] border border-[#FCD34D] text-[#92400E] text-[10px] font-extrabold uppercase tracking-wider">
-                              {slide.brandBadge}
-                            </span>
-                          </div>
-                        </div>
-
-                        <span className="text-[11px] font-mono font-bold text-slate-400">
-                          {slide.slideNumber} / 0{totalSlides}
-                        </span>
-                      </div>
-
-                      {/* Slide Center Visual Product Showcase */}
+                      {/* Slide Center Visual Product Showcase (30% Larger Product Imagery, Zero Excess Whitespace) */}
                       {slide.layout === 'grid-Showcase' ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 items-stretch my-1">
                           {slide.items.map((item, i) => (
                             <Link
                               key={i}
                               href={slide.ctaHref}
-                              className="group/card rounded-2xl bg-white border border-slate-200/80 p-3 flex flex-col items-center justify-between shadow-2xs hover:shadow-md hover:border-[#0B4F82] transition-all"
+                              className="group/card rounded-2xl bg-white border border-slate-200/85 p-2.5 flex flex-col items-center justify-between shadow-2xs hover:shadow-md hover:border-[#0B4F82] transition-all"
                             >
-                              <div className="h-32 sm:h-36 w-full flex items-center justify-center overflow-hidden p-1">
+                              <div className="h-44 sm:h-52 w-full flex items-center justify-center overflow-hidden p-1">
                                 <img
                                   src={item.image}
                                   alt={item.name}
-                                  className="max-h-full max-w-full object-contain group-hover/card:scale-108 transition-transform duration-500"
+                                  className="h-full w-full object-contain group-hover/card:scale-106 transition-transform duration-500"
                                 />
                               </div>
                               <div className="w-full text-center pt-2 border-t border-slate-100">
-                                <span className="text-[9px] font-mono font-bold text-[#D97706] uppercase block">
+                                <span className="text-[10px] font-bold text-[#D97706] uppercase tracking-wider block">
                                   {item.tag}
                                 </span>
-                                <span className="text-xs font-extrabold text-[#0F172A] line-clamp-1">
+                                <span className="text-xs sm:text-[13px] font-extrabold text-[#0F172A] block mt-0.5 leading-snug">
                                   {item.name}
                                 </span>
                               </div>
@@ -364,40 +346,40 @@ export const Hero: React.FC = () => {
                           ))}
                         </div>
                       ) : (
-                        <div className="grid grid-cols-3 gap-3 sm:gap-5 items-end my-4 px-1">
+                        <div className="grid grid-cols-3 gap-3 sm:gap-4 items-end my-1">
                           {slide.items.map((item, i) => {
                             const isFeatured = (item as any).featured;
                             return (
                               <Link
                                 key={i}
                                 href={slide.ctaHref}
-                                className={`group/item relative rounded-2xl bg-white/90 hover:bg-white border transition-all flex flex-col items-center justify-between p-3 sm:p-4 ${
+                                className={`group/item relative rounded-2xl bg-white border transition-all flex flex-col items-center justify-between p-2.5 sm:p-3.5 ${
                                   isFeatured
-                                    ? 'border-[#93C5FD] shadow-md sm:-translate-y-1.5'
-                                    : 'border-slate-200/80 shadow-2xs'
+                                    ? 'border-[#93C5FD] shadow-md sm:-translate-y-1.5 ring-1 ring-[#0B4F82]/10'
+                                    : 'border-slate-200/80 shadow-2xs hover:border-[#93C5FD]'
                                 }`}
                               >
-                                <span className="self-start px-2 py-0.5 rounded bg-slate-100 text-[#0B4F82] font-mono text-[9px] font-bold">
-                                  {item.code}
-                                </span>
-
+                                {/* Large, High-Resolution Authentic Product Image (30% Bigger!) */}
                                 <div
-                                  className={`w-full flex items-center justify-center my-1 ${
-                                    isFeatured ? 'h-40 sm:h-48' : 'h-32 sm:h-40'
+                                  className={`w-full flex items-center justify-center ${
+                                    isFeatured
+                                      ? 'h-48 sm:h-60 lg:h-64'
+                                      : 'h-40 sm:h-52 lg:h-56'
                                   }`}
                                 >
                                   <img
                                     src={item.image}
                                     alt={item.name}
-                                    className="max-h-full max-w-full object-contain drop-shadow-[0_10px_18px_rgba(15,23,42,0.14)] group-hover/item:scale-106 transition-transform duration-500"
+                                    className="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(15,23,42,0.14)] group-hover/item:scale-106 transition-transform duration-500"
                                   />
                                 </div>
 
-                                <div className="w-full text-center pt-1.5 border-t border-slate-100">
-                                  <span className="text-[9.5px] font-bold text-[#D97706] uppercase tracking-wider block">
+                                {/* Clear, Readable Product Label & Feature Tag */}
+                                <div className="w-full text-center pt-2 mt-1 border-t border-slate-100">
+                                  <span className="text-[10px] sm:text-[10.5px] font-bold text-[#D97706] uppercase tracking-wider block">
                                     {item.tag}
                                   </span>
-                                  <span className="text-xs font-extrabold text-[#0F172A] line-clamp-1">
+                                  <span className="text-xs sm:text-[13.5px] font-extrabold text-[#0F172A] block mt-0.5 leading-tight">
                                     {item.name}
                                   </span>
                                 </div>
@@ -407,78 +389,87 @@ export const Hero: React.FC = () => {
                         </div>
                       )}
 
-                      {/* Slide Bottom Caption & CTA Footer */}
-                      <div className="pt-3 border-t border-slate-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div className="space-y-0.5 text-left max-w-md">
-                          <h2 className="text-base sm:text-lg font-extrabold text-[#0F172A] tracking-tight">
-                            {slide.title}
-                          </h2>
-                          <p className="text-xs text-[#475569] line-clamp-1">
-                            {slide.description}
-                          </p>
+                      {/* Slide Bottom Information Area (Full Untruncated Description + Pagination Dots + Consistent CTA) */}
+                      <div className="mt-4 pt-4 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div className="flex items-start sm:items-center gap-3.5 text-left flex-1 min-w-0">
+                          {slide.brandLogo && (
+                            <div className="h-11 w-16 rounded-xl bg-white border border-slate-200/90 p-1.5 shadow-2xs flex items-center justify-center shrink-0">
+                              <img
+                                src={slide.brandLogo}
+                                alt={slide.brandBadge}
+                                className="max-h-full max-w-full object-contain"
+                              />
+                            </div>
+                          )}
+                          <div className="space-y-1 flex-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h2 className="text-base sm:text-lg font-extrabold text-[#0F172A] tracking-tight">
+                                {slide.title}
+                              </h2>
+                              <span className="px-2 py-0.5 rounded-md bg-[#0B4F82]/10 text-[#0B4F82] text-[10px] font-extrabold uppercase tracking-wider">
+                                {slide.brandBadge}
+                              </span>
+                            </div>
+                            <p className="text-xs sm:text-[13px] text-[#475569] leading-relaxed">
+                              {slide.description}
+                            </p>
+                          </div>
                         </div>
 
-                        <Link
-                          href={slide.ctaHref}
-                          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-extrabold uppercase tracking-wider transition-all shadow-xs shrink-0 group/btn"
-                        >
-                          <span>{slide.ctaLabel}</span>
-                          <ArrowRight className="w-3.5 h-3.5 text-[#FDE047] group-hover/btn:translate-x-1 transition-transform" />
-                        </Link>
+                        <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0">
+                          {/* Elegant Pagination Dots */}
+                          <div className="flex items-center gap-1.5">
+                            {slides.map((s, idx) => (
+                              <button
+                                key={s.id}
+                                type="button"
+                                onClick={() => goToSlide(idx)}
+                                aria-label={`Go to slide ${idx + 1}: ${s.tabLabel}`}
+                                className={`h-2 rounded-full transition-all cursor-pointer ${
+                                  idx === currentSlide
+                                    ? 'w-6 bg-[#0B4F82]'
+                                    : 'w-2 bg-slate-300 hover:bg-slate-400'
+                                }`}
+                              />
+                            ))}
+                          </div>
+
+                          {/* Consistent Explore Collection CTA */}
+                          <Link
+                            href={slide.ctaHref}
+                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#0B4F82] hover:bg-[#083B63] text-white text-xs font-extrabold uppercase tracking-wider transition-all shadow-xs group/btn whitespace-nowrap"
+                          >
+                            <span>{slide.ctaLabel}</span>
+                            <ArrowRight className="w-3.5 h-3.5 text-[#FDE047] group-hover/btn:translate-x-1 transition-transform" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-
-              {/* Bottom Pagination Dots & Collection Indicator */}
-              <div className="px-5 py-2.5 bg-white border-t border-slate-100 flex items-center justify-between text-[11px]">
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-[#0B4F82]">{activeSlideData.brandBadge}</span>
-                  <span className="text-slate-300">•</span>
-                  <span className="text-[#64748B] hidden sm:inline">
-                    Hover to pause • Swipe or use arrows to browse collections
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-1.5">
-                  {slides.map((s, idx) => (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onClick={() => goToSlide(idx)}
-                      aria-label={`Go to slide ${idx + 1}: ${s.tabLabel}`}
-                      className={`h-2 rounded-full transition-all cursor-pointer ${
-                        idx === currentSlide
-                          ? 'w-6 bg-[#0B4F82]'
-                          : 'w-2 bg-slate-300 hover:bg-slate-400'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
             </div>
 
-            {/* 7. Corporate Gifting Category Strip Below Slider */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            {/* 7. Corporate Gifting Category Strip Below Slider (Full Visibility — Zero Truncation on Desktop!) */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {giftingStrip.map((item, i) => (
                 <Link
                   key={i}
                   href={item.href}
-                  className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-white hover:bg-[#F8FAFC] border border-slate-200/90 hover:border-[#0B4F82] shadow-2xs hover:shadow-md transition-all group"
+                  className="flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-[#F8FAFC] border border-slate-200/90 hover:border-[#0B4F82] shadow-2xs hover:shadow-md transition-all group"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-[#F8FAFC] border border-slate-200/80 p-1 flex items-center justify-center shrink-0 overflow-hidden">
+                  <div className="w-12 h-12 rounded-xl bg-[#F8FAFC] border border-slate-200/80 p-1 flex items-center justify-center shrink-0 overflow-hidden">
                     <img
                       src={item.img}
                       alt={item.label}
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                     />
                   </div>
-                  <div className="text-left min-w-0">
-                    <span className="text-xs font-extrabold text-[#0F172A] group-hover:text-[#0B4F82] block truncate">
+                  <div className="text-left min-w-0 flex-1">
+                    <span className="text-xs sm:text-[13px] font-extrabold text-[#0F172A] group-hover:text-[#0B4F82] block leading-snug">
                       {item.label}
                     </span>
-                    <span className="text-[10px] text-[#64748B] block truncate">
+                    <span className="text-[11px] text-[#64748B] block leading-tight mt-0.5">
                       {item.sub}
                     </span>
                   </div>
