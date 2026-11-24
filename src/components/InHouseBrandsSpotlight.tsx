@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import { IN_HOUSE_BRANDS_DATA, COMPANY_INFO } from '../data/siteContent';
+import React from "react";
+import Link from "next/link";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { IN_HOUSE_BRANDS_DATA, COMPANY_INFO } from "../data/siteContent";
 
 export const InHouseBrandsSpotlight: React.FC = () => {
   const { header, brands } = IN_HOUSE_BRANDS_DATA;
@@ -12,7 +12,6 @@ export const InHouseBrandsSpotlight: React.FC = () => {
   return (
     <section className="pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 bg-white text-[#1E293B] text-left border-b border-[#DBEAFE]">
       <div className="max-w-[1320px] mx-auto px-6 sm:px-10 space-y-12">
-
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-4 border-b border-[#DBEAFE]">
           <div className="space-y-2.5 max-w-3xl">
@@ -23,7 +22,16 @@ export const InHouseBrandsSpotlight: React.FC = () => {
               {header.title}
             </h2>
             <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed">
-              At <strong className="text-[#0B4F82]">{COMPANY_INFO.legalName}</strong>, we design and manufacture our own registered brands in Bengaluru — backed by our {COMPANY_INFO.warrantyText} and in-house <strong className="text-[#0F172A]">DTF Printing, Embroidery &amp; Screen Printing</strong>.
+              At{" "}
+              <strong className="text-[#0B4F82]">
+                {COMPANY_INFO.legalName}
+              </strong>
+              , we design and manufacture our own registered brands in Bengaluru
+              — backed by our {COMPANY_INFO.warrantyText} and in-house{" "}
+              <strong className="text-[#0F172A]">
+                DTF Printing, Embroidery &amp; Screen Printing
+              </strong>
+              .
             </p>
           </div>
 
@@ -38,7 +46,6 @@ export const InHouseBrandsSpotlight: React.FC = () => {
 
         {/* Two Side-by-Side High-Contrast Light Pastel Brand Store Showcases (Zero Dark Background so Black Bags Pop!) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
           {/* BRAND 1: NINJA GEAR ORIGINAL (Light Pastel Warm Cream & Gold Accent Stage — 100% Contrast for Black Bags) */}
           <div className="rounded-3xl bg-gradient-to-b from-[#FFFDF7] to-[#FEF9E7] border-2 border-[#FDE68A] p-6 sm:p-8 shadow-md flex flex-col justify-between space-y-6">
             <div className="space-y-5">
@@ -113,9 +120,14 @@ export const InHouseBrandsSpotlight: React.FC = () => {
                 {ninjaGear.features.map((feat, idx) => {
                   const IconComponent = feat.icon;
                   return (
-                    <div key={idx} className="p-2.5 rounded-xl bg-white border border-[#FDE68A] flex items-center gap-2 shadow-2xs">
+                    <div
+                      key={idx}
+                      className="p-2.5 rounded-xl bg-white border border-[#FDE68A] flex items-center gap-2 shadow-2xs"
+                    >
                       <IconComponent className="w-4 h-4 text-[#D97706] shrink-0" />
-                      <span className="text-xs font-bold text-[#0F172A]">{feat.label}</span>
+                      <span className="text-xs font-bold text-[#0F172A]">
+                        {feat.label}
+                      </span>
                     </div>
                   );
                 })}
@@ -207,9 +219,14 @@ export const InHouseBrandsSpotlight: React.FC = () => {
                 {admaLondon.features.map((feat, idx) => {
                   const IconComponent = feat.icon;
                   return (
-                    <div key={idx} className="p-2.5 rounded-xl bg-white border border-[#BFDBFE] flex items-center gap-2 shadow-2xs">
+                    <div
+                      key={idx}
+                      className="p-2.5 rounded-xl bg-white border border-[#BFDBFE] flex items-center gap-2 shadow-2xs"
+                    >
                       <IconComponent className="w-4 h-4 text-[#0B4F82] shrink-0" />
-                      <span className="text-xs font-bold text-[#0F172A]">{feat.label}</span>
+                      <span className="text-xs font-bold text-[#0F172A]">
+                        {feat.label}
+                      </span>
                     </div>
                   );
                 })}
@@ -226,9 +243,7 @@ export const InHouseBrandsSpotlight: React.FC = () => {
               </Link>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
   );

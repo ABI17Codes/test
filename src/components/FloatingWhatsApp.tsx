@@ -28,16 +28,16 @@ export const FloatingWhatsApp: React.FC = () => {
 
   return (
     <div
-      className="fixed right-5 sm:right-8 lg:right-10 bottom-5 sm:bottom-6 z-50 max-w-[calc(100vw-40px)] flex flex-col items-end"
+      className="fixed right-5 bottom-5 z-40 max-w-[calc(100vw-40px)] flex flex-col items-end"
       style={{
         position: 'fixed',
-        right: '28px',
-        bottom: '22px',
-        maxWidth: 'calc(100vw - 48px)',
+        right: '20px',
+        bottom: '20px',
+        maxWidth: 'calc(100vw - 40px)',
       }}
     >
       {isOpen && (
-        <div className="mb-3 w-80 max-w-[calc(100vw-48px)] rounded-3xl bg-white border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200 text-left">
+        <div className="mb-3 w-80 max-w-[calc(100vw-40px)] rounded-3xl bg-white border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200 text-left">
           <div className="p-4 bg-[#EFF6FF] border-b border-[#DBEAFE] flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
