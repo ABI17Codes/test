@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { IN_HOUSE_BRANDS_DATA, COMPANY_INFO } from "../data/siteContent";
 
 export const InHouseBrandsSpotlight: React.FC = () => {

@@ -88,10 +88,7 @@ export const NAVIGATION_CONFIG = {
     atelierText: 'Bengaluru Factory',
     headline: 'Backpack Manufacturing & Corporate Gifting'
   },
-  primaryLinks: [
-    { label: 'Backpacks & In-House Brands', href: '/bags' },
-    { label: 'Corporate Gifting', href: '/gift-sets' },
-  ],
+  primaryLinks: [] as { label: string; href: string }[],
   secondaryLinks: [
     { label: 'Branding', href: '/branding' },
     { label: 'About', href: '/about' },
@@ -99,20 +96,20 @@ export const NAVIGATION_CONFIG = {
   ],
   catalogDropdownItems: [
     {
-      title: 'In-House Brands & Backpacks',
+      title: '01. In-House Brands & Backpacks',
       description: 'Ninja Gear, ADMA London + Skybags, Arctic Hunter & Swiss Military',
       href: '/bags',
       icon: Briefcase
     },
     {
-      title: 'Corporate Gifting Categories',
+      title: '02. Corporate Gifting (A-to-Z)',
       description: 'Welcome Kits, Bamboo, Drinkware, Trophies, Apparels & Trolleys',
       href: '/gift-sets',
       icon: Gift
     },
     {
-      title: 'PDF Catalogues',
-      description: 'View Digital PDF Catalogues',
+      title: '03. Digital PDF Flipbooks',
+      description: 'Interactive 37-Page Backpack Catalogue & 146-Page Gift Catalogue',
       href: '/catalog-viewer',
       icon: FileText
     }

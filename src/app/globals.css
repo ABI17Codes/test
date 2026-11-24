@@ -64,6 +64,7 @@
     --color-slate-200: oklch(92.9% 0.013 255.508);
     --color-slate-300: oklch(86.9% 0.022 252.894);
     --color-slate-400: oklch(70.4% 0.04 256.788);
+    --color-slate-500: oklch(55.4% 0.046 257.417);
     --color-slate-950: oklch(12.9% 0.042 264.695);
     --color-neutral-50: oklch(98.5% 0 none);
     --color-neutral-100: oklch(97% 0 none);
@@ -861,8 +862,8 @@
   .max-h-56 {
     max-height: calc(var(--spacing) * 56);
   }
-  .max-h-\[80vh\] {
-    max-height: 80vh;
+  .max-h-\[75vh\] {
+    max-height: 75vh;
   }
   .max-h-\[85vh\] {
     max-height: 85vh;
@@ -885,6 +886,9 @@
   .min-h-\[54px\] {
     min-height: 54px;
   }
+  .min-h-\[70vh\] {
+    min-height: 70vh;
+  }
   .min-h-\[75vh\] {
     min-height: 75vh;
   }
@@ -893,9 +897,6 @@
   }
   .min-h-\[85vh\] {
     min-height: 85vh;
-  }
-  .min-h-\[90vh\] {
-    min-height: 90vh;
   }
   .min-h-\[380px\] {
     min-height: 380px;
@@ -1899,9 +1900,6 @@
   .bg-\[\#EAE3D8\] {
     background-color: #EAE3D8;
   }
-  .bg-\[\#ECE8DE\] {
-    background-color: #ECE8DE;
-  }
   .bg-\[\#EFF6FF\] {
     background-color: #EFF6FF;
   }
@@ -1910,6 +1908,9 @@
   }
   .bg-\[\#F0F7FF\] {
     background-color: #F0F7FF;
+  }
+  .bg-\[\#F1F5F9\] {
+    background-color: #F1F5F9;
   }
   .bg-\[\#F4F1EA\] {
     background-color: #F4F1EA;
@@ -3244,6 +3245,9 @@
   .text-slate-400 {
     color: var(--color-slate-400);
   }
+  .text-slate-500 {
+    color: var(--color-slate-500);
+  }
   .text-slate-950 {
     color: var(--color-slate-950);
   }
@@ -3305,11 +3309,11 @@
   .placeholder-neutral-400::placeholder {
     color: var(--color-neutral-400);
   }
+  .accent-\[\#0B4F82\] {
+    accent-color: #0B4F82;
+  }
   .accent-\[\#0876B4\] {
     accent-color: #0876B4;
-  }
-  .accent-\[\#b88e3e\] {
-    accent-color: #b88e3e;
   }
   .opacity-0 {
     opacity: 0%;
@@ -4100,11 +4104,17 @@
     .sm\:right-4 {
       right: calc(var(--spacing) * 4);
     }
+    .sm\:right-6 {
+      right: calc(var(--spacing) * 6);
+    }
     .sm\:right-28 {
       right: calc(var(--spacing) * 28);
     }
     .sm\:left-4 {
       left: calc(var(--spacing) * 4);
+    }
+    .sm\:left-6 {
+      left: calc(var(--spacing) * 6);
     }
     .sm\:inline {
       display: inline;
@@ -4506,9 +4516,6 @@
     .lg\:gap-12 {
       gap: calc(var(--spacing) * 12);
     }
-    .lg\:self-center {
-      align-self: center;
-    }
     .lg\:self-end {
       align-self: flex-end;
     }
@@ -4550,8 +4557,8 @@
     .lg\:text-\[38px\] {
       font-size: 38px;
     }
-    .lg\:text-\[42px\] {
-      font-size: 42px;
+    .lg\:text-\[40px\] {
+      font-size: 40px;
     }
     .lg\:text-\[64px\] {
       font-size: 64px;

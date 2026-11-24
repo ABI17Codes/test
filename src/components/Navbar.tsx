@@ -190,37 +190,61 @@ export const Navbar: React.FC = () => {
               );
             })}
 
-            {/* Catalogues Dropdown */}
-            <div className="relative" ref={dropdownRef}>
+            {/* Unified Catalogues Dropdown (3 Items Only) */}
+            <div
+              className="relative"
+              ref={dropdownRef}
+              onMouseEnter={() => setCatalogDropdownOpen(true)}
+              onMouseLeave={() => setCatalogDropdownOpen(false)}
+            >
               <button
+                type="button"
                 onClick={() => setCatalogDropdownOpen(!catalogDropdownOpen)}
-                className={`inline-flex items-center gap-1 text-[12.5px] font-bold whitespace-nowrap transition-colors py-1 cursor-pointer ${
-                  catalogDropdownOpen ? 'text-[#0B4F82]' : 'text-[#1E293B] hover:text-[#0B4F82]'
+                className={`inline-flex items-center gap-1 text-[12.5px] font-bold whitespace-nowrap transition-colors py-1 relative cursor-pointer ${
+                  pathname === '/bags' ||
+                  pathname === '/brands' ||
+                  pathname === '/gift-sets' ||
+                  pathname === '/catalog-viewer' ||
+                  catalogDropdownOpen
+                    ? 'text-[#0B4F82]'
+                    : 'text-[#1E293B] hover:text-[#0B4F82]'
                 }`}
               >
                 <span>Catalogues</span>
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${catalogDropdownOpen ? 'rotate-180 text-[#D97706]' : ''}`} />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    catalogDropdownOpen ? 'rotate-180 text-[#D97706]' : ''
+                  }`}
+                />
+                {(pathname === '/bags' ||
+                  pathname === '/brands' ||
+                  pathname === '/gift-sets' ||
+                  pathname === '/catalog-viewer') && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D97706] rounded-full" />
+                )}
               </button>
 
               {catalogDropdownOpen && (
-                <div className="absolute left-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 space-y-1 z-50 text-left">
-                  {catalogDropdownItems.map((item, idx) => {
-                    const ItemIcon = item.icon;
-                    return (
-                      <Link
-                        key={idx}
-                        href={item.href}
-                        className="flex items-start gap-2.5 p-2.5 rounded-xl hover:bg-[#F8FAFC] transition-colors"
-                        onClick={() => setCatalogDropdownOpen(false)}
-                      >
-                        <ItemIcon className="w-4 h-4 text-[#0B4F82] mt-0.5 shrink-0" />
-                        <div>
-                          <div className="text-xs font-bold text-[#0F172A]">{item.title}</div>
-                          <div className="text-[10.5px] text-[#64748B]">{item.description}</div>
-                        </div>
-                      </Link>
-                    );
-                  })}
+                <div className="absolute left-0 pt-2 w-80 z-50 text-left">
+                  <div className="bg-white border border-slate-200 rounded-2xl shadow-xl p-2 space-y-1">
+                    {catalogDropdownItems.map((item, idx) => {
+                      const ItemIcon = item.icon;
+                      return (
+                        <Link
+                          key={idx}
+                          href={item.href}
+                          className="flex items-start gap-2.5 p-2.5 rounded-xl hover:bg-[#F8FAFC] transition-colors"
+                          onClick={() => setCatalogDropdownOpen(false)}
+                        >
+                          <ItemIcon className="w-4 h-4 text-[#0B4F82] mt-0.5 shrink-0" />
+                          <div>
+                            <div className="text-xs font-bold text-[#0F172A]">{item.title}</div>
+                            <div className="text-[10.5px] text-[#64748B]">{item.description}</div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>
@@ -345,16 +369,13 @@ export const Navbar: React.FC = () => {
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-2 shadow-xl text-left">
-          {primaryLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="block py-1.5 text-xs font-bold text-[#0F172A] hover:text-[#0B4F82]"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
+          <Link
+            href="/bags"
+            className="block py-1.5 text-xs font-extrabold text-[#0B4F82]"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Catalogues (Backpacks, Gifting &amp; PDFs)
+          </Link>
           {secondaryLinks.map((link) => (
             <Link
               key={link.href}
