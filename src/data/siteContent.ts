@@ -89,8 +89,7 @@ export const NAVIGATION_CONFIG = {
     headline: 'Backpack Manufacturing & Corporate Gifting'
   },
   primaryLinks: [
-    { label: 'In-House Brands', href: '/brands' },
-    { label: 'Backpacks', href: '/bags' },
+    { label: 'Backpacks & In-House Brands', href: '/bags' },
     { label: 'Corporate Gifting', href: '/gift-sets' },
   ],
   secondaryLinks: [
@@ -100,14 +99,8 @@ export const NAVIGATION_CONFIG = {
   ],
   catalogDropdownItems: [
     {
-      title: 'In-House Brands (Ninja Gear & ADMA London)',
-      description: 'Top factory backpack models with 1-Yr Warranty',
-      href: '/brands',
-      icon: Sparkles
-    },
-    {
-      title: 'Backpacks & Partner Brands',
-      description: 'Our Models + Skybags, Arctic Hunter & Swiss Military',
+      title: 'In-House Brands & Backpacks',
+      description: 'Ninja Gear, ADMA London + Skybags, Arctic Hunter & Swiss Military',
       href: '/bags',
       icon: Briefcase
     },
@@ -141,7 +134,7 @@ export const HERO_CONTENT = {
   imageBadge: 'IN-HOUSE FLAGSHIPS • NINJA GEAR BOXER & ADMA LONDON VOLVO 2.0',
   primaryCta: {
     label: 'EXPLORE IN-HOUSE BRANDS',
-    href: '/brands'
+    href: '/bags'
   },
   secondaryCta: {
     label: 'EXPLORE CORPORATE GIFTING',

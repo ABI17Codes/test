@@ -3755,6 +3755,9 @@
     .hover\:bg-\[\#D4952A\]:hover {
       background-color: #D4952A;
     }
+    .hover\:bg-\[\#DBEAFE\]:hover {
+      background-color: #DBEAFE;
+    }
     .hover\:bg-\[\#E8B43A\]:hover {
       background-color: #E8B43A;
     }
@@ -4280,6 +4283,9 @@
     .sm\:text-\[15\.5px\] {
       font-size: 15.5px;
     }
+    .sm\:text-\[15px\] {
+      font-size: 15px;
+    }
     .sm\:whitespace-nowrap {
       white-space: nowrap;
     }
@@ -4461,6 +4467,9 @@
     }
     .lg\:gap-12 {
       gap: calc(var(--spacing) * 12);
+    }
+    .lg\:self-center {
+      align-self: center;
     }
     .lg\:self-end {
       align-self: flex-end;
