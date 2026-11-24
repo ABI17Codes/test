@@ -107,14 +107,14 @@ export const Hero: React.FC = () => {
       <div className="absolute -top-28 right-1/4 w-[600px] h-[600px] bg-[#E0F2FE]/45 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute -bottom-28 left-8 w-[520px] h-[520px] bg-[#FEF3C7]/45 rounded-full blur-[130px] pointer-events-none" />
 
-      {/* Main Two-Column Hero Container (Balanced 42% / 58% Proportions across 1440px–1920px) */}
-      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-10 py-8 sm:py-11 lg:py-13">
+      {/* Main Two-Column Hero Container (Precisely Aligned Top & Center across 1440px–1920px) */}
+      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-9 items-center">
 
           {/* ================================================================
               LEFT SECTION (5 cols / ~42%): Brand Authority, Typography & CTAs
           ================================================================ */}
-          <div className="lg:col-span-5 flex flex-col justify-center items-start space-y-5 text-left order-1">
+          <div className="lg:col-span-5 flex flex-col justify-center items-start space-y-4 sm:space-y-5 text-left order-1">
 
             {/* 1. Single-Line Horizontal Company Information Badge on Desktop */}
             <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/90 shadow-2xs sm:whitespace-nowrap">
@@ -151,11 +151,13 @@ export const Hero: React.FC = () => {
               </Link>
             </div>
 
-            {/* 3. Main Headline with Distinct Typography Treatments */}
-            <h1 className="text-3xl sm:text-4xl lg:text-[40px] xl:text-[44px] font-black uppercase tracking-tight leading-[1.09] font-sans">
-              <span className="text-[#0F172A] block">DIRECT</span>
+            {/* 3. Main Headline with Balanced Line Breaks & Distinct Typography Treatments */}
+            <h1 className="text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px] font-black uppercase tracking-tight leading-[1.1] font-sans">
+              <span className="text-[#0F172A] block">
+                DIRECT <span className="text-[#0B4F82]">BACKPACK</span>
+              </span>
               <span className="text-[#0B4F82] block mt-0.5">
-                BACKPACK MANUFACTURING
+                MANUFACTURING
               </span>
               <span className="text-[#0F172A] block mt-0.5">
                 &amp; COMPLETE
@@ -167,7 +169,7 @@ export const Hero: React.FC = () => {
             </h1>
 
             {/* 4. Description */}
-            <p className="text-sm sm:text-[15px] text-[#334155] font-normal leading-[1.65]">
+            <p className="text-sm sm:text-[15px] text-[#334155] font-normal leading-[1.62]">
               We manufacture our own registered backpack brands (
               <strong className="font-bold text-[#0F172A]">Ninja Gear Original</strong> &amp;{' '}
               <strong className="font-bold text-[#0F172A]">ADMA London</strong>) in Bengaluru, supply leading partner brands (
@@ -250,7 +252,7 @@ export const Hero: React.FC = () => {
                 />
               </div>
 
-              {/* Slider Header Bar: All 4 Tabs Fully Visible + Prev/Next Arrows (Zero Clipping!) */}
+              {/* Slider Header Bar: All 4 Tabs Fully Visible + Prev/Next Arrows */}
               <div className="px-3.5 sm:px-5 py-2.5 bg-white border-b border-slate-100 flex items-center justify-between gap-2">
                 <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto scrollbar-none py-0.5">
                   {slides.map((s, idx) => {
@@ -296,7 +298,7 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
 
-              {/* Horizontal Sliding Track (Identical Height Across All 4 Slides — Zero Empty Space!) */}
+              {/* Horizontal Sliding Track (Compact & Identical Structure Across All 4 Slides) */}
               <div className="overflow-hidden">
                 <div
                   className="flex transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
@@ -307,11 +309,11 @@ export const Hero: React.FC = () => {
                     return (
                       <div
                         key={slide.id}
-                        className={`w-full shrink-0 bg-gradient-to-br ${slide.themeBg} px-4 sm:px-5 pt-4 pb-4 flex flex-col justify-between`}
+                        className={`w-full shrink-0 bg-gradient-to-br ${slide.themeBg} px-4 sm:px-5 py-3.5 flex flex-col justify-between`}
                       >
-                        {/* Uniform Product Cards Grid (Identical Card & Image Container Height Across All 4 Slides) */}
+                        {/* Uniform Product Showcase Grid (Complete 2-Line Product Names — Zero Ellipsis Truncation!) */}
                         <div
-                          className={`grid gap-3 items-stretch ${
+                          className={`grid gap-2.5 sm:gap-3 items-stretch ${
                             isFourGrid ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3'
                           }`}
                         >
@@ -319,23 +321,23 @@ export const Hero: React.FC = () => {
                             <Link
                               key={i}
                               href={slide.ctaHref}
-                              className="group/card rounded-2xl bg-white border border-slate-200/85 hover:border-[#0B4F82]/45 p-2.5 sm:p-3 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all h-[236px] sm:h-[262px]"
+                              className="group/card rounded-2xl bg-white border border-slate-200/85 hover:border-[#0B4F82]/45 p-2.5 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all"
                             >
-                              {/* Uniform Centered Product Image Stage */}
-                              <div className="h-[164px] sm:h-[188px] w-full rounded-xl bg-[#F8FAFC]/65 flex items-center justify-center overflow-hidden p-2">
+                              {/* Identical Centered Product Image Container Across All 4 Slides */}
+                              <div className="h-[158px] sm:h-[176px] w-full rounded-xl bg-[#F8FAFC] flex items-center justify-center overflow-hidden p-2">
                                 <img
                                   src={item.image}
                                   alt={item.name}
-                                  className="max-h-full max-w-full object-contain drop-shadow-[0_6px_14px_rgba(15,23,42,0.10)] group-hover/card:scale-105 transition-transform duration-500"
+                                  className="max-h-full max-w-full object-contain drop-shadow-[0_6px_12px_rgba(15,23,42,0.09)] group-hover/card:scale-105 transition-transform duration-500"
                                 />
                               </div>
 
-                              {/* Aligned Baseline Product Caption */}
-                              <div className="w-full text-center pt-2 border-t border-slate-100">
-                                <span className="text-[10px] font-bold text-[#D97706] uppercase tracking-wider block truncate">
+                              {/* Complete Product Name & Category Label (Zero Truncation, Clean 2-Line Support) */}
+                              <div className="w-full text-center pt-2 mt-1.5 border-t border-slate-100 min-h-[54px] flex flex-col justify-center">
+                                <span className="text-[9.5px] font-bold text-[#D97706] uppercase tracking-wider block leading-tight">
                                   {item.tag}
                                 </span>
-                                <span className="text-xs sm:text-[13px] font-extrabold text-[#0F172A] block mt-0.5 leading-tight truncate">
+                                <span className="text-[11.5px] sm:text-xs font-extrabold text-[#0F172A] block mt-0.5 leading-snug">
                                   {item.name}
                                 </span>
                               </div>
@@ -343,9 +345,9 @@ export const Hero: React.FC = () => {
                           ))}
                         </div>
 
-                        {/* Compact Bottom Information Area (Tight Vertical Spacing — No Empty Blank Gap) */}
-                        <div className="mt-3.5 pt-3.5 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                          <div className="flex items-center gap-3 text-left flex-1 min-w-0">
+                        {/* Compact Bottom Collection Information Area (Tight Vertical Spacing & Clear Separation from Pagination/CTA) */}
+                        <div className="mt-3 pt-3 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                          <div className="flex items-center gap-3 text-left flex-1 min-w-0 pr-2">
                             {slide.brandLogo && (
                               <div className="h-10 w-14 rounded-xl bg-white border border-slate-200/90 p-1 shadow-2xs flex items-center justify-center shrink-0">
                                 <img
@@ -357,7 +359,7 @@ export const Hero: React.FC = () => {
                             )}
                             <div className="space-y-0.5 flex-1 min-w-0">
                               <div className="flex items-center gap-2 flex-wrap">
-                                <h2 className="text-sm sm:text-base font-extrabold text-[#0F172A] tracking-tight">
+                                <h2 className="text-sm sm:text-[15px] font-extrabold text-[#0F172A] tracking-tight">
                                   {slide.title}
                                 </h2>
                                 <span className="px-2 py-0.5 rounded-md bg-[#0B4F82]/10 text-[#0B4F82] text-[9.5px] font-extrabold uppercase tracking-wider">
@@ -370,7 +372,7 @@ export const Hero: React.FC = () => {
                             </div>
                           </div>
 
-                          <div className="flex items-center justify-between sm:justify-end gap-3.5 shrink-0">
+                          <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0">
                             {/* Pagination Dots */}
                             <div className="flex items-center gap-1.5">
                               {slides.map((s, idx) => (
@@ -405,13 +407,13 @@ export const Hero: React.FC = () => {
               </div>
             </div>
 
-            {/* 7. Corporate Gifting Category Strip Below Slider (Aligned Perfectly with Slider Width) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full">
+            {/* 7. Corporate Gifting Category Strip Below Slider (Generous Text Spacing, Zero Truncation) */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full">
               {giftingStrip.map((item, i) => (
                 <Link
                   key={i}
                   href={item.href}
-                  className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-white hover:bg-[#F8FAFC] border border-slate-200/90 hover:border-[#0B4F82]/60 shadow-2xs hover:shadow-sm transition-all group"
+                  className="flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-[#F8FAFC] border border-slate-200/90 hover:border-[#0B4F82]/60 shadow-2xs hover:shadow-sm transition-all group"
                 >
                   <div className="w-11 h-11 rounded-xl bg-[#F8FAFC] border border-slate-200/80 p-1 flex items-center justify-center shrink-0 overflow-hidden">
                     <img
@@ -421,10 +423,10 @@ export const Hero: React.FC = () => {
                     />
                   </div>
                   <div className="text-left min-w-0 flex-1">
-                    <span className="text-xs font-extrabold text-[#0F172A] group-hover:text-[#0B4F82] block leading-snug">
+                    <span className="text-xs sm:text-[13px] font-extrabold text-[#0F172A] group-hover:text-[#0B4F82] block leading-snug">
                       {item.label}
                     </span>
-                    <span className="text-[10.5px] text-[#64748B] block leading-tight mt-0.5">
+                    <span className="text-[11px] text-[#64748B] block leading-tight mt-0.5">
                       {item.sub}
                     </span>
                   </div>

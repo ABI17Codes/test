@@ -235,25 +235,25 @@ export const HERO_CONTENT = {
           name: '5-in-1 VIP Welcome Kit',
           code: 'HGS-H74',
           tag: 'Employee Onboarding',
-          image: '/catalog/crops/hgs_h74.jpg'
+          image: '/images/hero-slider/gift-welcome-kit.jpg'
         },
         {
           name: 'Smart Vacuum Drinkware',
           code: 'HGS-H118',
           tag: 'Insulated Flasks',
-          image: '/catalog/crops/hgs_h118_vacuum.jpg'
+          image: '/images/hero-slider/gift-drinkware.jpg'
         },
         {
           name: 'Trophies & Recognition Awards',
           code: 'AWARDS',
           tag: 'Custom Engraved',
-          image: '/images/gifting-categories/trophy-1.jpg'
+          image: '/images/hero-slider/gift-trophies.jpg'
         },
         {
           name: 'Sustainable Bamboo Sets',
           code: 'HGS-H117',
           tag: 'Eco-Friendly Series',
-          image: '/catalog/crops/hgs_h117_bamboo.jpg'
+          image: '/images/hero-slider/gift-bamboo.jpg'
         }
       ]
     },
@@ -282,13 +282,13 @@ export const HERO_CONTENT = {
           name: 'Full-Color DTF Printing',
           code: 'DTF PRINT',
           tag: 'Bags, T-Shirts & Hoodies',
-          image: '/images/gifting-categories/apparel-1.jpg'
+          image: '/images/hero-slider/brand-apparel.jpg'
         },
         {
           name: 'Screen Print & Laser Engraving',
           code: 'SCREEN & LASER',
           tag: 'Bulk Bags & Metal Flasks',
-          image: '/catalog/crops/hgs_h125_temp_display.jpg'
+          image: '/images/hero-slider/brand-laser-flask.jpg'
         }
       ]
     }
