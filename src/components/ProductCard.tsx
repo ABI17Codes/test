@@ -205,20 +205,29 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           ) : null}
         </div>
 
-        {/* Pricing & MOQ Footer */}
+        {/* Pricing (M.R.P.) & Min. Order Footer — Amazon Brand Store B2B Style */}
         <div className="pt-3 border-t border-[#E2E8F0] space-y-2.5">
-          <div className="flex items-center justify-between text-xs">
+          <div className="flex items-end justify-between gap-2">
             <div>
-              <span className="text-[9px] text-[#64748B] uppercase font-bold tracking-wider block">Branding</span>
-              <span className="font-bold text-[#0B4F82] flex items-center gap-1 text-[11px]">
-                <Sparkles className="w-3 h-3 text-[#E5A93C]" />
-                DTF • Embroidery • Screen
+              <span className="text-[10px] text-[#64748B] font-semibold block">
+                M.R.P.:{' '}
+                <strong className="text-sm sm:text-[15px] font-black text-[#0F172A]">
+                  ₹{(product.mrp || 1499).toLocaleString('en-IN')}
+                </strong>
+              </span>
+              <span className="font-bold text-[#0B4F82] flex items-center gap-1 text-[10.5px] mt-0.5">
+                <Sparkles className="w-3 h-3 text-[#D97706] shrink-0" />
+                <span>DTF • Embroidery • Screen</span>
               </span>
             </div>
 
-            <div className="text-right">
-              <span className="text-[9px] text-[#64748B] uppercase font-bold tracking-wider block">Min. Order</span>
-              <span className="font-extrabold text-[#0F172A]">{product.moq}</span>
+            <div className="text-right shrink-0">
+              <span className="text-[9.5px] text-[#64748B] uppercase font-bold tracking-wider block">
+                Min. order
+              </span>
+              <span className="text-xs font-extrabold text-[#0F172A] bg-[#F8FAFC] border border-slate-200 px-2 py-0.5 rounded-md inline-block mt-0.5">
+                {product.moq}
+              </span>
             </div>
           </div>
 

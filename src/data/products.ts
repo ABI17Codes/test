@@ -81,6 +81,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_099.jpg',
     catalogType: 'gifts',
     pageNumber: 99,
+    mrp: 1999,
     moq: '50 sets',
     composition: [
       '304 Insulated Vacuum Coffee Mug with Lid',
@@ -111,6 +112,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_096.jpg',
     catalogType: 'gifts',
     pageNumber: 96,
+    mrp: 1999,
     moq: '50 sets',
     composition: [
       '500ml Natural Bamboo Vacuum Flask (304 Steel)',
@@ -140,6 +142,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_097.jpg',
     catalogType: 'gifts',
     pageNumber: 97,
+    mrp: 1999,
     moq: '50 sets',
     composition: [
       'Bamboo Coffee Mug with Insulated Steel Liner',
@@ -168,6 +171,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_081.jpg',
     catalogType: 'gifts',
     pageNumber: 81,
+    mrp: 1999,
     moq: '100 sets',
     composition: [
       'Magnet Flap A5 Diary (192 pages)',
@@ -201,6 +205,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_091.jpg',
     catalogType: 'gifts',
     pageNumber: 91,
+    mrp: 1999,
     moq: '50 sets',
     composition: [
       '500ml Smart LED Temperature Vacuum Flask',
@@ -233,6 +238,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_064.jpg',
     catalogType: 'gifts',
     pageNumber: 64,
+    mrp: 1999,
     moq: '100 sets',
     composition: [
       'A5 Magnet Flap Diary (192 Natural Pages)',
@@ -265,6 +271,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_105.jpg',
     catalogType: 'gifts',
     pageNumber: 105,
+    mrp: 1999,
     moq: '150 sets',
     composition: [
       'Metal Ball Pen with Touchscreen Stylus Tip',
@@ -1799,6 +1806,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_132.jpg',
     catalogType: 'gifts',
     pageNumber: 132,
+    mrp: 1299,
     moq: '100 pcs',
     specs: [
       { label: 'Capacity', value: '500 ml' },
@@ -1822,6 +1830,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_127.jpg',
     catalogType: 'gifts',
     pageNumber: 127,
+    mrp: 899,
     moq: '100 pcs',
     specs: [
       { label: 'Capacity', value: '500 ml' },
@@ -1848,6 +1857,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_123.jpg',
     catalogType: 'gifts',
     pageNumber: 123,
+    mrp: 999,
     moq: '100 pcs',
     specs: [
       { label: 'Capacity', value: '750 ml' },
@@ -1872,6 +1882,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_114.jpg',
     catalogType: 'gifts',
     pageNumber: 114,
+    mrp: 899,
     moq: '150 pcs',
     specs: [
       { label: 'Capacity', value: '750 ml' },
@@ -1902,6 +1913,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_141.jpg',
     catalogType: 'gifts',
     pageNumber: 141,
+    mrp: 899,
     moq: '100 pcs',
     specs: [
       { label: 'Capacity', value: '350 ml' },
@@ -1927,6 +1939,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_135.jpg',
     catalogType: 'gifts',
     pageNumber: 135,
+    mrp: 899,
     moq: '100 pcs',
     specs: [
       { label: 'Capacity', value: '450 ml' },
@@ -1948,6 +1961,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_138.jpg',
     catalogType: 'gifts',
     pageNumber: 138,
+    mrp: 899,
     moq: '100 pcs',
     specs: [
       { label: 'Capacity', value: '350 ml' },
@@ -1978,6 +1992,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_041.jpg',
     catalogType: 'gifts',
     pageNumber: 41,
+    mrp: 699,
     moq: '100 pcs',
     specs: [
       { label: 'Format', value: 'A5 Size Hardbound' },
@@ -2005,6 +2020,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_011.jpg',
     catalogType: 'gifts',
     pageNumber: 11,
+    mrp: 699,
     moq: '100 pcs',
     specs: [
       { label: 'Size', value: 'A5 Standard Notebook' },
@@ -2031,6 +2047,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_027.jpg',
     catalogType: 'gifts',
     pageNumber: 27,
+    mrp: 699,
     moq: '100 pcs',
     specs: [
       { label: 'Size', value: 'A5 Size' },
@@ -2060,6 +2077,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_143.jpg',
     catalogType: 'gifts',
     pageNumber: 143,
+    mrp: 699,
     moq: '100 pcs',
     specs: [
       { label: 'Material', value: 'Seasoned Natural Steam Beech Wood' },
@@ -2081,6 +2099,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/gifts/page_145.jpg',
     catalogType: 'gifts',
     pageNumber: 145,
+    mrp: 699,
     moq: '100 pcs',
     specs: [
       { label: 'Style', value: 'Contoured Wave Luxury Desk Stand' },
@@ -2110,6 +2129,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/bags/page_13.jpg',
     catalogType: 'bags',
     pageNumber: 13,
+    mrp: 2499,
     moq: '50 pcs',
     specs: [
       { label: 'Brand Partner', value: 'Skybags (Supplied & Branded by Globrands)' },
@@ -2138,6 +2158,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/bags/page_08.jpg',
     catalogType: 'bags',
     pageNumber: 8,
+    mrp: 1799,
     moq: '50 pcs',
     specs: [
       { label: 'Brand Partner', value: 'Skybags (Supplied & Branded by Globrands)' },
@@ -2165,6 +2186,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/bags/page_05.jpg',
     catalogType: 'bags',
     pageNumber: 5,
+    mrp: 3499,
     moq: '30 pcs',
     specs: [
       { label: 'Brand Partner', value: 'Arctic Hunter (Plus Equivalent In-House Manufacturing Available)' },
@@ -2193,6 +2215,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/bags/page_17.jpg',
     catalogType: 'bags',
     pageNumber: 17,
+    mrp: 3299,
     moq: '30 pcs',
     specs: [
       { label: 'Brand Partner', value: 'Arctic Hunter (Plus Equivalent In-House Manufacturing Available)' },
@@ -2220,6 +2243,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/bags/page_16.jpg',
     catalogType: 'bags',
     pageNumber: 16,
+    mrp: 3899,
     moq: '30 pcs',
     specs: [
       { label: 'Brand Partner', value: 'Swiss Military (Corporate Gifting Partner)' },
@@ -2247,6 +2271,7 @@ export const PRODUCTS: Product[] = [
     catalogPage: '/catalog/bags/page_06.jpg',
     catalogType: 'bags',
     pageNumber: 6,
+    mrp: 3599,
     moq: '30 pcs',
     specs: [
       { label: 'Brand Partner', value: 'Swiss Military (Corporate Gifting Partner)' },

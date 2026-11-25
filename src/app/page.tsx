@@ -1,34 +1,18 @@
 import React from 'react';
-import { Hero } from '../components/Hero';
-import { InHouseBrandsSpotlight } from '../components/InHouseBrandsSpotlight';
-import { CorporateGiftingSection } from '../components/CorporateGiftingSection';
-import { BackpackCategoriesSection } from '../components/BackpackCategoriesSection';
-import { ManufacturingStorySection } from '../components/ManufacturingStorySection';
-import { EnterpriseTrustBar } from '../components/EnterpriseTrustBar';
+import { AmazonBrandStoreHome } from '../components/AmazonBrandStoreHome';
 import { ContactSection } from '../components/ContactSection';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B] flex flex-col">
-      {/* 1. Light Pastel Brand Store Hero: Highlights BOTH Backpack Manufacturing (Primary) & Corporate Gifting (Secondary) */}
-      <Hero />
+    <div className="min-h-screen bg-[#F4F3EF] text-[#0F172A] flex flex-col">
+      {/* Official Amazon Brand Store Style Homepage:
+          - Parent Store Banner (Globrands Lifestyle Pvt. Ltd.)
+          - Store Sticky Tab Bar & Search (Home Page, ADMA London, Ninja Gear Original, Backpacks, Duffle & Luggage, Corporate Gifting, Partner Brands)
+          - Official ADMA London Amazon Store Banners, Podium Showcase, Editorial Split Rows & Product Rows
+          - Matching Ninja Gear Original & Corporate Gifting Podium Showcases & B2B Product Rows (with M.R.P., Min. Order & Add to Quote) */}
+      <AmazonBrandStoreHome />
 
-      {/* 2. Primary Business: In-House Backpack Brands (Ninja Gear & ADMA London) on High-Contrast Light Stage */}
-      <InHouseBrandsSpotlight />
-
-      {/* 3. Secondary Business (Moved Higher Up per Client Request!): 9 A-to-Z Corporate Gifting Categories with 4-Image Grids */}
-      <CorporateGiftingSection />
-
-      {/* 4. Backpack Categories & Multi-Brand Partner Bags (Skybags, Arctic Hunter, Swiss Military) */}
-      <BackpackCategoriesSection />
-
-      {/* 5. Backpack Materials & Simple In-House Branding (DTF Printing, Embroidery & Screen Printing) */}
-      <ManufacturingStorySection />
-
-      {/* 6. Why Globrands & Client Trust */}
-      <EnterpriseTrustBar />
-
-      {/* 7. Direct Factory & Corporate Gifting Enquiry Desk */}
+      {/* Direct Factory & Corporate Gifting Enquiry Desk */}
       <ContactSection />
     </div>
   );
