@@ -87,11 +87,11 @@ export const BackpackCategoriesSection: React.FC = () => {
                   href={cat.href}
                   className="group relative rounded-2xl overflow-hidden bg-white border-2 border-[#DBEAFE] hover:border-[#0B4F82] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between flex-1"
                 >
-                  <div className="relative h-[160px] w-full overflow-hidden bg-[#FEFCE8] flex items-center justify-center">
+                  <div className="relative h-[165px] w-full overflow-hidden bg-[#DCEBF7] flex items-center justify-center">
                     <img
                       src={cat.image}
                       alt={cat.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                       loading="lazy"
                     />
                     <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-[#0B4F82] text-white text-[9px] font-mono uppercase tracking-wider font-bold shadow-xs">

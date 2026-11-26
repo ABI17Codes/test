@@ -39,11 +39,11 @@ export const ManufacturingStorySection: React.FC = () => {
 
           {/* Left Column (6 cols): Featured Backpack Materials & Craft Showcase on Light Pastel Stage */}
           <div className="lg:col-span-6 rounded-2xl overflow-hidden border-2 border-[#DBEAFE] bg-[#F0F7FF] flex flex-col justify-between shadow-sm">
-            <div className="relative h-[280px] sm:h-[320px] w-full overflow-hidden bg-white flex items-center justify-center">
+            <div className="relative h-[300px] sm:h-[340px] w-full overflow-hidden bg-white flex items-center justify-center p-3">
               <img
                 src={featuredCraft.image}
                 alt={featuredCraft.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 loading="lazy"
               />
               <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#0B4F82] text-white text-[10px] font-mono uppercase tracking-wider font-bold shadow-xs">

@@ -1,46 +1,49 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import {
-  Eye,
-  ShoppingBag,
-  Check,
-  Sparkles,
-  MessageSquare
-} from 'lucide-react';
-import { Product } from '../data/products';
-import { useQuote } from '../context/QuoteContext';
-import { COMPANY_INFO } from '../data/siteContent';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { Eye, ShoppingBag, Check, Sparkles, MessageSquare } from "lucide-react";
+import { Product } from "../data/products";
+import { useQuote } from "../context/QuoteContext";
+import { COMPANY_INFO } from "../data/siteContent";
 
 interface ProductCardProps {
   product: Product;
   onQuickView?: (product: Product) => void;
-  onOpenCatalogPage?: (type: 'bags' | 'gifts', page: number) => void;
+  onOpenCatalogPage?: (type: "bags" | "gifts", page: number) => void;
 }
 
-export function getProductAngles(product: Product): { label: string; src: string }[] {
+export function getProductAngles(
+  product: Product,
+): { label: string; src: string }[] {
   if (product.images && product.images.length > 0) {
-    const labels = ['Front', 'Back', 'Side', 'Inside'];
+    const labels = ["Front", "Back", "Side", "Inside"];
     return product.images.map((src, i) => ({
       label: labels[i] || `View ${i + 1}`,
-      src
+      src,
     }));
   }
-  if (product.category === 'bags' && product.id.startsWith('bg-')) {
+  if (product.category === "bags" && product.id.startsWith("bg-")) {
     return [
-      { label: 'Front', src: product.image },
-      { label: 'Back', src: `/catalog/backpacks-angles/${product.id}-angle-1.png` },
-      { label: 'Side', src: `/catalog/backpacks-angles/${product.id}-angle-2.png` },
-      { label: 'Inside', src: `/catalog/backpacks-angles/${product.id}-angle-3.png` }
+      { label: "Front", src: product.image },
+      {
+        label: "Back",
+        src: `/catalog/backpacks-angles/${product.id}-angle-1.png`,
+      },
+      {
+        label: "Side",
+        src: `/catalog/backpacks-angles/${product.id}-angle-2.png`,
+      },
+      {
+        label: "Inside",
+        src: `/catalog/backpacks-angles/${product.id}-angle-3.png`,
+      },
     ];
   }
-  return [{ label: 'Front', src: product.image }];
+  return [{ label: "Front", src: product.image }];
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({
-  product,
-}) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToQuote, items } = useQuote();
   const [mounted, setMounted] = useState(false);
   const angles = getProductAngles(product);
@@ -50,14 +53,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     setMounted(true);
   }, []);
 
-  const isAlreadyInQuote = mounted && items.some((i) => i.product.id === product.id);
+  const isAlreadyInQuote =
+    mounted && items.some((i) => i.product.id === product.id);
 
   const getWhatsAppLink = (e: React.MouseEvent) => {
     e.stopPropagation();
     const text = encodeURIComponent(
-      `Hello ${COMPANY_INFO.legalName}! I would like to request bulk pricing and logo branding (DTF / Embroidery / Screen Print) details for:\nProduct: ${product.name}\nCode: ${product.code}\nBrand: ${product.brand}\nMinimum Order: ${product.moq}\nPlease share the quotation.`
+      `Hello ${COMPANY_INFO.legalName}! I would like to request bulk pricing and logo branding (DTF / Embroidery / Screen Print) details for:\nProduct: ${product.name}\nCode: ${product.code}\nBrand: ${product.brand}\nMinimum Order: ${product.moq}\nPlease share the quotation.`,
     );
-    window.open(`https://wa.me/${COMPANY_INFO.contact.phoneRaw}?text=${text}`, '_blank');
+    window.open(
+      `https://wa.me/${COMPANY_INFO.contact.phoneRaw}?text=${text}`,
+      "_blank",
+    );
   };
 
   const handleAddQuote = (e: React.MouseEvent) => {
@@ -67,23 +74,24 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const getBrandBadge = () => {
-    if (product.brand === 'Ninja Gear') {
-      return 'bg-[#FEF3C7] text-[#92400E] border-[#FCD34D]';
+    if (product.brand === "Ninja Gear") {
+      return "bg-[#FEF3C7] text-[#92400E] border-[#FCD34D]";
     }
-    if (product.brand === 'ADMA London') {
-      return 'bg-[#0B4F82] text-white border-[#0B4F82]';
+    if (product.brand === "ADMA London") {
+      return "bg-[#0B4F82] text-white border-[#0B4F82]";
     }
-    if (['Skybags', 'Arctic Hunter', 'Swiss Military'].includes(product.brand)) {
-      return 'bg-[#E0F2FE] text-[#0369A1] border-[#7DD3FC]';
+    if (
+      ["Skybags", "Arctic Hunter", "Swiss Military"].includes(product.brand)
+    ) {
+      return "bg-[#E0F2FE] text-[#0369A1] border-[#7DD3FC]";
     }
-    return 'bg-[#EFF6FF] text-[#0B4F82] border-[#BFDBFE]';
+    return "bg-[#EFF6FF] text-[#0B4F82] border-[#BFDBFE]";
   };
 
   const activeImageSrc = angles[activeAngleIdx]?.src || product.image;
 
   return (
     <div className="group relative rounded-2xl bg-white border-2 border-[#DBEAFE] hover:border-[#0B4F82] transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-2xs hover:shadow-xl">
-
       {/* Top Media / Product Stage (Bright High-Contrast White & Light Pastel Blue Stage — Black Backpacks Pop 100%!) */}
       <div className="relative bg-gradient-to-b from-[#FFFFFF] via-[#F8FBFF] to-[#EEF6FF] border-b border-[#DBEAFE]">
         <Link
@@ -92,7 +100,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         >
           {/* Floating Brand Badge */}
           <div className="absolute top-3 left-3 z-10 flex flex-col gap-1 items-start pointer-events-none">
-            <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border shadow-2xs uppercase tracking-wider ${getBrandBadge()}`}>
+            <span
+              className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border shadow-2xs uppercase tracking-wider ${getBrandBadge()}`}
+            >
               {product.brand}
             </span>
             {product.tags?.[0] && (
@@ -112,7 +122,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {/* Main Product Image (Razor-sharp contrast on bright stage, zero white cutout border) */}
           <img
             src={activeImageSrc}
-            alt={`${product.name} - ${angles[activeAngleIdx]?.label || 'Front'} View`}
+            alt={`${product.name} - ${angles[activeAngleIdx]?.label || "Front"} View`}
             className="max-h-[92%] max-w-[92%] object-contain drop-shadow-[0_8px_16px_rgba(11,79,130,0.12)] transform group-hover:scale-105 transition-transform duration-300"
             loading="lazy"
           />
@@ -145,8 +155,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                   }}
                   className={`flex items-center gap-1 px-2 py-1 rounded-md text-[9px] font-bold transition-all cursor-pointer border ${
                     activeAngleIdx === idx
-                      ? 'bg-[#0B4F82] text-white border-[#0B4F82] shadow-2xs'
-                      : 'bg-[#F8FAFC] text-[#475569] border-[#E2E8F0] hover:border-[#93C5FD]'
+                      ? "bg-[#0B4F82] text-white border-[#0B4F82] shadow-2xs"
+                      : "bg-[#F8FAFC] text-[#475569] border-[#E2E8F0] hover:border-[#93C5FD]"
                   }`}
                   title={`Switch to ${ang.label} View`}
                 >
@@ -205,27 +215,24 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           ) : null}
         </div>
 
-        {/* Pricing (M.R.P.) & Min. Order Footer — Amazon Brand Store B2B Style */}
+        {/* Pricing & MOQ Footer */}
         <div className="pt-3 border-t border-[#E2E8F0] space-y-2.5">
-          <div className="flex items-end justify-between gap-2">
+          <div className="flex items-center justify-between text-xs">
             <div>
-              <span className="text-[10px] text-[#64748B] font-semibold block">
-                M.R.P.:{' '}
-                <strong className="text-sm sm:text-[15px] font-black text-[#0F172A]">
-                  ₹{(product.mrp || 1499).toLocaleString('en-IN')}
-                </strong>
+              <span className="text-[9px] text-[#64748B] uppercase font-bold tracking-wider block">
+                Branding
               </span>
-              <span className="font-bold text-[#0B4F82] flex items-center gap-1 text-[10.5px] mt-0.5">
-                <Sparkles className="w-3 h-3 text-[#D97706] shrink-0" />
-                <span>DTF • Embroidery • Screen</span>
+              <span className="font-bold text-[#0B4F82] flex items-center gap-1 text-[11px]">
+                <Sparkles className="w-3 h-3 text-[#E5A93C]" />
+                DTF • Embroidery • Screen
               </span>
             </div>
 
-            <div className="text-right shrink-0">
-              <span className="text-[9.5px] text-[#64748B] uppercase font-bold tracking-wider block">
-                Min. order
+            <div className="text-right">
+              <span className="text-[9px] text-[#64748B] uppercase font-bold tracking-wider block">
+                Min. Order
               </span>
-              <span className="text-xs font-extrabold text-[#0F172A] bg-[#F8FAFC] border border-slate-200 px-2 py-0.5 rounded-md inline-block mt-0.5">
+              <span className="font-extrabold text-[#0F172A]">
                 {product.moq}
               </span>
             </div>
@@ -237,8 +244,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               onClick={handleAddQuote}
               className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 isAlreadyInQuote
-                  ? 'bg-[#FEF3C7] text-[#92400E] border border-[#FCD34D]'
-                  : 'bg-[#0B4F82] hover:bg-[#083B63] text-white shadow-2xs'
+                  ? "bg-[#FEF3C7] text-[#92400E] border border-[#FCD34D]"
+                  : "bg-[#0B4F82] hover:bg-[#083B63] text-white shadow-2xs"
               }`}
             >
               {isAlreadyInQuote ? (
@@ -264,7 +271,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </button>
           </div>
         </div>
-
       </div>
     </div>
   );

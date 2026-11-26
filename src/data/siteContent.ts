@@ -359,27 +359,27 @@ export const BACKPACK_CATEGORIES_DATA = {
   },
   featuredCategory: {
     id: 'laptop-backpacks',
-    tag: 'IN-HOUSE MODEL • NINJA GEAR INSPIRE (BG-INSPIRE)',
-    title: 'Laptop Backpacks',
-    description: 'Engineered with padded 17" laptop compartments, multi-level stationery organizers, concealed bottle pockets, and breathable honeycomb back mesh.',
-    image: '/images/backpacks/laptop/laptop-backpack.jpg',
+    tag: 'IN-HOUSE MODELS • NINJA GEAR & ADMA LONDON LAPTOP SERIES',
+    title: 'Laptop & Office Backpacks',
+    description: 'Engineered with padded 15.6"–17" laptop compartments, multi-level stationery organizers, bottle pockets, and breathable honeycomb back mesh.',
+    image: '/images/brand-store/editorial-office-desk.png',
     href: '/bags?type=laptop',
     actionLabel: 'View Laptop Backpacks'
   },
   stackedCategories: [
     {
       id: 'business-backpacks',
-      tag: 'IN-HOUSE MODEL • NINJA GEAR AVIATOR (BG-AVIATOR)',
+      tag: 'IN-HOUSE MODEL • ADMA LONDON & NINJA GEAR EXECUTIVE',
       title: 'Executive Business Backpacks',
-      image: '/images/backpacks/business/business-backpack.jpg',
+      image: '/images/brand-store/model-studio-blue-1.png',
       href: '/bags?type=laptop',
       actionLabel: 'View Business Models'
     },
     {
       id: 'travel-backpacks',
-      tag: 'IN-HOUSE MODEL • ADMA LONDON VOLVO 2.0 (38L–40L)',
-      title: 'Travel & Rain-Cover Backpacks',
-      image: '/images/backpacks/travel/travel-backpack.jpg',
+      tag: 'IN-HOUSE MODEL • 38L–40L TRAVEL & RAIN-COVER SERIES',
+      title: 'Travel & Mountain Backpacks',
+      image: '/images/brand-store/banner-travelling-easy.jpg',
       href: '/bags?type=waterproof',
       actionLabel: 'View Travel Models'
     }
@@ -387,28 +387,28 @@ export const BACKPACK_CATEGORIES_DATA = {
   standardCategories: [
     {
       id: 'school-college',
-      tag: 'IN-HOUSE MODEL • ADMA LONDON JIO 2.0 (BG-JIO-2)',
+      tag: 'IN-HOUSE MODEL • ADMA LONDON 27L CAMPUS & COMMUTER',
       title: 'College & Campus Backpacks',
-      description: 'Dual-compartment daily packs with ergonomic padded shoulder straps.',
-      image: '/images/backpacks/school/school-backpack.jpg',
-      href: '/bags?type=all',
+      description: 'Dual and triple-compartment daily packs with ergonomic padded shoulder straps and red-accent detailing.',
+      image: '/images/brand-store/model-outdoor-campus.jpg',
+      href: '/bags',
       actionLabel: 'View Campus Packs'
     },
     {
       id: 'casual-backpacks',
-      tag: 'IN-HOUSE MODEL • NINJA GEAR SOFT EDGE',
-      title: 'Everyday & Gym Duffle Bags',
-      description: 'Lightweight office daypacks, 35L–50L gym duffles, and commuter slings.',
-      image: '/images/backpacks/casual/casual-backpack.jpg',
+      tag: 'IN-HOUSE MODEL • ADMA LONDON & NINJA GEAR GYM DUFFLES',
+      title: 'Gym Duffle & Sports Travel Bags',
+      description: 'Lightweight office daypacks, 35L–50L gym duffles with dedicated shoe compartments, and commuter slings.',
+      image: '/images/brand-store/lifestyle-duffle-gym.jpg',
       href: '/bags?type=duffle',
-      actionLabel: 'View Everyday & Duffles'
+      actionLabel: 'View Duffles & Slings'
     },
     {
       id: 'customized-backpacks',
       tag: 'DTF PRINTING • EMBROIDERY • SCREEN PRINTING',
-      title: 'Custom Branded & Partner Bags',
-      description: 'Custom logo branding on our models or Skybags, Arctic Hunter & Swiss Military.',
-      image: '/images/backpacks/customized/customized-backpack.jpg',
+      title: 'Smart Organized & Custom Branded Bags',
+      description: 'Smart multi-compartment storage with custom logo branding on our models or Skybags, Arctic Hunter & Swiss Military.',
+      image: '/images/brand-store/feature-spacious-organized.jpg',
       href: '/branding',
       actionLabel: 'Explore Logo Branding'
     }
@@ -450,9 +450,9 @@ export const MANUFACTURING_DATA = {
   },
   featuredCraft: {
     tag: '1000D Heavy-Duty Backpack Fabric • 1-Year Factory Warranty',
-    title: 'Built with Real Backpack Materials & Reinforced Stitching',
-    description: 'Every Ninja Gear and ADMA London backpack is crafted from heavy-duty water-resistant polyester and nylon with bar-tack reinforced shoulder straps and smooth dual metal zippers.',
-    image: '/images/manufacturing/hero-stitching.jpg'
+    title: 'Built with Real Backpack Materials, Ergonomic Padding & Smart Storage',
+    description: 'Every Ninja Gear and ADMA London backpack is crafted from heavy-duty water-resistant polyester and nylon with bar-tack reinforced shoulder straps, breathable honeycomb back mesh, and smooth dual metal zippers.',
+    image: '/images/brand-store/product-grey-black-dimensions.jpg'
   },
   processSteps: [
     {
